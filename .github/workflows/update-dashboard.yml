@@ -1,1 +1,56 @@
+name: Update EMT Dashboard
 
+on:
+  schedule:
+    # Run every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Update dashboard data
+      run: |
+        echo "🔄 Starting dashboard update..."
+        node update-data.js
+
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "📝 Changes detected"
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+          echo "✅ No changes detected"
+        fi
+
+    - name: Commit and push changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add index.html
+        git commit -m "🤖 Auto-update dashboard data - $(date '+%Y-%m-%d %H:%M:%S')"
+        git push
+        echo "🚀 Changes pushed to repository"
+
+    - name: Summary
+      run: |
+        echo "✅ Dashboard update workflow completed"
+        if [ "${{ steps.verify-changed-files.outputs.changed }}" == "true" ]; then
+          echo "📊 Dashboard was updated with new data"
+        else
+          echo "📊 Dashboard was already up to date"
+        fi
