@@ -96,6 +96,22 @@
             background: rgba(59, 130, 246, 0.5);
         }
     </style>
+    <style>
+        /* hide the “xx.x% of total” under each card */
+        #eurPercentage,
+        #usdPercentage,
+        #gbpPercentage,
+        #czkPercentage {
+          display: none;
+        }
+      </style>
+
+      <style>
+  /* hide the entire “Currency Distribution Analysis” card */
+  .card-hover:has(.fa-coins) {
+    display: none !important;
+  }
+</style>
 </head>
 <body class="main-bg">
     <!-- Sticky Header -->
@@ -108,7 +124,7 @@
                     <div>
                         <h1 class="text-4xl font-bold text-white mb-1">MiCAR EMT License Tracker</h1>
                         <p class="text-blue-100 text-lg">Electronic Money Token Issuers Analytics</p>
-                        <p class="text-blue-200 text-sm mt-1">Source: ESMA EMT Register, 17 June 2025</p>
+                        <p class="text-blue-200 text-sm mt-1">Source: ESMA EMT Register, 30 June 2025</p>
                     </div>
                 </div>
                 <div class="flex space-x-3">
@@ -133,35 +149,35 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm opacity-90 font-medium">Total Issuers</p>
-                        <p class="text-3xl font-bold mt-2" id="totalIssuers">13</p>
+                        <p class="text-3xl font-bold mt-2" id="totalIssuers">14</p>
                         <p class="text-sm opacity-80 mt-1">Active EMT Providers</p>
                     </div>
                     <div class="text-4xl opacity-80">🏢</div>
                 </div>
             </div>
-            
+
             <div class="kpi-card kpi-blue p-6 rounded-2xl shadow-lg text-white card-hover">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm opacity-90 font-medium">Total Tokens</p>
-                        <p class="text-3xl font-bold mt-2" id="totalTokens">17</p>
+                        <p class="text-3xl font-bold mt-2" id="totalTokens">19</p>
                         <p class="text-sm opacity-80 mt-1">Authorized EMTs</p>
                     </div>
                     <div class="text-4xl opacity-80">🪙</div>
                 </div>
             </div>
-            
+
             <div class="kpi-card kpi-orange p-6 rounded-2xl shadow-lg text-white card-hover">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm opacity-90 font-medium">EUR Tokens</p>
-                        <p class="text-3xl font-bold mt-2" id="euroTokens">9</p>
+                        <p class="text-3xl font-bold mt-2" id="euroTokens">10</p>
                         <p class="text-sm opacity-80 mt-1">Euro-backed</p>
                     </div>
                     <div class="text-4xl opacity-80">💶</div>
                 </div>
             </div>
-            
+
             <div class="kpi-card kpi-coral p-6 rounded-2xl shadow-lg text-white card-hover">
                 <div class="flex items-center justify-between">
                     <div>
@@ -172,19 +188,30 @@
                     <div class="text-4xl opacity-80">💵</div>
                 </div>
             </div>
-            
+
             <div class="kpi-card kpi-purple p-6 rounded-2xl shadow-lg text-white card-hover">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm opacity-90 font-medium">CZK Tokens</p>
-                        <p class="text-3xl font-bold mt-2" id="czkTokens">1</p>
-                        <p class="text-sm opacity-80 mt-1">Koruna-backed</p>
+                        <p class="text-sm opacity-90 font-medium">GBP Tokens</p>
+                        <p class="text-3xl font-bold mt-2" id="gbpTokens">1</p>
+                        <p class="text-sm opacity-80 mt-1">Pound-backed</p>
                     </div>
-                    <div class="text-4xl opacity-80">🇨🇿</div>
+                    <div class="text-4xl opacity-80">💷</div>
                 </div>
             </div>
-            
-            <div class="kpi-card kpi-red p-6 rounded-2xl shadow-lg text-white card-hover">
+
+            <div class="kpi-card kpi-purple p-6 rounded-2xl shadow-lg text-white card-hover">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm opacity-90 font-medium">CZK Tokens</p>
+                    <p class="text-3xl font-bold mt-2" id="czkTokens">1</p>
+                    <p class="text-sm opacity-80 mt-1">Czech Koruna backed</p>
+                  </div>
+                  <div class="text-4xl opacity-80">🇨🇿</div>
+                </div>
+              </div>
+              
+            <div class="kpi-card kpi-coral p-6 rounded-2xl shadow-lg text-white card-hover">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm opacity-90 font-medium">Non-Compliant</p>
@@ -224,24 +251,30 @@
                 <h3 class="text-xl font-bold text-gray-800 mb-4">
                     <i class="fas fa-coins text-orange-600 mr-2"></i>Currency Distribution Analysis
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="text-center p-6 bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl">
                         <div class="text-4xl mb-3">💶</div>
-                        <div class="text-2xl font-bold text-teal-600" id="eurPercent">9</div>
+                        <div class="text-2xl font-bold text-teal-600" id="eurPercent">10</div>
                         <div class="text-gray-600">EUR Tokens</div>
-                        <div class="text-sm text-gray-500 mt-2" id="eurPercentage">52.9% of total</div>
+                        <div class="text-sm text-gray-500 mt-2" id="eurPercentage">52.6% of total</div>
                     </div>
                     <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
                         <div class="text-4xl mb-3">💵</div>
                         <div class="text-2xl font-bold text-blue-600" id="usdPercent">7</div>
                         <div class="text-gray-600">USD Tokens</div>
-                        <div class="text-sm text-gray-500 mt-2" id="usdPercentage">41.2% of total</div>
+                        <div class="text-sm text-gray-500 mt-2" id="usdPercentage">36.8% of total</div>
+                    </div>
+                    <div class="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
+                        <div class="text-4xl mb-3">💷</div>
+                        <div class="text-2xl font-bold text-green-600" id="gbpPercent">1</div>
+                        <div class="text-gray-600">GBP Tokens</div>
+                        <div class="text-sm text-gray-500 mt-2" id="gbpPercentage">5.3% of total</div>
                     </div>
                     <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-violet-100 rounded-xl">
                         <div class="text-4xl mb-3">🇨🇿</div>
                         <div class="text-2xl font-bold text-purple-600" id="czkPercent">1</div>
                         <div class="text-gray-600">CZK Tokens</div>
-                        <div class="text-sm text-gray-500 mt-2" id="czkPercentage">5.9% of total</div>
+                        <div class="text-sm text-gray-500 mt-2" id="czkPercentage">5.3% of total</div>
                     </div>
                 </div>
             </div>
@@ -308,21 +341,6 @@
                     </div>
                 </div>
                 
-                <!-- Warning Banner -->
-                <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-exclamation-triangle text-red-400"></i>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm text-red-700">
-                                <strong>Warning:</strong> The entities listed below have been flagged by regulatory authorities as non-compliant or potentially fraudulent. 
-                                Exercise extreme caution when dealing with these organizations.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead>
@@ -358,18 +376,19 @@
     <script>
         // Data
         const data = [
-            { id: 1, issuer: "Circle Internet Financial EU SAS", state: "France", authority: "ACPR", tokens: "EURC, USDC", count: 2, euro: 1, usd: 1, czk: 0 },
-            { id: 2, issuer: "Société Générale – Forge", state: "France", authority: "ACPR", tokens: "EURCV", count: 1, euro: 1, usd: 0, czk: 0 },
-            { id: 4, issuer: "Schuman Financial SAS", state: "France", authority: "ACPR", tokens: "EURØP", count: 1, euro: 1, usd: 0, czk: 0 },
-            { id: 5, issuer: "Membrane Finance Oy", state: "Finland", authority: "FIN-FSA", tokens: "eUSD, eUSD", count: 2, euro: 1, usd: 1, czk: 0 },
-            { id: 6, issuer: "Eurodollar ApS", state: "Denmark", authority: "Finanstilsynet", tokens: "USDE", count: 1, euro: 0, usd: 1, czk: 0 },
-            { id: 7, issuer: "Banking Circle S.A.", state: "Luxembourg", authority: "CSSF", tokens: "EURI", count: 1, euro: 1, usd: 0, czk: 0 },
-            { id: 8, issuer: "Quantoz Payments B.V.", state: "Netherlands", authority: "DNB", tokens: "EURQ / USDQ/ EURD", count: 2, euro: 1, usd: 1, czk: 0 },
-            { id: 9, issuer: "StablR Ltd", state: "Malta", authority: "MFSA", tokens: "USDR, EURR", count: 2, euro: 1, usd: 1, czk: 0 },
-            { id: 10, issuer: "Stablemint Ltd", state: "Malta", authority: "MFSA", tokens: "EURsm, USDsm", count: 2, euro: 1, usd: 1, czk: 0 },
-            { id: 11, issuer: "Ambr Payments UAB", state: "Lithuania", authority: "Bank of Lithuania", tokens: "", count: 0, euro: 0, usd: 0, czk: 0 },
-            { id: 12, issuer: "UAB Blue EMI LT", state: "Lithuania", authority: "Bank of Lithuania", tokens: "BLUEUR", count: 1, euro: 1, usd: 0, czk: 0 },
-            { id: 13, issuer: "Stable Europe", state: "Czech Republic", authority: "Czech National Bank", tokens: "CZKI", count: 1, euro: 0, usd: 0, czk: 1 }
+            { id: 1, issuer: "Circle Internet Financial EU SAS", state: "France", authority: "ACPR", tokens: "EURC, USDC", count: 2, euro: 1, usd: 1, czk: 0, gbp: 0 },
+            { id: 2, issuer: "Société Générale – Forge", state: "France", authority: "ACPR", tokens: "EURCV", count: 1, euro: 1, usd: 0, czk: 0, gbp: 0 },
+            { id: 4, issuer: "Schuman Financial SAS", state: "France", authority: "ACPR", tokens: "EURØP", count: 1, euro: 1, usd: 0, czk: 0, gbp: 0 },
+            { id: 5, issuer: "Membrane Finance Oy", state: "Finland", authority: "FIN-FSA", tokens: "eUSD, eUSD", count: 2, euro: 1, usd: 1, czk: 0, gbp: 0 },
+            { id: 6, issuer: "Eurodollar ApS", state: "Denmark", authority: "Finanstilsynet", tokens: "USDE", count: 1, euro: 0, usd: 1, czk: 0, gbp: 0 },
+            { id: 7, issuer: "Banking Circle S.A.", state: "Luxembourg", authority: "CSSF", tokens: "EURI", count: 1, euro: 1, usd: 0, czk: 0, gbp: 0 },
+            { id: 8, issuer: "Quantoz Payments B.V.", state: "Netherlands", authority: "Dutch National Bank", tokens: "EURQ / USDQ/ EURD", count: 2, euro: 1, usd: 1, czk: 0, gbp: 0 },
+            { id: 9, issuer: "StablR Ltd", state: "Malta", authority: "MFSA", tokens: "USDR, EURR", count: 2, euro: 1, usd: 1, czk: 0, gbp: 0 },
+            { id: 10, issuer: "Stablemint Ltd", state: "Malta", authority: "MFSA", tokens: "EURsm, USDsm", count: 2, euro: 1, usd: 1, czk: 0, gbp: 0 },
+            { id: 11, issuer: "Ambr Payments UAB", state: "Lithuania", authority: "Bank of Lithuania", tokens: "", count: 0, euro: 0, usd: 0, czk: 0, gbp: 0 },
+            { id: 12, issuer: "UAB Blue EMI LT", state: "Lithuania", authority: "Bank of Lithuania", tokens: "BLUEUR", count: 1, euro: 1, usd: 0, czk: 0, gbp: 0 },
+            { id: 13, issuer: "Stable Europe", state: "Czech Republic", authority: "Czech National Bank", tokens: "CZKI", count: 1, euro: 0, usd: 0, czk: 1, gbp: 0 },
+            { id: 14, issuer: "Fiat Republic Netherlands B.V.", state: "Netherlands", authority: "Dutch National Bank", tokens: "ENEUR, ENGBP", count: 2, euro: 1, usd: 0, czk: 0, gbp: 1 }
         ];
 
         // Non-compliant entities data
@@ -418,6 +437,7 @@
         const euroTokens = data.reduce((sum, item) => sum + item.euro, 0);
         const usdTokens = data.reduce((sum, item) => sum + item.usd, 0);
         const czkTokens = data.reduce((sum, item) => sum + item.czk, 0);
+        const gbpTokens = data.reduce((sum, item) => sum + item.gbp, 0);
         const nonCompliantCount = nonCompliantData.length;
 
         // Country and authority distributions (sorted by count descending)
@@ -435,23 +455,26 @@
         function initDashboard() {
             // Set current date
             document.getElementById('currentDate').textContent = `Data as of ${new Date().toLocaleDateString()}`;
-            
+
             // Update KPIs
             document.getElementById('totalIssuers').textContent = totalIssuers;
             document.getElementById('totalTokens').textContent = totalTokens;
             document.getElementById('euroTokens').textContent = euroTokens;
             document.getElementById('usdTokens').textContent = usdTokens;
+            document.getElementById('gbpTokens').textContent = gbpTokens;
             document.getElementById('czkTokens').textContent = czkTokens;
             document.getElementById('nonCompliantCount').textContent = nonCompliantCount;
-            
+
             // Update percentages
             document.getElementById('eurPercent').textContent = euroTokens;
             document.getElementById('usdPercent').textContent = usdTokens;
+            document.getElementById('gbpPercent').textContent = gbpTokens;
             document.getElementById('czkPercent').textContent = czkTokens;
             document.getElementById('eurPercentage').textContent = `${((euroTokens/totalTokens)*100).toFixed(1)}% of total`;
             document.getElementById('usdPercentage').textContent = `${((usdTokens/totalTokens)*100).toFixed(1)}% of total`;
+            document.getElementById('gbpPercentage').textContent = `${((gbpTokens/totalTokens)*100).toFixed(1)}% of total`;
             document.getElementById('czkPercentage').textContent = `${((czkTokens/totalTokens)*100).toFixed(1)}% of total`;
-            
+
             // Populate charts and tables
             populateCountryChart();
             populateAuthorityChart();
@@ -548,6 +571,7 @@
                         <div class="flex justify-center space-x-1">
                             ${item.euro ? '<span class="px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-semibold">EUR</span>' : ''}
                             ${item.usd ? '<span class="px-2 py-1 bg-coral-100 text-pink-700 rounded text-xs font-semibold">USD</span>' : ''}
+                            ${item.gbp ? '<span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-semibold">GBP</span>' : ''}
                             ${item.czk ? '<span class="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs font-semibold">CZK</span>' : ''}
                         </div>
                     </td>
