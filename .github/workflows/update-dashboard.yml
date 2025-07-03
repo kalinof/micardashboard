@@ -1,0 +1,69 @@
+name: Update EMT Dashboard
+
+on:
+  schedule:
+    # Run every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+
+permissions:
+  contents: write  # Explicitly grant write permissions
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Update dashboard data
+      run: |
+        echo "🔄 Starting dashboard update..."
+        node update-data.js
+
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "📝 Changes detected in working directory"
+          git status --porcelain
+        else
+          echo "✅ No changes detected"
+        fi
+
+    - name: Commit and push changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action Bot"
+        git add index.html
+        git status
+        git commit -m "🤖 Auto-update dashboard data - $(date '+%Y-%m-%d %H:%M:%S UTC')" || {
+          echo "No changes to commit"
+          exit 0
+        }
+        git push origin main || git push origin master || {
+          echo "❌ Failed to push changes"
+          exit 1
+        }
+        echo "🚀 Changes pushed successfully"
+
+    - name: Summary
+      run: |
+        echo "✅ Dashboard update workflow completed"
+        if [ "${{ steps.verify-changed-files.outputs.changed }}" == "true" ]; then
+          echo "📊 Dashboard was updated with new data"
+        else
+          echo "📊 Dashboard was already up to date"
+        fi
