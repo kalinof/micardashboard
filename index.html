@@ -278,13 +278,53 @@
     </div>
     </div>
 
-    <!-- Footer -->
-    <div class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-8 mt-12">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-    <p class="text-gray-300">MiCAR EMT License Tracker - Electronic Money Token Regulatory Overview</p>
-    <p class="text-gray-400 text-sm mt-2" id="currentDate"></p>
-    </div>
-    </div>
+    <!-- ==== DEA FOOTER START ==== -->
+    <footer class="bg-gray-900 text-gray-200 mt-12">
+      <div class="max-w-7xl mx-auto px-4 py-10 space-y-10">
+
+        <!-- ── Headline & snapshot date ── -->
+        <div class="text-center">
+          <p class="text-gray-300">
+            MiCAR EMT License Tracker – Electronic Money Token Regulatory Overview
+          </p>
+          <p class="text-gray-400 text-sm mt-2" id="currentDate">
+            Data as of 01/07/2025
+          </p>
+        </div>
+
+        <!-- ── Nav links + social icons ── -->
+        <div class="flex flex-col md:flex-row md:justify-between gap-8">
+          <!-- Nav -->
+          <nav>
+            <ul class="space-y-2 md:space-y-0 md:flex md:gap-6 text-sm">
+              <li><a href="https://home.digital-euro-association.de/legal-notice?hsLang=en"  target="_blank" rel="noopener" class="hover:text-white font-semibold">Legal Notice</a></li>
+              <li><a href="https://home.digital-euro-association.de/privacy-policy-0?hsLang=en" target="_blank" rel="noopener" class="hover:text-white font-semibold">Privacy</a></li>
+              <li><a href="https://home.digital-euro-association.de/code-of-conduct?hsLang=en"  target="_blank" rel="noopener" class="hover:text-white font-semibold">Code of Conduct</a></li>
+              <li><a href="https://home.digital-euro-association.de/faq?hsLang=en"            target="_blank" rel="noopener" class="hover:text-white font-semibold">FAQ</a></li>
+              <li><a href="https://home.digital-euro-association.de/impressum?hsLang=en"      target="_blank" rel="noopener" class="hover:text-white font-semibold">Impressum</a></li>
+            </ul>
+          </nav>
+
+          <!-- Social -->
+          <div class="flex items-center gap-6 text-xl">
+            <a href="https://twitter.com/DigiEuro" target="_blank" aria-label="Twitter"  class="hover:text-white"><i class="fab fa-twitter"></i></a>
+            <a href="mailto:info@digital-euro-association.de" target="_blank" aria-label="Email" class="hover:text-white"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.linkedin.com/company/digital-euro-association/" target="_blank" aria-label="LinkedIn" class="hover:text-white"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+
+        <!-- ── Bottom row: copyright + CTA ── -->
+        <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+          <p class="text-xs">&copy; <span id="year"></span> Digital Euro Association e.V.</p>
+
+          <a href="https://digital-euro-association.de"
+             class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow transition">
+            Learn more about DEA
+          </a>
+        </div>
+      </div>
+    </footer>
+    <!-- ==== DEA FOOTER END ==== -->
 
     <script>
     // Comprehensive European country flags mapping
@@ -935,6 +975,11 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('year').textContent = new Date().getFullYear();
+      });
     </script>
 </body>
 </html>
