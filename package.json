@@ -1,0 +1,11 @@
+{
+  "name": "micardashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tailwindcss -i ./src/input.css -o ./assets/style.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  }
+}
