@@ -702,7 +702,7 @@
         const totalTokens = Object.values(currencies).reduce((sum, count) => sum + count, 0);
 
         container.innerHTML = Object.entries(currencies).map(([currency, count]) => {
-            const info = currencyInfo[currency] || { symbol: '💰', name: currency };
+            const info = currencyInfo[currency] || { symbol: '💶', name: currency };
             const percentage = ((count / totalTokens) * 100).toFixed(1);
 
             return `
