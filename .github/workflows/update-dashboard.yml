@@ -1,11 +1,8 @@
 name: Update EMT Dashboard
 
 on:
-  schedule:
-    # Run every 6 hours
-    - cron: '0 */6 * * *'
   workflow_dispatch:
-    # Allow manual triggering
+    # Manual trigger only
 
 permissions:
   contents: write  # Explicitly grant write permissions
