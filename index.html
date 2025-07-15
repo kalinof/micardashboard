@@ -106,6 +106,33 @@
     .currency-card:hover {
     transform: scale(1.05);
     }
+
+    /* === Sticky header shrink on scroll === */
+    .header-sticky {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .header-sticky.shrink {
+        padding-top: 0.5rem;   /* smaller vertical padding */
+        padding-bottom: 0.5rem;
+    }
+
+    .header-sticky.shrink .logo-container {
+        max-height: 40px;      /* shrink logo */
+    }
+
+    .header-sticky.shrink h1 {
+        font-size: 1.5rem;     /* Tailwind 'text-2xl' */
+    }
+
+    .header-sticky.shrink .additional-info {
+        display: none;         /* hide extra header lines */
+    }
+
+    .header-sticky.shrink .tab-button {
+        padding: 0.5rem 1rem;  /* tighter buttons */
+        font-size: 0.875rem;   /* Tailwind 'text-sm' */
+    }
     </style>
     <style>
     /* hide the "xx.x% of total" under each card */
@@ -134,8 +161,8 @@
     alt="DEA Logo" class="logo-container">
     <div>
     <h1 class="text-4xl font-bold text-white mb-1">MiCAR EMT License Tracker</h1>
-    <p class="text-blue-100 text-lg">Electronic Money Token Issuers Analytics</p>
-    <p class="text-blue-200 text-sm mt-1">Source: ESMA EMT Register, 15 July 2025</p>
+    <p class="text-blue-100 text-lg additional-info">Electronic Money Token Issuers Analytics</p>
+    <p class="text-blue-200 text-sm mt-1 additional-info">Source: ESMA EMT Register, 15 July 2025</p>
     </div>
     </div>
     <div class="flex space-x-3">
@@ -744,6 +771,15 @@
         return acc;
     }, {})).sort((a, b) => b[1] - a[1]);
 
+    // === Shrink header on scroll ===
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header-sticky');
+      if (window.scrollY > 20) {
+        header.classList.add('shrink');
+      } else {
+        header.classList.remove('shrink');
+      }
+    });
     // Initialize dashboard
     function initDashboard() {
         // Set current date
