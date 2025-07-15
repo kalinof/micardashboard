@@ -1,0 +1,9 @@
+name: Test Dispatch
+on:
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🚀 If you see this, manual dispatch works!"
