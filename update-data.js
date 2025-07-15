@@ -3,6 +3,8 @@ const fs = require('fs');
 
 // Your working CSV URL
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRWudeV0zFLqB54658hCDUgSRFfy-ADeR2JMilO-oel74hjBr1CdIB2FWufxyR2yuQJGNaBPHNYG7vh/pub?gid=0&single=true&output=csv';
+// Metadata CSV containing snapshot information
+const metadataUrl = 'https://docs.google.com/spreadsheets/d/e/.../pub?gid=353293525&single=true&output=csv';
 
 function csvToArray(str, delimiter = ',') {
     const lines = str.split('\n');
@@ -42,6 +44,18 @@ function parseCSVLine(line) {
     }
 
     result.push(current);
+    return result;
+}
+
+function parseKeyValueCSV(csvText) {
+    const lines = csvText.trim().split(/\n/);
+    const result = {};
+    lines.forEach(line => {
+        const [key, value] = parseCSVLine(line);
+        if (key) {
+            result[key.trim()] = value ? value.trim() : '';
+        }
+    });
     return result;
 }
 
@@ -87,7 +101,7 @@ function convertToJsData(csvData) {
     return data;
 }
 
-function updateHtmlFile(newData) {
+function updateHtmlFile(newData, snapshotDate) {
     const htmlFile = 'index.html';
 
     if (!fs.existsSync(htmlFile)) {
@@ -132,20 +146,32 @@ function updateHtmlFile(newData) {
 
     // Replace the data array
     const newDataString = `${dataPattern}${JSON.stringify(newData, null, 4)};`;
-    const updatedHtml = htmlContent.substring(0, dataStart) + newDataString + htmlContent.substring(dataEnd);
+    let updatedHtml = htmlContent.substring(0, dataStart) + newDataString + htmlContent.substring(dataEnd);
 
-    // Update the date
-    const today = new Date().toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-    });
-    const updatedHtmlWithDate = updatedHtml.replace(
-        /Source: ESMA EMT Register, \d{1,2} \w+ \d{4}/,
-        `Source: ESMA EMT Register, ${today}`
+    const dateObj = new Date(snapshotDate);
+    const longDate = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    const shortDate = dateObj.toLocaleDateString('en-GB');
+
+    updatedHtml = updatedHtml.replace(
+        /Source: ESMA EMT Register, [^<]+/,
+        `Source: ESMA EMT Register, ${longDate}`
+    );
+    updatedHtml = updatedHtml.replace(
+        /Data as of \d{1,2}\/\d{1,2}\/\d{4}/,
+        `Data as of ${shortDate}`
     );
 
-    fs.writeFileSync(htmlFile, updatedHtmlWithDate);
+    if (updatedHtml.includes('const snapshotDate')) {
+        updatedHtml = updatedHtml.replace(/const snapshotDate = '[^']*';/, `const snapshotDate = '${snapshotDate}';`);
+    } else {
+        const insertPoint = updatedHtml.indexOf('// Data - will be updated by the automation script');
+        if (insertPoint !== -1) {
+            const endOfLine = updatedHtml.indexOf('\n', insertPoint);
+            updatedHtml = updatedHtml.slice(0, endOfLine + 1) + `    const snapshotDate = '${snapshotDate}';\n` + updatedHtml.slice(endOfLine + 1);
+        }
+    }
+
+    fs.writeFileSync(htmlFile, updatedHtml);
     console.log('✅ Dashboard updated successfully!');
     console.log(`📊 Updated with ${newData.length} issuers`);
 
@@ -231,10 +257,11 @@ function fetchWithRedirect(url, maxRedirects = 3) {
 
 // Main execution
 console.log('🔄 Fetching data from Google Sheets...');
-console.log('🌐 URL:', csvUrl);
+console.log('🌐 Data URL:', csvUrl);
+console.log('🌐 Metadata URL:', metadataUrl);
 
-fetchWithRedirect(csvUrl)
-    .then(data => {
+Promise.all([fetchWithRedirect(csvUrl), fetchWithRedirect(metadataUrl)])
+    .then(([data, meta]) => {
         try {
             console.log('📋 Raw CSV length:', data.length, 'characters');
             console.log('📋 First 200 characters:', data.substring(0, 200));
@@ -257,7 +284,10 @@ fetchWithRedirect(csvUrl)
                 process.exit(1);
             }
 
-            updateHtmlFile(jsData);
+            const metadata = parseKeyValueCSV(meta);
+            const snapshotDate = metadata['snapshot_date'];
+
+            updateHtmlFile(jsData, snapshotDate);
 
         } catch (error) {
             console.error('❌ Error processing data:', error);

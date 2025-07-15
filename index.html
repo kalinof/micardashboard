@@ -456,6 +456,7 @@
     const kpiColors = ['kpi-teal', 'kpi-blue', 'kpi-orange', 'kpi-coral', 'kpi-purple', 'kpi-red', 'kpi-green', 'kpi-yellow'];
 
     // Data - will be updated by the automation script
+    const snapshotDate = 'YYYY-MM-DD';
     const data = [
     {
         "id": 1,
@@ -804,9 +805,9 @@
       }
     });
     // Initialize dashboard
-    function initDashboard() {
-        // Set current date
-        document.getElementById('currentDate').textContent = `Data as of ${new Date().toLocaleDateString()}`;
+      function initDashboard() {
+          const formatted = new Date(snapshotDate).toLocaleDateString('en-GB');
+          document.getElementById('currentDate').textContent = `Data as of ${formatted}`;
 
         // Generate dynamic components
         generateKPICards();
