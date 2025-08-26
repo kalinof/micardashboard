@@ -4,6 +4,9 @@ const fs = require('fs');
 // Your working CSV URL
 const csvUrl = 'https://docs.google.com/spreadsheets/d/1RfeiT68rH65izevXw_Upqdn0lXz-IGI83Zn3q0SBEbE/export?format=csv&id=1RfeiT68rH65izevXw_Upqdn0lXz-IGI83Zn3q0SBEbE&gid=0';
 
+// CSV containing the last update date in cell B2
+const dateUrl = 'https://docs.google.com/spreadsheets/d/1RfeiT68rH65izevXw_Upqdn0lXz-IGI83Zn3q0SBEbE/export?format=csv&gid=353293525';
+
 function csvToArray(str, delimiter = ',') {
     const lines = str.split('\n');
     const headers = parseCSVLine(lines[0]);
@@ -51,6 +54,30 @@ function parseNumber(value) {
     return isNaN(num) ? 0 : num;
 }
 
+function extractDateFromCsv(csv) {
+    const lines = csv.trim().split('\n');
+    if (lines.length < 2) return null;
+    const values = parseCSVLine(lines[1]);
+    return values[1] ? values[1].trim() : null;
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) {
+        const today = new Date();
+        return {
+            longDate: today.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+            shortDate: today.toLocaleDateString('en-GB')
+        };
+    }
+
+    const [day, month, year] = dateStr.split(/[\/\-]/);
+    const dateObj = new Date(`${year}-${month}-${day}`);
+    return {
+        longDate: dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+        shortDate: `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`
+    };
+}
+
 function convertToJsData(csvData) {
     const data = [];
 
@@ -87,7 +114,7 @@ function convertToJsData(csvData) {
     return data;
 }
 
-function updateHtmlFile(newData) {
+function updateHtmlFile(newData, lastUpdated) {
     const htmlFile = 'index.html';
 
     if (!fs.existsSync(htmlFile)) {
@@ -134,16 +161,10 @@ function updateHtmlFile(newData) {
     const newDataString = `${dataPattern}${JSON.stringify(newData, null, 4)};`;
     const updatedHtml = htmlContent.substring(0, dataStart) + newDataString + htmlContent.substring(dataEnd);
 
-    // Update the date
-    const today = new Date().toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-    });
-    const updatedHtmlWithDate = updatedHtml.replace(
-        /Source: ESMA EMT Register, \d{1,2} \w+ \d{4}/,
-        `Source: ESMA EMT Register, ${today}`
-    );
+    const { longDate, shortDate } = formatDate(lastUpdated);
+    const updatedHtmlWithDate = updatedHtml
+        .replace(/Source: ESMA EMT Register, \d{1,2} \w+ \d{4}/, `Source: ESMA EMT Register, ${longDate}`)
+        .replace(/Data as of \d{1,2}\/\d{1,2}\/\d{4}/, `Data as of ${shortDate}`);
 
     fs.writeFileSync(htmlFile, updatedHtmlWithDate);
     console.log('✅ Dashboard updated successfully!');
@@ -231,10 +252,11 @@ function fetchWithRedirect(url, maxRedirects = 3) {
 
 // Main execution
 console.log('🔄 Fetching data from Google Sheets...');
-console.log('🌐 URL:', csvUrl);
+console.log('🌐 Data URL:', csvUrl);
+console.log('🌐 Date URL:', dateUrl);
 
-fetchWithRedirect(csvUrl)
-    .then(data => {
+Promise.all([fetchWithRedirect(csvUrl), fetchWithRedirect(dateUrl)])
+    .then(([data, dateCsv]) => {
         try {
             console.log('📋 Raw CSV length:', data.length, 'characters');
             console.log('📋 First 200 characters:', data.substring(0, 200));
@@ -257,7 +279,10 @@ fetchWithRedirect(csvUrl)
                 process.exit(1);
             }
 
-            updateHtmlFile(jsData);
+            const sheetDate = extractDateFromCsv(dateCsv);
+            console.log('📅 Sheet date:', sheetDate);
+
+            updateHtmlFile(jsData, sheetDate);
 
         } catch (error) {
             console.error('❌ Error processing data:', error);
