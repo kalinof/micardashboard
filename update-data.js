@@ -64,17 +64,34 @@ function extractDateFromCsv(csv) {
 function formatDate(dateStr) {
     if (!dateStr) {
         const today = new Date();
+        const longDate = today.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
         return {
-            longDate: today.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
-            shortDate: today.toLocaleDateString('en-GB')
+            longDate,
+            shortDate: longDate
         };
     }
 
-    const [day, month, year] = dateStr.split(/[\/\-]/);
+    const parts = dateStr.split(/[\/\-]/);
+    let day, month, year;
+    if (parts[0].length === 4) {
+        [year, month, day] = parts; // Format: YYYY-MM-DD
+    } else {
+        [day, month, year] = parts; // Format: DD-MM-YYYY or DD/MM/YYYY
+    }
+
     const dateObj = new Date(`${year}-${month}-${day}`);
+    const longDate = dateObj.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
     return {
-        longDate: dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
-        shortDate: `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`
+        longDate,
+        shortDate: longDate
     };
 }
 
@@ -161,10 +178,10 @@ function updateHtmlFile(newData, lastUpdated) {
     const newDataString = `${dataPattern}${JSON.stringify(newData, null, 4)};`;
     const updatedHtml = htmlContent.substring(0, dataStart) + newDataString + htmlContent.substring(dataEnd);
 
-    const { longDate, shortDate } = formatDate(lastUpdated);
+    const { longDate } = formatDate(lastUpdated);
     const updatedHtmlWithDate = updatedHtml
         .replace(/Source: ESMA EMT Register, \d{1,2} \w+ \d{4}/, `Source: ESMA EMT Register, ${longDate}`)
-        .replace(/Data as of \d{1,2}\/\d{1,2}\/\d{4}/, `Data as of ${shortDate}`);
+        .replace(/Data as of [^<]+/, `Data as of ${longDate}`);
 
     fs.writeFileSync(htmlFile, updatedHtmlWithDate);
     console.log('✅ Dashboard updated successfully!');
