@@ -6,4 +6,4 @@ This project tracks issuers of Electronic Money Tokens (EMTs) under the MiCAR fr
 
 `update-data.js` downloads a CSV export of the ESMA EMT register from Google Sheets.
 
-The script parses the CSV, converts each row into a JavaScript object and then rewrites `index.html` with the new data and an updated source date.
+The script parses the CSV, converts each row into a JavaScript object and then rewrites `index.html` with the new data and a human‑friendly source date.
