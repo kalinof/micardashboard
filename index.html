@@ -805,9 +805,6 @@
     });
     // Initialize dashboard
     function initDashboard() {
-        // Set current date
-        document.getElementById('currentDate').textContent = `Data as of ${new Date().toLocaleDateString()}`;
-
         // Generate dynamic components
         generateKPICards();
         generateCurrencyDistribution();
