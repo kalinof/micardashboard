@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { csvUrl, dateUrl, nonCompliantUrl } = require('./config');
+const { csvUrl, dateUrl, nonCompliantUrl, caspsUrl } = require('./config');
 
 function csvToArray(str, delimiter = ',') {
     const lines = str.split('\n');
@@ -83,11 +83,25 @@ async function fetchCsv(url) {
     return res.text();
 }
 
-function extractDateFromCsv(csv) {
+function extractDatesFromCsv(csv) {
     const lines = csv.trim().split('\n');
-    if (lines.length < 2) return null;
-    const values = parseCSVLine(lines[1]);
-    return values[1] ? values[1].trim() : null;
+    const dateMap = {};
+
+    lines.forEach((line, index) => {
+        if (!line.trim()) {
+            return;
+        }
+
+        const values = parseCSVLine(line);
+        const key = values[0] ? values[0].trim() : `row_${index}`;
+        const value = values[1] ? values[1].trim() : '';
+
+        if (key) {
+            dateMap[key] = value;
+        }
+    });
+
+    return dateMap;
 }
 
 function formatDate(dateStr) {
@@ -158,6 +172,30 @@ function convertToJsData(csvData) {
     });
 
     return data;
+}
+
+function parseMultiValueField(value) {
+    if (!value) {
+        return [];
+    }
+
+    return value
+        .split(/\||,|;|\s{2,}/)
+        .map(entry => entry.trim())
+        .filter(entry => entry.length > 0);
+}
+
+function convertToCaspsData(csvData) {
+    return csvData
+        .filter(row => (row['ae_lei_name'] || '').trim())
+        .map((row, index) => ({
+            id: index + 1,
+            name: row['ae_lei_name'] ? row['ae_lei_name'].trim() : '',
+            authority: row['ae_competentAuthority'] ? row['ae_competentAuthority'].trim() : '',
+            memberState: row['ae_homeMemberState'] ? row['ae_homeMemberState'].trim() : '',
+            services: parseMultiValueField(row['ac_serviceCode']),
+            websites: parseMultiValueField(row['ae_website'])
+        }));
 }
 
 const memberStateMap = {
@@ -252,7 +290,7 @@ function convertToNonCompliantData(csvData) {
     return entries;
 }
 
-function updateHtmlFile(newData, lastUpdated, nonCompliantEntries) {
+function updateHtmlFile(newData, emtLastUpdated, nonCompliantEntries, caspsEntries, caspsLastUpdated) {
     const htmlFile = 'index.html';
 
     if (!fs.existsSync(htmlFile)) {
@@ -310,9 +348,20 @@ function updateHtmlFile(newData, lastUpdated, nonCompliantEntries) {
         console.error('❌ Could not find nonCompliantData array in HTML file');
     }
 
-    const { longDate } = formatDate(lastUpdated);
+    const caspsStart = finalHtml.indexOf('const caspsData = [');
+    if (caspsStart !== -1) {
+        const caspsEnd = finalHtml.indexOf('];', caspsStart) + 2;
+        const caspsString = `const caspsData = ${JSON.stringify(caspsEntries || [], null, 4)};`;
+        finalHtml = finalHtml.substring(0, caspsStart) + caspsString + finalHtml.substring(caspsEnd);
+    } else {
+        console.error('❌ Could not find caspsData array in HTML file');
+    }
+
+    const { longDate: emtLongDate } = formatDate(emtLastUpdated);
+    const { longDate: caspsLongDate } = formatDate(caspsLastUpdated);
     const updatedHtmlWithDate = finalHtml
-        .replace(/Source: ESMA EMT Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA EMT Register – Data as of ${longDate}`);
+        .replace(/Source: ESMA EMT Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA EMT Register – Data as of ${emtLongDate}`)
+        .replace(/Source: ESMA CASPs Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA CASPs Register – Data as of ${caspsLongDate}`);
 
     fs.writeFileSync(htmlFile, updatedHtmlWithDate);
     console.log('✅ Dashboard updated successfully!');
@@ -343,12 +392,14 @@ async function main() {
     console.log('🌐 Data URL:', csvUrl);
     console.log('🌐 Date URL:', dateUrl);
     console.log('🌐 Non-compliant URL:', nonCompliantUrl);
+    console.log('🌐 CASPs URL:', caspsUrl);
 
     try {
-        const [data, dateCsv, nonCompliantCsv] = await Promise.all([
+        const [data, dateCsv, nonCompliantCsv, caspsCsv] = await Promise.all([
             fetchCsv(csvUrl),
             fetchCsv(dateUrl),
-            fetchCsv(nonCompliantUrl)
+            fetchCsv(nonCompliantUrl),
+            fetchCsv(caspsUrl)
         ]);
         console.log('📋 Raw CSV length:', data.length, 'characters');
         console.log('📋 First 200 characters:', data.substring(0, 200));
@@ -356,6 +407,7 @@ async function main() {
         // Final check if we still got HTML
         ensureCsvResponseValid(data, 'issuer feed');
         ensureCsvResponseValid(nonCompliantCsv, 'non-compliant feed');
+        ensureCsvResponseValid(caspsCsv, 'CASPs feed');
 
         const csvArray = csvToArray(data);
         console.log('📊 Parsed', csvArray.length, 'valid rows');
@@ -374,10 +426,19 @@ async function main() {
         const nonCompliantEntries = convertToNonCompliantData(nonCompliantArray);
         console.log('🚨 Converted to', nonCompliantEntries.length, 'non-compliant entities');
 
-        const sheetDate = extractDateFromCsv(dateCsv);
-        console.log('📅 Sheet date:', sheetDate);
+        const caspsArray = csvToArrayGeneric(caspsCsv);
+        console.log('🏛️ Parsed', caspsArray.length, 'CASPs rows');
 
-        updateHtmlFile(jsData, sheetDate, nonCompliantEntries);
+        const caspsEntries = convertToCaspsData(caspsArray);
+        console.log('🏛️ Converted to', caspsEntries.length, 'CASPs entries');
+
+        const dateMap = extractDatesFromCsv(dateCsv);
+        const emtSheetDate = dateMap['snapshot_date'] || dateMap['emt_snapshot_date'] || '';
+        const caspsSheetDate = dateMap['casps_snapshot_date'] || '';
+        console.log('📅 EMT sheet date:', emtSheetDate);
+        console.log('📅 CASPs sheet date:', caspsSheetDate);
+
+        updateHtmlFile(jsData, emtSheetDate, nonCompliantEntries, caspsEntries, caspsSheetDate);
     } catch (error) {
         console.error('❌ Error fetching CSV:', error);
         process.exit(1);

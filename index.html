@@ -188,6 +188,9 @@
     <button id="nonCompliantBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
     <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
     </button>
+    <button id="caspsBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
+    <i class="fas fa-building-columns mr-2"></i>CASPs
+    </button>
     </div>
     </div>
     </div>
@@ -280,6 +283,48 @@
     </div>
     </div>
 
+    <!-- CASPs Section -->
+    <div id="caspsSection" class="hidden fade-in">
+    <div class="bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-6 card-hover">
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-4 md:mb-0">
+    <i class="fas fa-building text-teal-600 mr-2"></i>Crypto-Asset Service Providers (CASPs)
+    </h3>
+    <div class="flex items-center space-x-4">
+    <div class="relative">
+    <input type="text" id="caspsSearchInput" placeholder="Search CASPs, countries, services..."
+    class="search-input pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent w-64">
+    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+    </div>
+    <button id="clearCaspsSearch" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+    <i class="fas fa-times mr-1"></i>Clear
+    </button>
+    </div>
+    </div>
+
+    <div class="overflow-x-auto">
+    <table class="w-full">
+    <thead>
+    <tr class="bg-gradient-to-r from-teal-50 to-blue-50">
+    <th class="text-left p-4 font-semibold text-gray-700">CASP</th>
+    <th class="text-left p-4 font-semibold text-gray-700">Country</th>
+    <th class="text-left p-4 font-semibold text-gray-700">Competent Authority</th>
+    <th class="text-left p-4 font-semibold text-gray-700">Services</th>
+    <th class="text-left p-4 font-semibold text-gray-700">Websites</th>
+    </tr>
+    </thead>
+    <tbody id="caspsTable">
+    <!-- Will be populated by JavaScript -->
+    </tbody>
+    </table>
+    </div>
+    <div id="noCaspsResults" class="hidden text-center py-8 text-gray-500">
+    <i class="fas fa-search text-4xl mb-4"></i>
+    <p class="text-lg">No CASPs match your search.</p>
+    </div>
+    </div>
+    </div>
+
     <!-- Non-Compliant Section -->
     <div id="nonCompliantSection" class="hidden fade-in">
     <div class="bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-6 card-hover">
@@ -334,6 +379,7 @@
           </p>
           <p class="text-gray-400 text-sm mt-2" id="currentDate">
             Source: ESMA EMT Register – Data as of 12 July 2025</p>
+          <p class="text-gray-400 text-sm" id="caspsDate">Source: ESMA CASPs Register – Data as of 2 September 2025</p>
         </div>
 
         <!-- ── Nav links + social icons ── -->
@@ -628,6 +674,21 @@
         "usd": 0,
         "czk": 0,
         "gbp": 0
+    }
+];
+
+    const caspsData = [
+    {
+        "id": 1,
+        "name": "Example CASP",
+        "authority": "Example Authority",
+        "memberState": "France",
+        "services": [
+            "CASP1"
+        ],
+        "websites": [
+            "https://example.com"
+        ]
     }
 ];
 
@@ -1190,6 +1251,7 @@
 ];
 
     let filteredData = [...data];
+    let filteredCaspsData = [...caspsData];
     let filteredNonCompliantData = [...nonCompliantData];
 
     // Dynamic calculation functions
@@ -1328,6 +1390,7 @@
         populateCountryChart();
         populateAuthorityChart();
         populateDetailsTable();
+        populateCaspsTable();
         populateNonCompliantTable();
     }
 
@@ -1430,6 +1493,59 @@
         }).join('');
     }
 
+    function populateCaspsTable(dataToShow = filteredCaspsData) {
+        const tbody = document.getElementById('caspsTable');
+        const noResults = document.getElementById('noCaspsResults');
+
+        if (!tbody) {
+            return;
+        }
+
+        if (dataToShow.length === 0) {
+            tbody.innerHTML = '';
+            if (noResults) {
+                noResults.classList.remove('hidden');
+            }
+            return;
+        }
+
+        if (noResults) {
+            noResults.classList.add('hidden');
+        }
+
+        tbody.innerHTML = dataToShow.map(item => {
+            const servicesBadges = (item.services || []).map(service => `
+                <span class="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">${service}</span>
+            `).join(' ');
+
+            const websiteBadges = (item.websites && item.websites.length > 0)
+                ? item.websites.map(site => `
+                    <a href="${site}" target="_blank" rel="noopener" class="block text-sm text-blue-600 underline break-words">${site}</a>
+                `).join('')
+                : '<span class="text-xs text-gray-500">Not provided</span>';
+
+            return `
+                <tr class="border-b hover:bg-gradient-to-r hover:from-teal-50 hover:to-blue-50 transition-all duration-200">
+                    <td class="p-4">
+                        <p class="text-gray-900 font-semibold">${item.name || 'N/A'}</p>
+                    </td>
+                    <td class="p-4">
+                        <span class="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">
+                            ${countryFlags[item.memberState] || '🏳️'} ${item.memberState || 'Unknown'}
+                        </span>
+                    </td>
+                    <td class="p-4 text-gray-600 text-sm">${item.authority || '—'}</td>
+                    <td class="p-4">
+                        <div class="flex flex-wrap gap-2">${servicesBadges || '<span class="text-xs text-gray-500">Not specified</span>'}</div>
+                    </td>
+                    <td class="p-4">
+                        <div class="space-y-1">${websiteBadges}</div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
     function populateNonCompliantTable(dataToShow = filteredNonCompliantData) {
         const tbody = document.getElementById('nonCompliantTable');
         const noResults = document.getElementById('noNonCompliantResults');
@@ -1484,7 +1600,7 @@
             filteredData = [...data];
         } else {
             const term = searchTerm.toLowerCase();
-            filteredData = data.filter(item => 
+            filteredData = data.filter(item =>
                 item.issuer.toLowerCase().includes(term) ||
                 item.state.toLowerCase().includes(term) ||
                 item.authority.toLowerCase().includes(term) ||
@@ -1492,6 +1608,26 @@
             );
         }
         populateDetailsTable(filteredData);
+    }
+
+    function filterCaspsData(searchTerm) {
+        if (!searchTerm.trim()) {
+            filteredCaspsData = [...caspsData];
+        } else {
+            const term = searchTerm.toLowerCase();
+            filteredCaspsData = caspsData.filter(item => {
+                const services = (item.services || []).join(' ').toLowerCase();
+                const websites = (item.websites || []).join(' ').toLowerCase();
+                return (
+                    (item.name || '').toLowerCase().includes(term) ||
+                    (item.memberState || '').toLowerCase().includes(term) ||
+                    (item.authority || '').toLowerCase().includes(term) ||
+                    services.includes(term) ||
+                    websites.includes(term)
+                );
+            });
+        }
+        populateCaspsTable(filteredCaspsData);
     }
 
     function filterNonCompliantData(searchTerm) {
@@ -1514,17 +1650,19 @@
         const overviewBtn = document.getElementById('overviewBtn');
         const detailsBtn = document.getElementById('detailsBtn');
         const nonCompliantBtn = document.getElementById('nonCompliantBtn');
+        const caspsBtn = document.getElementById('caspsBtn');
         const overviewSection = document.getElementById('overviewSection');
         const detailsSection = document.getElementById('detailsSection');
+        const caspsSection = document.getElementById('caspsSection');
         const nonCompliantSection = document.getElementById('nonCompliantSection');
 
         // Reset all buttons
-        [overviewBtn, detailsBtn, nonCompliantBtn].forEach(btn => {
+        [overviewBtn, detailsBtn, nonCompliantBtn, caspsBtn].forEach(btn => {
             btn.className = 'tab-button tab-inactive px-5 py-3 rounded-xl font-semibold';
         });
 
         // Hide all sections
-        [overviewSection, detailsSection, nonCompliantSection].forEach(section => {
+        [overviewSection, detailsSection, caspsSection, nonCompliantSection].forEach(section => {
             section.classList.add('hidden');
         });
 
@@ -1535,6 +1673,9 @@
         } else if (tab === 'details') {
             detailsBtn.className = 'tab-button tab-active px-5 py-3 rounded-xl font-semibold';
             detailsSection.classList.remove('hidden');
+        } else if (tab === 'casps') {
+            caspsBtn.className = 'tab-button tab-active px-5 py-3 rounded-xl font-semibold';
+            caspsSection.classList.remove('hidden');
         } else if (tab === 'nonCompliant') {
             nonCompliantBtn.className = 'tab-button tab-active px-5 py-3 rounded-xl font-semibold';
             nonCompliantSection.classList.remove('hidden');
@@ -1544,6 +1685,7 @@
     // Event listeners
     document.getElementById('overviewBtn').addEventListener('click', () => switchTab('overview'));
     document.getElementById('detailsBtn').addEventListener('click', () => switchTab('details'));
+    document.getElementById('caspsBtn').addEventListener('click', () => switchTab('casps'));
     document.getElementById('nonCompliantBtn').addEventListener('click', () => switchTab('nonCompliant'));
 
     document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -1553,6 +1695,15 @@
     document.getElementById('clearSearch').addEventListener('click', () => {
         document.getElementById('searchInput').value = '';
         filterData('');
+    });
+
+    document.getElementById('caspsSearchInput').addEventListener('input', (e) => {
+        filterCaspsData(e.target.value);
+    });
+
+    document.getElementById('clearCaspsSearch').addEventListener('click', () => {
+        document.getElementById('caspsSearchInput').value = '';
+        filterCaspsData('');
     });
 
     document.getElementById('nonCompliantSearchInput').addEventListener('input', (e) => {
