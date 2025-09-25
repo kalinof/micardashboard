@@ -312,8 +312,7 @@ function updateHtmlFile(newData, lastUpdated, nonCompliantEntries) {
 
     const { longDate } = formatDate(lastUpdated);
     const updatedHtmlWithDate = finalHtml
-        .replace(/Source: ESMA EMT Register, \d{1,2} \w+ \d{4}/, `Source: ESMA EMT Register, ${longDate}`)
-        .replace(/Data as of [^<]+/, `Data as of ${longDate}`);
+        .replace(/Source: ESMA EMT Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA EMT Register – Data as of ${longDate}`);
 
     fs.writeFileSync(htmlFile, updatedHtmlWithDate);
     console.log('✅ Dashboard updated successfully!');
