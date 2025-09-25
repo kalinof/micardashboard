@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { csvUrl, dateUrl } = require('./config');
+const { csvUrl, dateUrl, nonCompliantUrl } = require('./config');
 
 function csvToArray(str, delimiter = ',') {
     const lines = str.split('\n');
@@ -18,6 +18,25 @@ function csvToArray(str, delimiter = ',') {
     }
 
     return result.filter(row => row['#'] && row['#'] !== '' && row['#'] !== 'nan' && !isNaN(parseInt(row['#'])));
+}
+
+function csvToArrayGeneric(str) {
+    const lines = str.split('\n');
+    const headers = parseCSVLine(lines[0]);
+    const result = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim()) {
+            const values = parseCSVLine(lines[i]);
+            const obj = {};
+            headers.forEach((header, index) => {
+                obj[header.trim()] = values[index] ? values[index].trim() : '';
+            });
+            result.push(obj);
+        }
+    }
+
+    return result;
 }
 
 function parseCSVLine(line) {
@@ -141,7 +160,99 @@ function convertToJsData(csvData) {
     return data;
 }
 
-function updateHtmlFile(newData, lastUpdated) {
+const memberStateMap = {
+    'AT': 'Austria',
+    'BE': 'Belgium',
+    'BG': 'Bulgaria',
+    'HR': 'Croatia',
+    'CY': 'Cyprus',
+    'CZ': 'Czech Republic',
+    'DK': 'Denmark',
+    'EE': 'Estonia',
+    'FI': 'Finland',
+    'FR': 'France',
+    'DE': 'Germany',
+    'GR': 'Greece',
+    'HU': 'Hungary',
+    'IE': 'Ireland',
+    'IT': 'Italy',
+    'LV': 'Latvia',
+    'LT': 'Lithuania',
+    'LU': 'Luxembourg',
+    'MT': 'Malta',
+    'NL': 'Netherlands',
+    'PL': 'Poland',
+    'PT': 'Portugal',
+    'RO': 'Romania',
+    'SK': 'Slovakia',
+    'SI': 'Slovenia',
+    'ES': 'Spain',
+    'SE': 'Sweden',
+    'IS': 'Iceland',
+    'LI': 'Liechtenstein',
+    'NO': 'Norway',
+    'UK': 'United Kingdom'
+};
+
+function mapMemberState(code) {
+    if (!code) return '';
+    const trimmed = code.trim();
+    return memberStateMap[trimmed.toUpperCase()] || trimmed;
+}
+
+function convertToNonCompliantData(csvData) {
+    const entries = [];
+    const entryIndexByKey = new Map();
+
+    csvData.forEach((row, index) => {
+        const entity = row['Commercial Name'] || '';
+        const authority = row['Competent Authority'] || '';
+        const memberState = mapMemberState(row['Member State'] || '');
+        const websites = (row['ae_website'] || '')
+            .split('|')
+            .map(site => site.trim())
+            .filter(site => site.length > 0);
+        const isNew = (row['Column 1'] || '').toLowerCase() === 'new';
+
+        if (!entity) {
+            return;
+        }
+
+        const dedupeKey = `${entity}::${memberState}::${websites.join('|')}`;
+        if (entryIndexByKey.has(dedupeKey)) {
+            const existingIndex = entryIndexByKey.get(dedupeKey);
+            const existingEntry = entries[existingIndex];
+            if (isNew && !existingEntry.isNew) {
+                existingEntry.isNew = true;
+                console.log('🔄 Updated existing non-compliant entry to NEW status:', entity);
+            }
+            return;
+        }
+
+        entryIndexByKey.set(dedupeKey, entries.length);
+
+        entries.push({
+            id: entries.length + 1,
+            entity,
+            country: memberState,
+            authority,
+            websites,
+            isNew
+        });
+
+        console.log('🚨 Non-compliant entity added:', {
+            entity,
+            country: memberState,
+            authority,
+            websites,
+            isNew
+        });
+    });
+
+    return entries;
+}
+
+function updateHtmlFile(newData, lastUpdated, nonCompliantEntries) {
     const htmlFile = 'index.html';
 
     if (!fs.existsSync(htmlFile)) {
@@ -188,8 +299,19 @@ function updateHtmlFile(newData, lastUpdated) {
     const newDataString = `${dataPattern}${JSON.stringify(newData, null, 4)};`;
     const updatedHtml = htmlContent.substring(0, dataStart) + newDataString + htmlContent.substring(dataEnd);
 
+    const nonCompliantStart = updatedHtml.indexOf('const nonCompliantData = [');
+    let finalHtml = updatedHtml;
+
+    if (nonCompliantStart !== -1) {
+        const nonCompliantEnd = updatedHtml.indexOf('];', nonCompliantStart) + 2;
+        const nonCompliantString = `const nonCompliantData = ${JSON.stringify(nonCompliantEntries || [], null, 4)};`;
+        finalHtml = updatedHtml.substring(0, nonCompliantStart) + nonCompliantString + updatedHtml.substring(nonCompliantEnd);
+    } else {
+        console.error('❌ Could not find nonCompliantData array in HTML file');
+    }
+
     const { longDate } = formatDate(lastUpdated);
-    const updatedHtmlWithDate = updatedHtml
+    const updatedHtmlWithDate = finalHtml
         .replace(/Source: ESMA EMT Register, \d{1,2} \w+ \d{4}/, `Source: ESMA EMT Register, ${longDate}`)
         .replace(/Data as of [^<]+/, `Data as of ${longDate}`);
 
@@ -211,6 +333,9 @@ function updateHtmlFile(newData, lastUpdated) {
     console.log(`   USD Tokens: ${usdTokens}`);
     console.log(`   GBP Tokens: ${gbpTokens}`);
     console.log(`   CZK Tokens: ${czkTokens}`);
+    if (Array.isArray(nonCompliantEntries)) {
+        console.log(`   Non-compliant entities: ${nonCompliantEntries.length}`);
+    }
 }
 
 // Main execution
@@ -218,18 +343,20 @@ async function main() {
     console.log('🔄 Fetching data from Google Sheets...');
     console.log('🌐 Data URL:', csvUrl);
     console.log('🌐 Date URL:', dateUrl);
+    console.log('🌐 Non-compliant URL:', nonCompliantUrl);
 
     try {
-        const [data, dateCsv] = await Promise.all([fetchCsv(csvUrl), fetchCsv(dateUrl)]);
+        const [data, dateCsv, nonCompliantCsv] = await Promise.all([
+            fetchCsv(csvUrl),
+            fetchCsv(dateUrl),
+            fetchCsv(nonCompliantUrl)
+        ]);
         console.log('📋 Raw CSV length:', data.length, 'characters');
         console.log('📋 First 200 characters:', data.substring(0, 200));
 
         // Final check if we still got HTML
-        if (data.includes('<HTML>') || data.includes('<html>') || data.includes('Temporary Redirect')) {
-            console.error('❌ Still receiving HTML after redirect handling!');
-            console.error('📋 Raw response:', data.substring(0, 500));
-            process.exit(1);
-        }
+        ensureCsvResponseValid(data, 'issuer feed');
+        ensureCsvResponseValid(nonCompliantCsv, 'non-compliant feed');
 
         const csvArray = csvToArray(data);
         console.log('📊 Parsed', csvArray.length, 'valid rows');
@@ -242,12 +369,26 @@ async function main() {
             process.exit(1);
         }
 
+        const nonCompliantArray = csvToArrayGeneric(nonCompliantCsv);
+        console.log('🚨 Parsed', nonCompliantArray.length, 'non-compliant rows');
+
+        const nonCompliantEntries = convertToNonCompliantData(nonCompliantArray);
+        console.log('🚨 Converted to', nonCompliantEntries.length, 'non-compliant entities');
+
         const sheetDate = extractDateFromCsv(dateCsv);
         console.log('📅 Sheet date:', sheetDate);
 
-        updateHtmlFile(jsData, sheetDate);
+        updateHtmlFile(jsData, sheetDate, nonCompliantEntries);
     } catch (error) {
         console.error('❌ Error fetching CSV:', error);
+        process.exit(1);
+    }
+}
+
+function ensureCsvResponseValid(csvText, label) {
+    if (!csvText || /<html|<HTML|Temporary Redirect/i.test(csvText)) {
+        console.error(`❌ ${label} returned unexpected HTML or empty content.`);
+        console.error('📋 Raw response preview:', (csvText || '').substring(0, 500));
         process.exit(1);
     }
 }
