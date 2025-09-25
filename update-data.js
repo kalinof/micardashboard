@@ -1,11 +1,5 @@
-const https = require('https');
 const fs = require('fs');
-
-// Your working CSV URL
-const csvUrl = 'https://docs.google.com/spreadsheets/d/1RfeiT68rH65izevXw_Upqdn0lXz-IGI83Zn3q0SBEbE/export?format=csv&id=1RfeiT68rH65izevXw_Upqdn0lXz-IGI83Zn3q0SBEbE&gid=0';
-
-// CSV containing the last update date in cell B2
-const dateUrl = 'https://docs.google.com/spreadsheets/d/1RfeiT68rH65izevXw_Upqdn0lXz-IGI83Zn3q0SBEbE/export?format=csv&gid=353293525';
+const { csvUrl, dateUrl } = require('./config');
 
 function csvToArray(str, delimiter = ',') {
     const lines = str.split('\n');
@@ -52,6 +46,22 @@ function parseNumber(value) {
     if (!value || value === 'nan' || value === '') return 0;
     const num = parseInt(value);
     return isNaN(num) ? 0 : num;
+}
+
+async function fetchCsv(url) {
+    console.log('🌐 Fetching:', url);
+    const res = await fetch(url, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'Accept': 'text/csv,text/plain,*/*',
+            'Accept-Language': 'en-US,en;q=0.9'
+        },
+        redirect: 'follow'
+    });
+    if (!res.ok) {
+        throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    }
+    return res.text();
 }
 
 function extractDateFromCsv(csv) {
@@ -203,111 +213,43 @@ function updateHtmlFile(newData, lastUpdated) {
     console.log(`   CZK Tokens: ${czkTokens}`);
 }
 
-function extractRedirectUrl(htmlContent) {
-    // Extract the redirect URL from the HTML response
-    const match = htmlContent.match(/HREF="([^"]+)"/);
-    if (match) {
-        return match[1].replace(/&amp;/g, '&');
-    }
-    return null;
-}
-
-function fetchWithRedirect(url, maxRedirects = 3) {
-    return new Promise((resolve, reject) => {
-        console.log('🌐 Fetching:', url);
-
-        const urlObj = new URL(url);
-        const options = {
-            hostname: urlObj.hostname,
-            path: urlObj.pathname + urlObj.search,
-            method: 'GET',
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                'Accept': 'text/csv,text/plain,*/*',
-                'Accept-Language': 'en-US,en;q=0.9',
-                'Connection': 'keep-alive'
-            }
-        };
-
-        const req = https.request(options, (res) => {
-            console.log('📡 Response status:', res.statusCode);
-
-            let data = '';
-
-            res.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            res.on('end', () => {
-                // Check if it's a redirect HTML page
-                if (data.includes('Temporary Redirect') && data.includes('HREF=')) {
-                    if (maxRedirects > 0) {
-                        const redirectUrl = extractRedirectUrl(data);
-                        if (redirectUrl) {
-                            console.log('🔄 Following HTML redirect to:', redirectUrl);
-                            fetchWithRedirect(redirectUrl, maxRedirects - 1)
-                                .then(resolve)
-                                .catch(reject);
-                            return;
-                        }
-                    }
-                    reject(new Error('Too many redirects or unable to extract redirect URL'));
-                    return;
-                }
-
-                resolve(data);
-            });
-        });
-
-        req.on('error', (error) => {
-            reject(error);
-        });
-
-        req.end();
-    });
-}
-
 // Main execution
-console.log('🔄 Fetching data from Google Sheets...');
-console.log('🌐 Data URL:', csvUrl);
-console.log('🌐 Date URL:', dateUrl);
+async function main() {
+    console.log('🔄 Fetching data from Google Sheets...');
+    console.log('🌐 Data URL:', csvUrl);
+    console.log('🌐 Date URL:', dateUrl);
 
-Promise.all([fetchWithRedirect(csvUrl), fetchWithRedirect(dateUrl)])
-    .then(([data, dateCsv]) => {
-        try {
-            console.log('📋 Raw CSV length:', data.length, 'characters');
-            console.log('📋 First 200 characters:', data.substring(0, 200));
+    try {
+        const [data, dateCsv] = await Promise.all([fetchCsv(csvUrl), fetchCsv(dateUrl)]);
+        console.log('📋 Raw CSV length:', data.length, 'characters');
+        console.log('📋 First 200 characters:', data.substring(0, 200));
 
-            // Final check if we still got HTML
-            if (data.includes('<HTML>') || data.includes('<html>') || data.includes('Temporary Redirect')) {
-                console.error('❌ Still receiving HTML after redirect handling!');
-                console.error('📋 Raw response:', data.substring(0, 500));
-                process.exit(1);
-            }
-
-            const csvArray = csvToArray(data);
-            console.log('📊 Parsed', csvArray.length, 'valid rows');
-
-            const jsData = convertToJsData(csvArray);
-            console.log('📈 Converted to', jsData.length, 'JavaScript objects');
-
-            if (jsData.length === 0) {
-                console.error('❌ No valid data found! Check CSV format.');
-                process.exit(1);
-            }
-
-            const sheetDate = extractDateFromCsv(dateCsv);
-            console.log('📅 Sheet date:', sheetDate);
-
-            updateHtmlFile(jsData, sheetDate);
-
-        } catch (error) {
-            console.error('❌ Error processing data:', error);
-            console.error('Stack trace:', error.stack);
+        // Final check if we still got HTML
+        if (data.includes('<HTML>') || data.includes('<html>') || data.includes('Temporary Redirect')) {
+            console.error('❌ Still receiving HTML after redirect handling!');
+            console.error('📋 Raw response:', data.substring(0, 500));
             process.exit(1);
         }
-    })
-    .catch(error => {
+
+        const csvArray = csvToArray(data);
+        console.log('📊 Parsed', csvArray.length, 'valid rows');
+
+        const jsData = convertToJsData(csvArray);
+        console.log('📈 Converted to', jsData.length, 'JavaScript objects');
+
+        if (jsData.length === 0) {
+            console.error('❌ No valid data found! Check CSV format.');
+            process.exit(1);
+        }
+
+        const sheetDate = extractDateFromCsv(dateCsv);
+        console.log('📅 Sheet date:', sheetDate);
+
+        updateHtmlFile(jsData, sheetDate);
+    } catch (error) {
         console.error('❌ Error fetching CSV:', error);
         process.exit(1);
-    });
+    }
+}
+
+main();
