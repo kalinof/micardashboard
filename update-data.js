@@ -355,11 +355,8 @@ async function main() {
         console.log('📋 First 200 characters:', data.substring(0, 200));
 
         // Final check if we still got HTML
-        if (data.includes('<HTML>') || data.includes('<html>') || data.includes('Temporary Redirect')) {
-            console.error('❌ Still receiving HTML after redirect handling!');
-            console.error('📋 Raw response:', data.substring(0, 500));
-            process.exit(1);
-        }
+        ensureCsvResponseValid(data, 'issuer feed');
+        ensureCsvResponseValid(nonCompliantCsv, 'non-compliant feed');
 
         const csvArray = csvToArray(data);
         console.log('📊 Parsed', csvArray.length, 'valid rows');
@@ -384,6 +381,14 @@ async function main() {
         updateHtmlFile(jsData, sheetDate, nonCompliantEntries);
     } catch (error) {
         console.error('❌ Error fetching CSV:', error);
+        process.exit(1);
+    }
+}
+
+function ensureCsvResponseValid(csvText, label) {
+    if (!csvText || /<html|<HTML|Temporary Redirect/i.test(csvText)) {
+        console.error(`❌ ${label} returned unexpected HTML or empty content.`);
+        console.error('📋 Raw response preview:', (csvText || '').substring(0, 500));
         process.exit(1);
     }
 }
