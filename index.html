@@ -112,6 +112,46 @@
     background: rgba(59, 130, 246, 0.5);
     }
 
+    .nav-buttons {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: flex-end;
+    }
+
+    .nav-buttons .tab-button {
+        flex: 1 1 auto;
+    }
+
+    @media (max-width: 768px) {
+        .header-content {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1.25rem;
+        }
+
+        .nav-buttons {
+            justify-content: center;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .nav-buttons .tab-button {
+            flex: 1 1 calc(50% - 0.75rem);
+        }
+
+        .header-sticky.shrink .nav-buttons .tab-button {
+            font-size: 0.875rem;
+            padding: 0.75rem 1rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .nav-buttons .tab-button {
+            flex-basis: 100%;
+        }
+    }
+
     /* Dynamic currency cards */
     .currency-card {
     transition: all 0.3s ease;
@@ -169,7 +209,7 @@
     <!-- Sticky Header -->
     <div class="header-sticky shadow-2xl">
     <div class="max-w-7xl mx-auto px-6 py-6">
-    <div class="flex items-center justify-between flex-wrap">
+    <div class="flex items-center justify-between flex-wrap header-content">
     <div class="flex items-start space-x-6 mb-4 md:mb-0">
     <img src="https://cdn.abacus.ai/images/5bf38e3c-f4e1-4450-8d41-277ada1b7069.png" 
     alt="DEA Logo" class="logo-container">
@@ -178,7 +218,7 @@
     <p class="text-blue-100 text-lg additional-info">Electronic Money Token Issuers Analytics</p>
     </div>
     </div>
-    <div class="flex space-x-3">
+    <div class="flex nav-buttons">
     <button id="overviewBtn" class="tab-button tab-active px-5 py-3 rounded-xl font-semibold">
     <i class="fas fa-chart-pie mr-2"></i>Overview
     </button>
