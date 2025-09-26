@@ -272,6 +272,34 @@
     </div>
     </div>
 
+    <div class="h-px bg-white/30 my-10"></div>
+
+    <div class="mb-6 text-white">
+    <h2 id="caspsSectionTitle" class="text-2xl font-semibold">CASPs Insights</h2>
+    <p class="text-blue-100">Overview of registered Crypto-Asset Service Providers by country and authority.</p>
+    </div>
+
+    <!-- CASPs Charts Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <div class="bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-6 card-hover">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+    <i class="fas fa-globe text-teal-600 mr-2"></i>CASP Geographic Distribution
+    </h3>
+    <div class="space-y-4" id="caspsCountryChart">
+    <!-- Will be populated by JavaScript -->
+    </div>
+    </div>
+
+    <div class="bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-6 card-hover">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+    <i class="fas fa-landmark text-blue-600 mr-2"></i>CASP Competent Authorities
+    </h3>
+    <div class="space-y-4" id="caspsAuthorityChart">
+    <!-- Will be populated by JavaScript -->
+    </div>
+    </div>
+    </div>
+
     <!-- Currency Distribution -->
     <div class="bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-6 card-hover">
     <h3 class="text-xl font-bold text-gray-800 mb-4">
@@ -2302,6 +2330,18 @@
         return acc;
     }, {})).sort((a, b) => b[1] - a[1]);
 
+    const caspsCountryData = Object.entries(caspsData.reduce((acc, item) => {
+        const country = item.memberState || 'Unknown';
+        acc[country] = (acc[country] || 0) + 1;
+        return acc;
+    }, {})).sort((a, b) => b[1] - a[1]);
+
+    const caspsAuthorityData = Object.entries(caspsData.reduce((acc, item) => {
+        const authority = item.authority || 'Unknown';
+        acc[authority] = (acc[authority] || 0) + 1;
+        return acc;
+    }, {})).sort((a, b) => b[1] - a[1]);
+
     // === Shrink header on scroll ===
     window.addEventListener('scroll', () => {
       const header = document.querySelector('.header-sticky');
@@ -2321,6 +2361,8 @@
         // Populate charts and tables
         populateCountryChart();
         populateAuthorityChart();
+        populateCaspsCountryChart();
+        populateCaspsAuthorityChart();
         populateDetailsTable();
         populateCaspsTable();
         populateNonCompliantTable();
@@ -2356,7 +2398,66 @@
                 <span class="text-gray-700 font-medium text-sm">${authority}</span>
                 <div class="flex items-center space-x-3">
                     <div class="w-32 bg-gray-200 rounded-full h-3">
-                        <div class="bg-gradient-to-r from-teal-500 to-blue-600 h-3 rounded-full progress-bar" 
+                        <div class="bg-gradient-to-r from-teal-500 to-blue-600 h-3 rounded-full progress-bar"
+                             style="width: ${(count / maxCount) * 100}%"></div>
+                    </div>
+                    <span class="text-teal-600 font-bold text-lg">${count}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function populateCaspsCountryChart() {
+        const container = document.getElementById('caspsCountryChart');
+
+        if (!container) {
+            return;
+        }
+
+        if (caspsCountryData.length === 0) {
+            container.innerHTML = '<p class="text-gray-500 text-sm">No CASP country data available.</p>';
+            return;
+        }
+
+        const maxCount = caspsCountryData[0][1];
+
+        container.innerHTML = caspsCountryData.map(([country, count]) => `
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl">${countryFlags[country] || '🏳️'}</span>
+                    <span class="text-gray-700 font-medium">${country}</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="w-32 bg-gray-200 rounded-full h-3">
+                        <div class="bg-gradient-to-r from-teal-500 to-blue-600 h-3 rounded-full progress-bar"
+                             style="width: ${(count / maxCount) * 100}%"></div>
+                    </div>
+                    <span class="text-teal-600 font-bold text-lg">${count}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function populateCaspsAuthorityChart() {
+        const container = document.getElementById('caspsAuthorityChart');
+
+        if (!container) {
+            return;
+        }
+
+        if (caspsAuthorityData.length === 0) {
+            container.innerHTML = '<p class="text-gray-500 text-sm">No CASP authority data available.</p>';
+            return;
+        }
+
+        const maxCount = caspsAuthorityData[0][1];
+
+        container.innerHTML = caspsAuthorityData.map(([authority, count]) => `
+            <div class="flex items-center justify-between">
+                <span class="text-gray-700 font-medium text-sm">${authority}</span>
+                <div class="flex items-center space-x-3">
+                    <div class="w-32 bg-gray-200 rounded-full h-3">
+                        <div class="bg-gradient-to-r from-teal-500 to-blue-600 h-3 rounded-full progress-bar"
                              style="width: ${(count / maxCount) * 100}%"></div>
                     </div>
                     <span class="text-teal-600 font-bold text-lg">${count}</span>
