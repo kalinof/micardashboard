@@ -91,6 +91,7 @@
     max-height: 80px;
     width: auto;
     margin-right: 20px;
+    cursor: pointer;
     }
 
     .tab-button {
@@ -171,8 +172,9 @@
     <div class="max-w-7xl mx-auto px-6 py-6">
     <div class="flex items-center justify-between flex-wrap">
     <div class="flex items-start space-x-6 mb-4 md:mb-0">
-    <img src="https://cdn.abacus.ai/images/5bf38e3c-f4e1-4450-8d41-277ada1b7069.png" 
-    alt="DEA Logo" class="logo-container">
+    <img src="https://cdn.abacus.ai/images/5bf38e3c-f4e1-4450-8d41-277ada1b7069.png"
+    alt="DEA Logo" id="homeLogo" class="logo-container" role="button" tabindex="0"
+    aria-label="Return to the default dashboard view">
     <div>
     <h1 class="text-[1.8rem] font-bold text-white mb-1">MiCAR EMT License Tracker</h1>
     <p class="text-blue-100 text-lg additional-info">Electronic Money Token Issuers Analytics</p>
@@ -2518,11 +2520,51 @@
         }
     }
 
+    function resetDashboard() {
+        switchTab('overview');
+
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.value = '';
+        }
+        filteredData = [...data];
+        populateDetailsTable(filteredData);
+
+        const caspsSearchInput = document.getElementById('caspsSearchInput');
+        if (caspsSearchInput) {
+            caspsSearchInput.value = '';
+        }
+        filteredCaspsData = [...caspsData];
+        populateCaspsTable(filteredCaspsData);
+
+        const nonCompliantSearchInput = document.getElementById('nonCompliantSearchInput');
+        if (nonCompliantSearchInput) {
+            nonCompliantSearchInput.value = '';
+        }
+        filteredNonCompliantData = [...nonCompliantData];
+        populateNonCompliantTable(filteredNonCompliantData);
+    }
+
     // Event listeners
     document.getElementById('overviewBtn').addEventListener('click', () => switchTab('overview'));
     document.getElementById('detailsBtn').addEventListener('click', () => switchTab('details'));
     document.getElementById('caspsBtn').addEventListener('click', () => switchTab('casps'));
     document.getElementById('nonCompliantBtn').addEventListener('click', () => switchTab('nonCompliant'));
+
+    const homeLogo = document.getElementById('homeLogo');
+    if (homeLogo) {
+        const handleDashboardReset = (event) => {
+            event.preventDefault();
+            resetDashboard();
+        };
+
+        homeLogo.addEventListener('click', handleDashboardReset);
+        homeLogo.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                handleDashboardReset(event);
+            }
+        });
+    }
 
     document.getElementById('searchInput').addEventListener('input', (e) => {
         filterData(e.target.value);
