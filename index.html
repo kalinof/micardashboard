@@ -239,9 +239,9 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-6 py-8">
-    <div class="mb-6 text-white">
-    <h2 class="text-2xl font-semibold">EMT Issuer Insights</h2>
-    <p class="text-blue-100">Key indicators and distributions for licensed Electronic Money Token issuers.</p>
+    <div id="sectionIntro" class="mb-6 text-white">
+    <h2 id="sectionTitle" class="text-2xl font-semibold">EMT Issuer Insights</h2>
+    <p id="sectionDescription" class="text-blue-100">Key indicators and distributions for licensed Electronic Money Token issuers.</p>
     </div>
 
     <!-- KPI Cards Container - Dynamic -->
@@ -2132,6 +2132,59 @@
     let filteredCaspsData = [...caspsData];
     let filteredNonCompliantData = [...nonCompliantData];
 
+    const sectionTitleEl = document.getElementById('sectionTitle');
+    const sectionDescriptionEl = document.getElementById('sectionDescription');
+    const kpiContainerEl = document.getElementById('kpiContainer');
+
+    const sectionIntroConfig = {
+        overview: {
+            title: 'EMT Issuer Insights',
+            description: 'Key indicators and distributions for licensed Electronic Money Token issuers.',
+            showKpis: true
+        },
+        details: {
+            title: 'EMT Issuer Details',
+            description: 'Explore detailed records for each Electronic Money Token issuer authorised under MiCAR.',
+            showKpis: true
+        },
+        casps: {
+            title: 'CASPs Overview',
+            description: 'Discover authorised Crypto-Asset Service Providers and the services they offer across Europe.',
+            showKpis: false
+        },
+        nonCompliant: {
+            title: 'Non-Compliant Entities',
+            description: 'Monitor entities flagged by European regulators for non-compliant activity.',
+            showKpis: false
+        }
+    };
+
+    function updateSectionIntro(tab) {
+        const config = sectionIntroConfig[tab] || sectionIntroConfig.overview;
+
+        if (sectionTitleEl) {
+            sectionTitleEl.textContent = config.title;
+        }
+
+        if (sectionDescriptionEl) {
+            if (config.description) {
+                sectionDescriptionEl.textContent = config.description;
+                sectionDescriptionEl.classList.remove('hidden');
+            } else {
+                sectionDescriptionEl.textContent = '';
+                sectionDescriptionEl.classList.add('hidden');
+            }
+        }
+
+        if (kpiContainerEl) {
+            if (config.showKpis) {
+                kpiContainerEl.classList.remove('hidden');
+            } else {
+                kpiContainerEl.classList.add('hidden');
+            }
+        }
+    }
+
     // Dynamic calculation functions
     function calculateCurrencyTotals() {
         const currencies = {};
@@ -2260,6 +2313,7 @@
     });
     // Initialize dashboard
     function initDashboard() {
+        updateSectionIntro('overview');
         // Generate dynamic components
         generateKPICards();
         generateCurrencyDistribution();
@@ -2543,6 +2597,8 @@
         [overviewSection, detailsSection, caspsSection, nonCompliantSection].forEach(section => {
             section.classList.add('hidden');
         });
+
+        updateSectionIntro(tab);
 
         // Show selected tab
         if (tab === 'overview') {
