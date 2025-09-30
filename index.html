@@ -20,6 +20,7 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="styles/tailwind.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="dbd82f5d-689a-452f-9fff-fba85b9de507"></script>
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -205,6 +206,151 @@
     display: none !important;
   }
 </style>
+    <style>
+      .cookie-banner {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: min(22rem, calc(100% - 2rem));
+        padding: 1.5rem;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 64, 175, 0.95));
+        color: #f8fafc;
+        border-radius: 1.25rem;
+        box-shadow: 0 20px 45px -20px rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .cookie-banner.cookie-hidden {
+        transform: translateY(25px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .cookie-banner h2 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .cookie-banner p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #e2e8f0;
+      }
+
+      .cookie-banner .cookie-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .cookie-banner .cookie-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.75rem;
+        background: rgba(255, 255, 255, 0.12);
+        color: #facc15;
+        font-size: 1.25rem;
+      }
+
+      .cookie-banner .cookie-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .cookie-banner button {
+        font: inherit;
+        border: none;
+        cursor: pointer;
+      }
+
+      .cookie-banner .cookie-accept {
+        padding: 0.65rem 1.5rem;
+        border-radius: 9999px;
+        background: #ffffff;
+        color: #1e40af;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .cookie-banner .cookie-accept:hover,
+      .cookie-banner .cookie-accept:focus-visible {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 18px -12px rgba(15, 23, 42, 0.9);
+      }
+
+      .cookie-banner .cookie-dismiss {
+        padding: 0.65rem 1.15rem;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #f8fafc;
+        font-weight: 500;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .cookie-banner .cookie-dismiss:hover,
+      .cookie-banner .cookie-dismiss:focus-visible {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-1px);
+      }
+
+      .cookie-banner .cookie-close {
+        position: absolute;
+        top: 0.65rem;
+        right: 0.65rem;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 9999px;
+        background: transparent;
+        color: #cbd5f5;
+        font-size: 1.1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      .cookie-banner .cookie-close:hover,
+      .cookie-banner .cookie-close:focus-visible {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+      }
+
+      @media (max-width: 640px) {
+        .cookie-banner {
+          left: 1rem;
+          right: 1rem;
+          width: auto;
+          bottom: 1rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .cookie-banner {
+          transition: none;
+        }
+
+        .cookie-banner.cookie-hidden {
+          transform: translateY(0);
+        }
+      }
+    </style>
 </head>
 <body class="main-bg">
     <!-- Sticky Header -->
@@ -484,6 +630,22 @@
         </div>
       </div>
     </footer>
+    <div id="cookieConsent" class="cookie-banner cookie-hidden" role="dialog" aria-live="polite" aria-modal="false" aria-labelledby="cookieTitle" aria-describedby="cookieDescription" aria-hidden="true">
+      <button type="button" id="cookieDismiss" class="cookie-close" aria-label="Dismiss cookie notice">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="cookie-header">
+        <div class="cookie-icon" aria-hidden="true">
+          <i class="fas fa-cookie-bite"></i>
+        </div>
+        <h2 id="cookieTitle">Cookie notice</h2>
+      </div>
+      <p id="cookieDescription">We use essential cookies to keep this dashboard running smoothly. Our privacy-friendly analytics (Umami) operates without cookies.</p>
+      <div class="cookie-actions">
+        <button type="button" id="cookieAccept" class="cookie-accept">Got it</button>
+        <button type="button" id="cookieRemind" class="cookie-dismiss">Remind me later</button>
+      </div>
+    </div>
     <!-- ==== DEA FOOTER END ==== -->
 
     <script>
@@ -2776,6 +2938,62 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const consentBanner = document.getElementById('cookieConsent');
+        if (!consentBanner) {
+          return;
+        }
+
+        const storageKey = 'micardashboard-cookie-consent';
+
+        const getStoredValue = () => {
+          try {
+            return window.localStorage.getItem(storageKey);
+          } catch (error) {
+            return null;
+          }
+        };
+
+        const setStoredValue = (value) => {
+          try {
+            window.localStorage.setItem(storageKey, value);
+          } catch (error) {
+            // Ignore storage errors (e.g., private browsing)
+          }
+        };
+
+        const hideBanner = () => {
+          consentBanner.classList.add('cookie-hidden');
+          consentBanner.setAttribute('aria-hidden', 'true');
+        };
+
+        const showBanner = () => {
+          consentBanner.classList.remove('cookie-hidden');
+          consentBanner.removeAttribute('aria-hidden');
+        };
+
+        const acceptButton = document.getElementById('cookieAccept');
+        const dismissButton = document.getElementById('cookieDismiss');
+        const remindButton = document.getElementById('cookieRemind');
+
+        acceptButton?.addEventListener('click', () => {
+          setStoredValue('accepted');
+          hideBanner();
+        });
+
+        const handleRemind = () => {
+          hideBanner();
+        };
+
+        dismissButton?.addEventListener('click', handleRemind);
+        remindButton?.addEventListener('click', handleRemind);
+
+        if (!getStoredValue()) {
+          window.setTimeout(showBanner, 800);
+        }
+      });
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
