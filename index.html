@@ -24,7 +24,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
     body {
-    font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+    font-family: "Twemoji Country Flags", 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
     background: linear-gradient(90deg, #58c1ba, #004aad);
     min-height: 100vh;
     }
@@ -2781,6 +2781,11 @@
       document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('year').textContent = new Date().getFullYear();
       });
+    </script>
+    <!-- Polyfill to render flag emojis correctly on Windows-based browsers -->
+    <script type="module" defer>
+      import { polyfillCountryFlagEmojis } from 'https://cdn.skypack.dev/country-flag-emoji-polyfill';
+      polyfillCountryFlagEmojis();
     </script>
 </body>
 </html>
