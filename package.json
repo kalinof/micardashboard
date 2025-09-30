@@ -1,0 +1,17 @@
+{
+  "name": "micardashboard",
+  "version": "1.0.0",
+  "description": "This project tracks issuers of Electronic Money Tokens (EMTs) under the MiCAR framework. The dashboard is a simple static site that reads data from a public Google Sheets document and visualises it using HTML and Tailwind CSS.",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./styles/tailwind.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "tailwindcss": "^3.4.14"
+  }
+}
