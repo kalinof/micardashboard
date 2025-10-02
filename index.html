@@ -390,6 +390,9 @@
     <div id="sectionIntro" class="mb-6 text-white">
     <h2 id="sectionTitle" class="text-2xl font-semibold">EMT Issuer Insights</h2>
     <p id="sectionDescription" class="text-blue-100">Key indicators and distributions for licensed Electronic Money Token issuers.</p>
+    <div id="caspsIntroKpiContainer" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-6 fade-in">
+    <!-- CASPs KPI cards duplicated for section intro -->
+    </div>
     </div>
 
     <!-- KPI Cards Container - Dynamic -->
@@ -2328,6 +2331,7 @@
     const sectionTitleEl = document.getElementById('sectionTitle');
     const sectionDescriptionEl = document.getElementById('sectionDescription');
     const kpiContainerEl = document.getElementById('kpiContainer');
+    const caspsIntroKpiContainerEl = document.getElementById('caspsIntroKpiContainer');
 
     const sectionIntroConfig = {
         overview: {
@@ -2374,6 +2378,14 @@
                 kpiContainerEl.classList.remove('hidden');
             } else {
                 kpiContainerEl.classList.add('hidden');
+            }
+        }
+
+        if (caspsIntroKpiContainerEl) {
+            if (tab === 'casps') {
+                caspsIntroKpiContainerEl.classList.remove('hidden');
+            } else {
+                caspsIntroKpiContainerEl.classList.add('hidden');
             }
         }
     }
@@ -2459,13 +2471,7 @@
         `).join('');
     }
 
-    function updateCaspsKpis(dataToShow = filteredCaspsData) {
-        const container = document.getElementById('caspsKpiContainer');
-
-        if (!container) {
-            return;
-        }
-
+    function buildCaspsKpiCards(dataToShow) {
         const totalProviders = dataToShow.length;
         const normalizedCountries = dataToShow.map(item => {
             const country = (item.memberState || '').trim();
@@ -2474,7 +2480,7 @@
         const uniqueCountries = new Set(normalizedCountries.map(country => country.toLowerCase()));
         const totalCountries = normalizedCountries.length > 0 ? uniqueCountries.size : 0;
 
-        container.innerHTML = `
+        return `
             <div class="kpi-card kpi-teal p-6 rounded-2xl shadow-lg text-white card-hover">
                 <div class="flex items-center justify-between">
                     <div>
@@ -2496,6 +2502,21 @@
                 </div>
             </div>
         `;
+    }
+
+    function updateCaspsKpis(dataToShow = filteredCaspsData) {
+        const container = document.getElementById('caspsKpiContainer');
+        const introContainer = document.getElementById('caspsIntroKpiContainer');
+
+        const cardsHtml = buildCaspsKpiCards(dataToShow);
+
+        if (container) {
+            container.innerHTML = cardsHtml;
+        }
+
+        if (introContainer) {
+            introContainer.innerHTML = cardsHtml;
+        }
     }
 
     function generateCurrencyDistribution() {
