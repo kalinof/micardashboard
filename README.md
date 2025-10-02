@@ -1,10 +1,10 @@
-# MiCAR EMT Dashboard
+# Digital Euro Association (DEA) MiCAR Tracker
 
-This project tracks issuers of Electronic Money Tokens (EMTs) under the MiCAR framework. The dashboard is a simple static site that reads data from a public Google Sheets document and visualises it using HTML and Tailwind CSS.
+This project tracks issuers of Electronic Money Tokens (EMTs) and Crypto-Asset Service Providers (CASPs) under the MiCAR framework. The dashboard is a simple static site that reads data from a public Google Sheets document and visualises it using HTML and Tailwind CSS.
 
 ## Data source
 
-`update-data.js` downloads a CSV export of the ESMA EMT register from Google Sheets.
+`update-data.js` downloads a CSV export of the ESMA registers from Google Sheets, ensuring the dashboard reflects the latest EMT and CASP information published by the regulator.
 
 The script parses the CSV, converts each row into a JavaScript object and then rewrites `index.html` with the new data and a human‑friendly source date.
 
