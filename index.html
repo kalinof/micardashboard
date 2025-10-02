@@ -427,6 +427,10 @@
     <p class="text-blue-100">Overview of registered Crypto-Asset Service Providers by country and authority.</p>
     </div>
 
+    <div id="caspsKpiContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8 fade-in">
+    <!-- CASPs KPI cards populated dynamically -->
+    </div>
+
     <!-- CASPs Charts Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
     <div class="bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-6 card-hover">
@@ -2455,6 +2459,45 @@
         `).join('');
     }
 
+    function updateCaspsKpis(dataToShow = filteredCaspsData) {
+        const container = document.getElementById('caspsKpiContainer');
+
+        if (!container) {
+            return;
+        }
+
+        const totalProviders = dataToShow.length;
+        const normalizedCountries = dataToShow.map(item => {
+            const country = (item.memberState || '').trim();
+            return country.length > 0 ? country : 'Unknown';
+        });
+        const uniqueCountries = new Set(normalizedCountries.map(country => country.toLowerCase()));
+        const totalCountries = normalizedCountries.length > 0 ? uniqueCountries.size : 0;
+
+        container.innerHTML = `
+            <div class="kpi-card kpi-teal p-6 rounded-2xl shadow-lg text-white card-hover">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-90 font-medium">Total Providers</p>
+                        <p class="text-3xl font-bold mt-2">${totalProviders}</p>
+                        <p class="text-sm opacity-80 mt-1">Registered CASP Providers</p>
+                    </div>
+                    <div class="text-4xl opacity-80">🏢</div>
+                </div>
+            </div>
+            <div class="kpi-card kpi-blue p-6 rounded-2xl shadow-lg text-white card-hover">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-90 font-medium">Total Countries</p>
+                        <p class="text-3xl font-bold mt-2">${totalCountries}</p>
+                        <p class="text-sm opacity-80 mt-1">Countries Represented</p>
+                    </div>
+                    <div class="text-4xl opacity-80">🌍</div>
+                </div>
+            </div>
+        `;
+    }
+
     function generateCurrencyDistribution() {
         const container = document.getElementById('currencyDistribution');
         const currencies = calculateCurrencyTotals();
@@ -2690,6 +2733,8 @@
     function populateCaspsTable(dataToShow = filteredCaspsData) {
         const tbody = document.getElementById('caspsTable');
         const noResults = document.getElementById('noCaspsResults');
+
+        updateCaspsKpis(dataToShow);
 
         if (!tbody) {
             return;
