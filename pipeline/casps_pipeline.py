@@ -109,6 +109,16 @@ def normalize_casp_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def derive_latest_record_date(df: pd.DataFrame) -> str | None:
+    candidates: list[str] = []
+    for column in DATE_COLUMNS:
+        if column in df.columns:
+            candidates.extend([value for value in df[column].tolist() if isinstance(value, str) and value])
+    if not candidates:
+        return None
+    return max(candidates)
+
+
 def build_export_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     export_columns = [
         "pk",
@@ -155,6 +165,7 @@ def run(session: requests.Session | None = None) -> dict[str, Any]:
         meta_extra={
             "source_url": url,
             "date_columns": [column for column in DATE_COLUMNS if column in normalized.columns],
+            "latest_record_date": derive_latest_record_date(normalized),
         },
     )
 

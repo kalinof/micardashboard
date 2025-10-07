@@ -438,17 +438,21 @@ async function main() {
         const caspsMeta = meta.casps || {};
 
         const state = loadState();
-        if (!state.caspsLastUpdated && caspsMeta.generated_at) {
-            state.caspsLastUpdated = isoDateOnly(caspsMeta.generated_at);
+        const metaGeneratedDate = isoDateOnly(caspsMeta.generated_at);
+        const metaLatestRecordDate = isoDateOnly(caspsMeta.latest_record_date);
+        const preferredMetaDate = metaLatestRecordDate || metaGeneratedDate || '';
+
+        if (!state.caspsLastUpdated && preferredMetaDate) {
+            state.caspsLastUpdated = preferredMetaDate;
         }
         if (caspsHasChange) {
-            state.caspsLastUpdated = isoDateOnly(new Date().toISOString());
+            state.caspsLastUpdated = preferredMetaDate || isoDateOnly(new Date().toISOString());
         }
         saveState(state);
 
         const dateMap = extractDatesFromCsv(dateCsv);
         const emtSheetDate = dateMap['snapshot_date'] || dateMap['emt_snapshot_date'] || '';
-        const caspsSnapshotDate = state.caspsLastUpdated || isoDateOnly(caspsMeta.generated_at) || '';
+        const caspsSnapshotDate = state.caspsLastUpdated || preferredMetaDate || '';
 
         console.log('📅 EMT sheet date:', emtSheetDate);
         console.log('📅 CASPs snapshot date:', caspsSnapshotDate || '(not available)');

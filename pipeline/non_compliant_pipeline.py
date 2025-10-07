@@ -1,10 +1,12 @@
-"""Non-compliant pipeline: fetch, normalise, diff, and export ESMA non-compliant entities."""
+"""Non-compliant entity pipeline: fetch, normalise, diff, and export data."""
+
 from __future__ import annotations
 
 import dataclasses
 import json
 import os
 import re
+from typing import Any
 
 import pandas as pd
 import requests
@@ -29,14 +31,15 @@ def pick_column(df: pd.DataFrame, *candidates: str, default: str = "") -> pd.Ser
     for name in candidates:
         if name in df.columns:
             return df[name]
-    return pd.Series([default] * len(df))
+    return pd.Series([default] * len(df), dtype="string")
 
 
-def normalise_country(value: str) -> str:
-    upper = value.upper()
+def normalise_country(value: Any) -> str:
+    text = "" if pd.isna(value) else str(value).strip()
+    upper = text.upper()
     if upper in {"", "NAN", "NONE", "NULL"}:
         return ""
-    return COUNTRY_MAP.get(upper, value)
+    return COUNTRY_MAP.get(upper, text)
 
 
 def normalize_non_compliant_dataframe(df: pd.DataFrame) -> pd.DataFrame:
@@ -58,9 +61,7 @@ def normalize_non_compliant_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
     df["is_new_flag"] = False
     if "column_1" in df.columns:
-        df["is_new_flag"] = (
-            df["column_1"].astype(str).str.strip().str.lower() == "new"
-        )
+        df["is_new_flag"] = df["column_1"].astype(str).str.strip().str.lower() == "new"
 
     df = df[df["ae_lei_name"].astype(bool)]
 
@@ -134,4 +135,3 @@ def run(session: requests.Session | None = None) -> dict[str, object]:
 if __name__ == "__main__":
     result = run()
     print(json.dumps(result, indent=2))
-

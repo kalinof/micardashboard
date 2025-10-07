@@ -1,7 +1,7 @@
 {
   "casps": {
     "total_rows": 2,
-    "new_rows": 0,
+    "new_rows": 2,
     "updated_rows": 0,
     "removed_rows": 0,
     "source_url": "pipeline/sample_data/CASPS_sample.csv",
@@ -10,16 +10,17 @@
       "ac_authorisation_end_date",
       "ac_lastupdate"
     ],
+    "latest_record_date": "2024-12-01",
     "source": "casps",
-    "generated_at": "2025-10-07T19:54:37.390119Z"
+    "generated_at": "2025-10-07T20:09:23.462837Z"
   },
   "non_compliant": {
     "total_rows": 2,
-    "new_rows": 0,
+    "new_rows": 2,
     "updated_rows": 0,
     "removed_rows": 0,
     "source_url": "pipeline/sample_data/non_compliant_sample.csv",
     "source": "non_compliant",
-    "generated_at": "2025-10-07T19:54:37.404990Z"
+    "generated_at": "2025-10-07T20:09:23.499757Z"
   }
 }
