@@ -1,0 +1,3 @@
+pk,competent_authority,home_member_state,lei_name,website,service_codes,ac_authorisation_notification_date,ac_authorisation_end_date,ac_lastupdate
+AUSTRIA|financial market authority (fma)|example crypto gmbh,Financial Market Authority (FMA),Austria,Example Crypto GmbH,https://example.com,custody | trading platform,2024-03-15,,2024-12-01
+LUXEMBOURG|commission de surveillance du secteur financier (cssf)|lux token services,Commission de Surveillance du Secteur Financier (CSSF),Luxembourg,Lux Token Services,https://luxtoken.lu,custody | exchange crypto | advice,2024-05-20,,2024-11-20

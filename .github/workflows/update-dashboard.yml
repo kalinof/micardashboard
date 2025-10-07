@@ -2,8 +2,8 @@ name: Update EMT Dashboard
 
 on:
   schedule:
-    # Run every 6 hours
-    - cron: '0 */6 * * *'
+    # Run once every 24 hours at midnight UTC
+    - cron: '0 0 * * *'
   workflow_dispatch:
     # Allow manual triggering
 
@@ -21,6 +21,22 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
 
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Python dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run ESMA pipelines
+      env:
+        CASP_CSV_URL: ${{ vars.CASP_CSV_URL || secrets.CASP_CSV_URL || '' }}
+        NON_COMPLIANT_CSV_URL: ${{ vars.NON_COMPLIANT_CSV_URL || secrets.NON_COMPLIANT_CSV_URL || '' }}
+      run: |
+        echo "🚰 Running ESMA pipelines"
+        python -m pipeline.run_all
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -30,7 +46,8 @@ jobs:
       env:
         CSV_URL: ${{ vars.CSV_URL || secrets.CSV_URL || '' }}
         DATE_URL: ${{ vars.DATE_URL || secrets.DATE_URL || '' }}
-        NON_COMPLIANT_URL: ${{ vars.NON_COMPLIANT_URL || secrets.NON_COMPLIANT_URL || '' }}
+        NON_COMPLIANT_PATH: ${{ vars.NON_COMPLIANT_PATH || secrets.NON_COMPLIANT_PATH || '' }}
+        CASPS_PATH: ${{ vars.CASPS_PATH || secrets.CASPS_PATH || '' }}
       run: |
         echo "🔄 Starting dashboard update..."
         node update-data.js
