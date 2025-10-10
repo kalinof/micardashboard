@@ -1,7 +1,1 @@
-__pycache__/
-*.pyc
-.env
-.envrc
-venv/
 node_modules/
-data/state.sqlite
