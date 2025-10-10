@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About – DEA MiCAR Tracker</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles/tailwind.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    body {
+      font-family: "Twemoji Country Flags", 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+      background: linear-gradient(90deg, #58c1ba, #004aad);
+      min-height: 100vh;
+    }
+
+    .main-bg {
+      background: linear-gradient(90deg, #58c1ba, #004aad);
+    }
+
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(90deg, rgba(88, 193, 186, 0.95), rgba(0, 74, 173, 0.95));
+    }
+
+    .logo-container {
+      max-height: 80px;
+      width: auto;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .tab-button {
+      transition: all 0.3s ease;
+    }
+
+    .tab-active {
+      background: white;
+      color: #1e40af;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab-inactive {
+      background: rgba(59, 130, 246, 0.3);
+      color: white;
+    }
+
+    .tab-inactive:hover {
+      background: rgba(59, 130, 246, 0.5);
+    }
+
+    .nav-buttons {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    .nav-buttons .tab-button {
+      flex: 1 1 auto;
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.25rem;
+      }
+
+      .nav-buttons {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-buttons .tab-button {
+        flex: 1 1 calc(50% - 0.75rem);
+      }
+    }
+
+    @media (max-width: 400px) {
+      .nav-buttons .tab-button {
+        flex-basis: 100%;
+      }
+    }
+  </style>
+</head>
+<body class="main-bg">
+  <header class="header-sticky shadow-2xl">
+    <div class="max-w-7xl mx-auto px-6 py-6">
+      <div class="flex items-center justify-between flex-wrap header-content">
+        <div class="flex items-center space-x-6 mb-4 md:mb-0">
+          <a href="index.html" class="flex items-center">
+            <img src="https://cdn.abacus.ai/images/5bf38e3c-f4e1-4450-8d41-277ada1b7069.png"
+                 alt="DEA Logo" class="logo-container max-h-16" aria-label="Go to Dashboard">
+          </a>
+          <div class="flex items-center">
+            <h1 class="text-[1.8rem] md:text-[2.2rem] font-bold text-white mb-0 leading-tight">
+              <span class="text-sky-100">MiCAR</span>
+              <span class="text-sky-50">Tracker</span>
+            </h1>
+          </div>
+        </div>
+        <nav class="flex items-center nav-buttons">
+          <a href="index.html" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+            <span class="mr-2" aria-hidden="true">📊</span>
+            Dashboard
+          </a>
+          <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister"
+             class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center"
+             target="_blank" rel="noopener">
+            <span class="mr-2" aria-hidden="true">📈</span>
+            ESMA Data
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+          <a href="about.html" class="tab-button tab-active px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+            <span class="mr-2" aria-hidden="true">ℹ️</span>
+            About
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-16 text-white space-y-16">
+    <section class="space-y-6">
+      <p class="uppercase tracking-widest text-sky-100 text-sm font-semibold">About the MiCAR Tracker</p>
+      <h2 class="text-4xl md:text-5xl font-extrabold leading-tight">A clearer view of MiCAR activity in Europe</h2>
+      <p class="text-lg md:text-xl text-blue-100 leading-relaxed max-w-3xl">
+        The MiCAR Tracker is created by the Digital Euro Association (DEA) to make the European crypto-asset
+        landscape easier to understand. We collect Electronic Money Token (EMT) issuer and Crypto-Asset Service Provider (CASP)
+        registrations from the European Securities and Markets Authority (ESMA) and present them in a friendly, interactive dashboard.
+      </p>
+    </section>
+
+    <section class="bg-white/10 backdrop-blur-lg rounded-3xl border border-white/20 shadow-2xl p-10 space-y-8">
+      <h3 class="text-2xl md:text-3xl font-bold">Built on open data and open collaboration</h3>
+      <p class="text-base md:text-lg text-blue-100 leading-relaxed">
+        Transparency is central to our mission. The tracker is fully open source, allowing the community to inspect and improve
+        how we process regulatory information. We source data directly from ESMA’s interim MiCAR register, clean it in
+        collaboratively maintained Google Spreadsheets, and transform it into a beautiful, readable overview on this website.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+        <div class="bg-white/10 rounded-2xl border border-white/10 p-6 space-y-4">
+          <h4 class="text-xl font-semibold flex items-center gap-2"><span aria-hidden="true">🔎</span>Data sourcing</h4>
+          <p class="text-blue-100 leading-relaxed">We regularly pull the latest EMT and CASP entries from the
+            <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister"
+               class="underline decoration-white/40 hover:decoration-white" target="_blank" rel="noopener">ESMA MiCAR register<span class="sr-only"> (opens in new tab)</span></a>.
+          </p>
+        </div>
+        <div class="bg-white/10 rounded-2xl border border-white/10 p-6 space-y-4">
+          <h4 class="text-xl font-semibold flex items-center gap-2"><span aria-hidden="true">🧹</span>Data cleaning</h4>
+          <p class="text-blue-100 leading-relaxed">Our team curates the dataset in Google Sheets, standardising fields, aligning
+            authorities, and enriching entries so that the information is reliable and comparable.</p>
+        </div>
+        <div class="bg-white/10 rounded-2xl border border-white/10 p-6 space-y-4">
+          <h4 class="text-xl font-semibold flex items-center gap-2"><span aria-hidden="true">📊</span>Data storytelling</h4>
+          <p class="text-blue-100 leading-relaxed">The public dashboard presents market activity through interactive charts,
+            geographic breakdowns, and searchable tables to make regulatory progress easier to follow.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-6">
+      <h3 class="text-2xl md:text-3xl font-bold">Advancing the DEA mission</h3>
+      <p class="text-base md:text-lg text-blue-100 leading-relaxed max-w-4xl">
+        The Digital Euro Association empowers its members by combining education, community building, and public affairs advocacy.
+        The MiCAR Tracker supports that mission by helping policymakers, industry leaders, and researchers stay informed about
+        regulatory progress and market participation across Europe.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <article class="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/10 p-6 space-y-4">
+          <h4 class="text-xl font-semibold">Education</h4>
+          <p class="text-blue-100 leading-relaxed">The DEA equips members with publications, the Digital Euro Conference,
+            expert-led roundtables, tailored courses, and exclusive briefings with key stakeholders so they can align strategies
+            with evolving regulation and best practices.</p>
+        </article>
+        <article class="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/10 p-6 space-y-4">
+          <h4 class="text-xl font-semibold">Community &amp; Collaboration</h4>
+          <p class="text-blue-100 leading-relaxed">Through a multidisciplinary network, members connect with the right partners,
+            exchange knowledge, and access insights that help them cut through the noise and reach their audiences.</p>
+        </article>
+        <article class="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/10 p-6 space-y-4">
+          <h4 class="text-xl font-semibold">Public Affairs</h4>
+          <p class="text-blue-100 leading-relaxed">The association represents its community before European policymakers and regulators,
+            advocating for innovation-friendly, balanced rules that protect civil liberties while supporting responsible growth.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="bg-white/10 backdrop-blur-lg rounded-3xl border border-white/20 shadow-2xl p-10 space-y-6">
+      <h3 class="text-2xl md:text-3xl font-bold">Our DEA Offering</h3>
+      <p class="text-base md:text-lg text-blue-100 leading-relaxed">
+        We help organisations navigate the complexities of digital money in Europe by connecting them to experts, research,
+        and strategic conversations that drive meaningful progress.
+      </p>
+      <ul class="space-y-4 text-blue-100 leading-relaxed">
+        <li class="flex items-start gap-3"><span class="text-white mt-1" aria-hidden="true">✅</span><span>Stay ahead of market shifts with timely intelligence on MiCAR implementation and emerging regulatory priorities.</span></li>
+        <li class="flex items-start gap-3"><span class="text-white mt-1" aria-hidden="true">🤝</span><span>Engage with peers across the European ecosystem to co-create solutions for digital money challenges.</span></li>
+        <li class="flex items-start gap-3"><span class="text-white mt-1" aria-hidden="true">📣</span><span>Ensure your perspective is heard in Brussels and beyond through DEA-led consultations and advocacy.</span></li>
+      </ul>
+      <div>
+        <a href="https://digital-euro-association.de" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white text-blue-700 font-semibold shadow-lg hover:bg-blue-50 transition">
+          Discover membership opportunities
+          <i class="fas fa-arrow-up-right-from-square text-sm" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-900 text-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-10 space-y-10">
+      <div class="text-center space-y-2">
+        <p class="text-gray-300">Digital Euro Association (DEA) MiCAR Tracker – Overview</p>
+        <p class="text-gray-400 text-sm">Source: ESMA EMT Register – Latest available publication</p>
+        <p class="text-gray-400 text-sm">Source: ESMA CASPs Register – Latest available publication</p>
+      </div>
+      <div class="flex flex-col md:flex-row md:justify-between gap-8">
+        <nav>
+          <ul class="space-y-2 md:space-y-0 md:flex md:gap-6 text-sm">
+            <li><a href="index.html" class="hover:text-white font-semibold">Dashboard</a></li>
+            <li><a href="about.html" class="hover:text-white font-semibold">About</a></li>
+            <li><a href="https://home.digital-euro-association.de/legal-notice?hsLang=en" target="_blank" rel="noopener" class="hover:text-white font-semibold">Legal Notice</a></li>
+            <li><a href="https://home.digital-euro-association.de/privacy-policy-0?hsLang=en" target="_blank" rel="noopener" class="hover:text-white font-semibold">Privacy</a></li>
+            <li><a href="https://home.digital-euro-association.de/code-of-conduct?hsLang=en" target="_blank" rel="noopener" class="hover:text-white font-semibold">Code of Conduct</a></li>
+            <li><a href="https://home.digital-euro-association.de/faq?hsLang=en" target="_blank" rel="noopener" class="hover:text-white font-semibold">FAQ</a></li>
+            <li><a href="https://home.digital-euro-association.de/impressum?hsLang=en" target="_blank" rel="noopener" class="hover:text-white font-semibold">Impressum</a></li>
+          </ul>
+        </nav>
+        <div class="flex items-center gap-6 text-xl">
+          <a href="https://x.com/DigiEuro" target="_blank" aria-label="Twitter" class="hover:text-white"><i class="fab fa-twitter"></i></a>
+          <a href="mailto:info@digital-euro-association.de" target="_blank" aria-label="Email" class="hover:text-white"><i class="fas fa-envelope"></i></a>
+          <a href="https://www.linkedin.com/company/digital-euro-association/" target="_blank" aria-label="LinkedIn" class="hover:text-white"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/DigiEuro/micardashboard" target="_blank" aria-label="GitHub" class="hover:text-white"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        <p class="text-xs">&copy; <span id="year"></span> Digital Euro Association e.V.</p>
+        <a href="https://digital-euro-association.de"
+           class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow transition"
+           target="_blank" rel="noopener">
+          Learn more about DEA
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const yearEl = document.getElementById('year');
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+    });
+  </script>
+</body>
+</html>
