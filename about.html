@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About – DEA MiCAR Tracker</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles/tailwind.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    body {
+      font-family: 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+      background: linear-gradient(90deg, #58c1ba, #004aad);
+      min-height: 100vh;
+    }
+
+    .main-bg {
+      background: linear-gradient(90deg, #58c1ba, #004aad);
+    }
+
+    .logo-container {
+      max-height: 80px;
+      width: auto;
+      margin-right: 20px;
+    }
+
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(90deg, rgba(88, 193, 186, 0.95), rgba(0, 74, 173, 0.95));
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .tab-button {
+      transition: all 0.3s ease;
+    }
+
+    .tab-active {
+      background: white;
+      color: #1e40af;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab-inactive {
+      background: rgba(59, 130, 246, 0.3);
+      color: white;
+    }
+
+    .tab-inactive:hover {
+      background: rgba(59, 130, 246, 0.5);
+    }
+
+    .nav-buttons {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    .nav-buttons .tab-button {
+      flex: 1 1 auto;
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.25rem;
+      }
+
+      .nav-buttons {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-buttons .tab-button {
+        flex: 1 1 calc(50% - 0.75rem);
+      }
+    }
+
+    @media (max-width: 400px) {
+      .nav-buttons .tab-button {
+        flex-basis: 100%;
+      }
+    }
+  </style>
+</head>
+<body class="main-bg">
+  <div class="header-sticky shadow-2xl">
+    <div class="max-w-7xl mx-auto px-6 py-6">
+      <div class="flex items-center justify-between flex-wrap header-content">
+        <div class="flex items-center space-x-6 mb-4 md:mb-0">
+          <a href="index.html" class="inline-flex items-center">
+            <img src="https://cdn.abacus.ai/images/5bf38e3c-f4e1-4450-8d41-277ada1b7069.png"
+                 alt="DEA Logo" class="logo-container" aria-label="Return to the dashboard">
+          </a>
+          <div class="flex items-center">
+            <h1 class="text-[1.8rem] md:text-[2.2rem] font-bold text-white mb-0 leading-tight">
+              <span class="text-sky-100">MiCAR</span>
+              <span class="text-sky-50">Tracker</span>
+            </h1>
+          </div>
+        </div>
+        <div class="flex items-center nav-buttons">
+          <a href="index.html#detailsSection" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
+            <i class="fas fa-table mr-2"></i>EMTs
+          </a>
+          <a href="index.html#caspsSection" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
+            <i class="fas fa-building-columns mr-2"></i>CASPs
+          </a>
+          <a href="index.html#nonCompliantSection" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
+            <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
+          </a>
+          <a href="about.html" class="tab-button tab-active px-5 py-3 rounded-xl font-semibold">
+            <i class="fas fa-circle-info mr-2"></i>About
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 mt-12 pb-16">
+    <div class="bg-white bg-opacity-95 backdrop-filter backdrop-blur-lg rounded-2xl shadow-lg p-8 md:p-12 card-hover">
+      <div class="space-y-6 text-right">
+        <p class="text-sm uppercase tracking-[0.35em] text-blue-500 font-semibold">About the tracker 🌐</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">Building a collaborative MiCAR community</h2>
+        <p class="text-gray-700 text-lg leading-relaxed">
+          We build collaborative communities to solve the complexities of digital money in Europe.
+          Whether you are shaping new products, advising clients, or crafting policy, DEA membership keeps you close to the conversations that matter.
+        </p>
+        <ul class="space-y-4">
+          <li class="flex flex-col items-end gap-1">
+            <span class="font-semibold text-gray-900">✅ Stay ahead of market shifts</span>
+            <span class="text-gray-700">Receive timely intelligence on MiCAR implementation, upcoming deadlines, and regulatory priorities.</span>
+          </li>
+          <li class="flex flex-col items-end gap-1">
+            <span class="font-semibold text-gray-900">🤝 Engage with peers</span>
+            <span class="text-gray-700">Connect with partners across the European ecosystem to co-create responsible digital money solutions.</span>
+          </li>
+          <li class="flex flex-col items-end gap-1">
+            <span class="font-semibold text-gray-900">📣 Amplify your voice</span>
+            <span class="text-gray-700">Ensure your perspective is reflected in Brussels and beyond through DEA-led consultations and advocacy.</span>
+          </li>
+        </ul>
+        <p class="text-gray-700 text-lg leading-relaxed">
+          Curious to get involved? <a href="https://digital-euro-association.de" target="_blank" rel="noopener" class="text-blue-600 font-semibold hover:underline">Explore membership opportunities</a> and collaborate with us on the future of digital money.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 text-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-10 space-y-10">
+      <div class="text-center">
+        <p class="text-gray-300">
+          Digital Euro Association (DEA) MiCAR Tracker – Overview
+        </p>
+        <p class="text-gray-400 text-sm mt-2" id="currentDate">
+          Source: ESMA EMT Register – Data as of 21 October 2025</p>
+        <p class="text-gray-400 text-sm" id="caspsDate">Source: ESMA CASPs Register – Data as of 21 October 2025</p>
+      </div>
+      <div class="flex flex-col md:flex-row md:justify-between gap-8">
+        <nav>
+          <ul class="space-y-2 md:space-y-0 md:flex md:gap-6 text-sm">
+            <li><a href="https://home.digital-euro-association.de/legal-notice?hsLang=en"  target="_blank" rel="noopener" class="hover:text-white font-semibold">Legal Notice</a></li>
+            <li><a href="https://home.digital-euro-association.de/privacy-policy-0?hsLang=en" target="_blank" rel="noopener" class="hover:text-white font-semibold">Privacy</a></li>
+            <li><a href="https://home.digital-euro-association.de/code-of-conduct?hsLang=en"  target="_blank" rel="noopener" class="hover:text-white font-semibold">Code of Conduct</a></li>
+            <li><a href="https://home.digital-euro-association.de/faq?hsLang=en"            target="_blank" rel="noopener" class="hover:text-white font-semibold">FAQ</a></li>
+            <li><a href="https://home.digital-euro-association.de/impressum?hsLang=en"      target="_blank" rel="noopener" class="hover:text-white font-semibold">Impressum</a></li>
+          </ul>
+        </nav>
+        <div class="flex items-center gap-6 text-xl">
+          <a href="https://x.com/DigiEuro" target="_blank" aria-label="Twitter"  class="hover:text-white"><i class="fab fa-twitter"></i></a>
+          <a href="mailto:info@digital-euro-association.de" target="_blank" aria-label="Email" class="hover:text-white"><i class="fas fa-envelope"></i></a>
+          <a href="https://www.linkedin.com/company/digital-euro-association/" target="_blank" aria-label="LinkedIn" class="hover:text-white"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/DigiEuro/micardashboard" target="_blank" aria-label="GitHub" class="hover:text-white"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        <p class="text-xs">&copy; <span id="year"></span> Digital Euro Association e.V.</p>
+        <a href="https://digital-euro-association.de"
+           class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow transition">
+          Learn more about DEA
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
