@@ -376,11 +376,11 @@
     <button id="detailsBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
     <i class="fas fa-table mr-2"></i>EMTs
     </button>
-    <button id="nonCompliantBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
-    <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
-    </button>
     <button id="caspsBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
     <i class="fas fa-building-columns mr-2"></i>CASPs
+    </button>
+    <button id="nonCompliantBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
+    <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
     </button>
     </div>
     </div>
@@ -391,7 +391,7 @@
     <div id="sectionIntro" class="mb-6 text-white space-y-4 md:space-y-6">
     <h2 id="sectionTitle" class="text-2xl font-semibold">EMT Issuer Insights</h2>
     <p id="sectionDescription" class="text-blue-100">Key indicators and distributions for licensed Electronic Money Token issuers.</p>
-    <div id="caspsIntroKpiContainer" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 fade-in">
+    <div id="caspsIntroKpiContainer" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in">
     <!-- CASPs KPI cards duplicated for section intro -->
     </div>
     </div>
@@ -431,7 +431,7 @@
     <p class="text-blue-100">Overview of registered Crypto-Asset Service Providers by country and authority.</p>
     </div>
 
-    <div id="caspsKpiContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8 fade-in">
+    <div id="caspsKpiContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 fade-in">
     <!-- CASPs KPI cards populated dynamically -->
     </div>
 
@@ -604,8 +604,8 @@
             Digital Euro Association (DEA) MiCAR Tracker – Overview
           </p>
           <p class="text-gray-400 text-sm mt-2" id="currentDate">
-            Source: ESMA EMT Register – Data as of 21 October 2025</p>
-          <p class="text-gray-400 text-sm" id="caspsDate">Source: ESMA CASPs Register – Data as of 21 October 2025</p>
+            Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA EMT Register</a> – Data as of 21 October 2025</p>
+          <p class="text-gray-400 text-sm" id="caspsDate">Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA CASPs Register</a> – Data as of 21 October 2025</p>
         </div>
 
         <!-- ── Nav links + social icons ── -->
@@ -2801,7 +2801,7 @@
         },
         nonCompliant: {
             title: 'Non-Compliant Entities',
-            description: 'Monitor entities flagged by European regulators for non-compliant activity.',
+            description: 'Monitor CASPs and related entities flagged by European regulators for non-compliant activity. Please refrain from visiting the listed websites, as many are suspected of hosting phishing or other malicious content.',
             showKpis: false
         }
     };
@@ -2892,16 +2892,7 @@
             };
         });
 
-        // Non-compliant KPI
-        const nonCompliantKPI = {
-            title: 'Non-Compliant',
-            value: nonCompliantData.length,
-            subtitle: 'Flagged Entities',
-            icon: '⚠️',
-            color: 'kpi-red'
-        };
-
-        const allKPIs = [...baseKPIs, ...currencyKPIs, nonCompliantKPI];
+        const allKPIs = [...baseKPIs, ...currencyKPIs];
 
         // Adjust grid columns based on number of KPIs
         const gridCols = Math.min(allKPIs.length, 6);
@@ -2929,6 +2920,7 @@
         });
         const uniqueCountries = new Set(normalizedCountries.map(country => country.toLowerCase()));
         const totalCountries = normalizedCountries.length > 0 ? uniqueCountries.size : 0;
+        const nonCompliantCaspsCount = filteredNonCompliantData.length;
 
         return `
             <div class="kpi-card kpi-teal p-6 rounded-2xl shadow-lg text-white card-hover">
@@ -2949,6 +2941,16 @@
                         <p class="text-sm opacity-80 mt-1">Countries Represented</p>
                     </div>
                     <div class="text-4xl opacity-80">🌍</div>
+                </div>
+            </div>
+            <div class="kpi-card kpi-red p-6 rounded-2xl shadow-lg text-white card-hover">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-90 font-medium">Non-Compliant CASPs</p>
+                        <p class="text-3xl font-bold mt-2">${nonCompliantCaspsCount}</p>
+                        <p class="text-sm opacity-80 mt-1">Flagged Providers</p>
+                    </div>
+                    <div class="text-4xl opacity-80">⚠️</div>
                 </div>
             </div>
         `;
