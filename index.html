@@ -3469,6 +3469,31 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', initDashboard);
+    document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        let requestedView = params.get('view');
+
+        if (!requestedView && window.location.hash) {
+            requestedView = window.location.hash.replace('#', '');
+        }
+
+        if (requestedView) {
+            const normalized = requestedView.toLowerCase();
+            const viewMap = {
+                overview: 'overview',
+                emts: 'details',
+                details: 'details',
+                casps: 'casps',
+                noncompliant: 'nonCompliant',
+                'non-compliant': 'nonCompliant'
+            };
+
+            const targetTab = viewMap[normalized];
+            if (targetTab) {
+                switchTab(targetTab);
+            }
+        }
+    });
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
