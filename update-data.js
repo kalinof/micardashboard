@@ -360,8 +360,8 @@ function updateHtmlFile(newData, emtLastUpdated, nonCompliantEntries, caspsEntri
     const { longDate: emtLongDate } = formatDate(emtLastUpdated);
     const { longDate: caspsLongDate } = formatDate(caspsLastUpdated);
     const updatedHtmlWithDate = finalHtml
-        .replace(/Source: ESMA EMT Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA EMT Register – Data as of ${emtLongDate}`)
-        .replace(/Source: ESMA CASPs Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA CASPs Register – Data as of ${caspsLongDate}`);
+        .replace(/Source: ESMA EMT Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA EMT Register - Data as of ${emtLongDate}`)
+        .replace(/Source: ESMA CASPs Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA CASPs Register - Data as of ${caspsLongDate}`);
 
     fs.writeFileSync(htmlFile, updatedHtmlWithDate);
     console.log('✅ Dashboard updated successfully!');
