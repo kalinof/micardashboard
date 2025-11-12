@@ -359,9 +359,13 @@ function updateHtmlFile(newData, emtLastUpdated, nonCompliantEntries, caspsEntri
 
     const { longDate: emtLongDate } = formatDate(emtLastUpdated);
     const { longDate: caspsLongDate } = formatDate(caspsLastUpdated);
+    
+    const dashClass = '[\\uFFFD–-]'; // optional helper; inline if you prefer
     const updatedHtmlWithDate = finalHtml
-        .replace(/Source: ESMA EMT Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA EMT Register - Data as of ${emtLongDate}`)
-        .replace(/Source: ESMA CASPs Register\s*[–-]\s*Data as of [^<]+/, `Source: ESMA CASPs Register - Data as of ${caspsLongDate}`);
+    .replace(new RegExp(`Source:\\s*<a[^>]*>ESMA EMT Register<\\/a>\\s*${dashClass}\\s*Data as of [^<]+`),
+        `Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA EMT Register</a> - Data as of ${emtLongDate}`)
+    .replace(new RegExp(`Source:\\s*<a[^>]*>ESMA CASPs Register<\\/a>\\s*${dashClass}\\s*Data as of [^<]+`),
+        `Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA CASPs Register</a> - Data as of ${caspsLongDate}`);
 
     fs.writeFileSync(htmlFile, updatedHtmlWithDate);
     console.log('✅ Dashboard updated successfully!');
