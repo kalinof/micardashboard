@@ -357,38 +357,84 @@
 <body class="main-bg">
     <!-- Sticky Header -->
     <div class="header-sticky shadow-2xl">
-    <div class="max-w-7xl mx-auto px-6 py-6">
-    <div class="flex items-center justify-between flex-wrap header-content">
-    <div class="flex items-center space-x-6 mb-4 md:mb-0">
-        <img src="DEA%20logo%20white.png"
-             alt="DEA Logo" id="homeLogo" class="logo-container" role="button" tabindex="0"
-             aria-label="Return to the default dashboard view">
-        <div class="flex items-center">
-            <h1 class="text-[1.8rem] md:text-[2.2rem] font-bold text-white mb-0 leading-tight">
-                <span class="text-sky-100">MiCAR</span>
-                <span class="text-sky-50">Tracker</span>
-            </h1>
+      <header class="bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div class="flex items-center justify-between h-16 header-content">
+            <div class="flex items-center space-x-6">
+              <img src="DEA%20logo%20white.png"
+                   alt="DEA Logo" id="homeLogo" class="logo-container" role="button" tabindex="0"
+                   aria-label="Return to the default dashboard view">
+              <div class="flex items-center">
+                <h1 class="text-[1.8rem] md:text-[2.2rem] font-bold text-white mb-0 leading-tight">
+                  <span class="text-sky-100">MiCAR</span>
+                  <span class="text-sky-50">Tracker</span>
+                </h1>
+              </div>
+            </div>
+
+            <!-- Middle / Right: Desktop nav (visible from md and up) -->
+            <nav class="hidden md:flex md:items-center md:space-x-3 nav-buttons">
+              <button id="overviewBtn" type="button" class="tab-button tab-active px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+                <i class="fas fa-chart-pie mr-2"></i>Overview
+              </button>
+              <button id="detailsBtn" type="button" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+                <i class="fas fa-table mr-2"></i>EMTs
+              </button>
+              <button id="caspsBtn" type="button" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+                <i class="fas fa-building-columns mr-2"></i>CASPs
+              </button>
+              <button id="nonCompliantBtn" type="button" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+                <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
+              </button>
+              <a href="about.html" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+                <i class="fas fa-circle-info mr-2"></i>About
+              </a>
+            </nav>
+
+            <!-- Mobile hamburger button (visible on small screens) -->
+            <div class="md:hidden flex items-center">
+              <button id="mobile-menu-button"
+                      type="button"
+                      class="p-2 rounded-md text-white hover:text-sky-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                      aria-controls="mobile-menu"
+                      aria-expanded="false"
+                      aria-label="Open main menu">
+                <!-- Hamburger icon -->
+                <svg id="hamburger-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <!-- Close icon (hidden by default) -->
+                <svg id="close-icon" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
+      </header>
     </div>
-    <div class="flex items-center nav-buttons">
-    <button id="overviewBtn" class="tab-button tab-active px-5 py-3 rounded-xl font-semibold">
-    <i class="fas fa-chart-pie mr-2"></i>Overview
-    </button>
-    <button id="detailsBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
-    <i class="fas fa-table mr-2"></i>EMTs
-    </button>
-    <button id="caspsBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
-    <i class="fas fa-building-columns mr-2"></i>CASPs
-    </button>
-    <button id="nonCompliantBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
-    <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
-    </button>
-    <a href="about.html" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
-    <i class="fas fa-circle-info mr-2"></i>About
-    </a>
-    </div>
-    </div>
-    </div>
+
+    <!-- Mobile Popup Menu (like cookie banner) -->
+    <!-- Overlay to capture outside clicks (no visible color) -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 z-40 hidden" aria-hidden="true"></div>
+
+    <!-- Floating popup: small, centered horizontally, anchored bottom like cookie banner -->
+    <div id="mobile-menu"
+         class="fixed left-4 right-4 bottom-4 z-50 hidden">
+      <div class="mx-auto max-w-md bg-white/80 backdrop-blur-sm shadow-lg rounded-lg p-4 transition-transform duration-200 ease-out transform opacity-0 translate-y-6"
+           role="menu"
+           aria-labelledby="mobile-menu-button">
+        <!-- Menu items stacked vertically -->
+        <nav class="flex flex-col" role="none">
+          <button role="menuitem" type="button" data-tab-target="overview" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 text-left">Overview</button>
+          <button role="menuitem" type="button" data-tab-target="details" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 text-left">EMTs</button>
+          <button role="menuitem" type="button" data-tab-target="casps" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 text-left">CASPs</button>
+          <button role="menuitem" type="button" data-tab-target="nonCompliant" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 text-left">Non-Compliant</button>
+          <a role="menuitem" href="about.html" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600">About</a>
+        </nav>
+      </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-6 py-8">
@@ -4446,6 +4492,7 @@
         document.getElementById('year').textContent = new Date().getFullYear();
       });
     </script>
+    <script src="assets/js/mobile-menu.js" defer></script>
     <!-- Polyfill to render flag emojis correctly on Windows-based browsers -->
     <script type="module" defer>
       import { polyfillCountryFlagEmojis } from 'https://cdn.skypack.dev/country-flag-emoji-polyfill';
