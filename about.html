@@ -91,6 +91,43 @@
       }
     }
 
+    .floating-card {
+      max-width: 64rem;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border-radius: 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .floating-card h1,
+    .floating-card h2,
+    .floating-card p,
+    .floating-card li {
+      color: #0f172a;
+    }
+
+    .about-content ol,
+    .about-content ul {
+      list-style-position: outside;
+      padding-left: 1.5rem;
+      margin-left: 0.5rem;
+    }
+
+    .about-content li {
+      line-height: 1.75;
+    }
+
+    .about-content ul {
+      list-style-type: disc;
+    }
+
+    .about-content ol {
+      list-style-type: decimal;
+    }
+
     /* ==== Cookie banner styles (match index.html) ==== */
     .cookie-banner {
       position: fixed;
@@ -273,8 +310,8 @@
     </div>
   </div>
 
-  <main class="max-w-5xl mx-auto my-10 px-6">
-    <div class="bg-white shadow-md rounded-lg p-8">
+  <main class="max-w-7xl mx-auto my-10 px-6">
+    <div class="floating-card p-8 md:p-10 about-content">
       <header class="mb-8">
         <h1 class="text-3xl font-semibold mb-3 text-gray-900">About the MiCAR Tracker</h1>
       </header>
