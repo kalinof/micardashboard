@@ -190,6 +190,7 @@
         padding: 0.5rem 1rem;  /* tighter buttons */
         font-size: 0.875rem;   /* Tailwind 'text-sm' */
     }
+
     </style>
     <style>
     /* hide the "xx.x% of total" under each card */
@@ -426,21 +427,26 @@
            role="menu"
            aria-labelledby="mobile-menu-button">
         <!-- Menu items stacked vertically -->
-        <nav class="flex flex-col" role="none">
-          <button role="menuitem" type="button" data-tab-target="overview" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 text-left flex items-center gap-3">
-            <i class="fas fa-chart-pie"></i><span>Overview</span>
+        <nav class="flex flex-col mobile-menu-list" role="none">
+          <button role="menuitem" type="button" data-tab-target="overview" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600 text-left">
+            <span class="mobile-menu-icon"><i class="fas fa-chart-pie"></i></span>
+            <span class="mobile-menu-text">Overview</span>
           </button>
-          <button role="menuitem" type="button" data-tab-target="details" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 text-left flex items-center gap-3">
-            <i class="fas fa-table"></i><span>EMTs</span>
+          <button role="menuitem" type="button" data-tab-target="details" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600 text-left">
+            <span class="mobile-menu-icon"><i class="fas fa-table"></i></span>
+            <span class="mobile-menu-text">EMTs</span>
           </button>
-          <button role="menuitem" type="button" data-tab-target="casps" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 text-left flex items-center gap-3">
-            <i class="fas fa-building-columns"></i><span>CASPs</span>
+          <button role="menuitem" type="button" data-tab-target="casps" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600 text-left">
+            <span class="mobile-menu-icon"><i class="fas fa-building-columns"></i></span>
+            <span class="mobile-menu-text">CASPs</span>
           </button>
-          <button role="menuitem" type="button" data-tab-target="nonCompliant" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 text-left flex items-center gap-3">
-            <i class="fas fa-exclamation-triangle"></i><span>Non-Compliant</span>
+          <button role="menuitem" type="button" data-tab-target="nonCompliant" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600 text-left">
+            <span class="mobile-menu-icon"><i class="fas fa-exclamation-triangle"></i></span>
+            <span class="mobile-menu-text">Non-Compliant</span>
           </button>
-          <a role="menuitem" href="about.html" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 flex items-center gap-3">
-            <i class="fas fa-circle-info"></i><span>About</span>
+          <a role="menuitem" href="about.html" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600">
+            <span class="mobile-menu-icon"><i class="fas fa-circle-info"></i></span>
+            <span class="mobile-menu-text">About</span>
           </a>
         </nav>
       </div>
