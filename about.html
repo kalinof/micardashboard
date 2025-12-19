@@ -68,9 +68,8 @@
 
     @media (max-width: 768px) {
       .header-content {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1.25rem;
+        align-items: center;
+        gap: 0.75rem;
       }
 
       .nav-buttons {
@@ -83,12 +82,44 @@
       .nav-buttons .tab-button {
         flex: 1 1 calc(50% - 0.75rem);
       }
+
+      .header-sticky.shrink .nav-buttons .tab-button {
+        font-size: 0.875rem;
+        padding: 0.75rem 1rem;
+      }
     }
 
     @media (max-width: 400px) {
       .nav-buttons .tab-button {
         flex-basis: 100%;
       }
+    }
+
+    /* === Sticky header shrink on scroll === */
+    .header-sticky {
+      transition: all 0.3s ease-in-out;
+    }
+
+    .header-sticky.shrink {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .header-sticky.shrink .logo-container {
+      max-height: 40px;
+    }
+
+    .header-sticky.shrink h1 {
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+    }
+
+    .header-sticky.shrink .additional-info {
+      display: none;
+    }
+
+    .header-sticky.shrink .tab-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
     }
 
     .floating-card {
@@ -347,11 +378,21 @@
          aria-labelledby="mobile-menu-button">
       <!-- Menu items stacked vertically -->
       <nav class="flex flex-col" role="none">
-        <a role="menuitem" href="index.html" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600">Overview</a>
-        <a role="menuitem" href="index.html#details" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600">EMTs</a>
-        <a role="menuitem" href="index.html#casps" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600">CASPs</a>
-        <a role="menuitem" href="index.html#non-compliant" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600">Non-Compliant</a>
-        <a role="menuitem" href="about.html" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600">About</a>
+        <a role="menuitem" href="index.html" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 flex items-center gap-3">
+          <i class="fas fa-chart-pie"></i><span>Overview</span>
+        </a>
+        <a role="menuitem" href="index.html#details" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 flex items-center gap-3">
+          <i class="fas fa-table"></i><span>EMTs</span>
+        </a>
+        <a role="menuitem" href="index.html#casps" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 flex items-center gap-3">
+          <i class="fas fa-building-columns"></i><span>CASPs</span>
+        </a>
+        <a role="menuitem" href="index.html#non-compliant" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 flex items-center gap-3">
+          <i class="fas fa-exclamation-triangle"></i><span>Non-Compliant</span>
+        </a>
+        <a role="menuitem" href="about.html" class="py-3 px-2 text-base font-medium text-gray-800 hover:text-indigo-600 flex items-center gap-3">
+          <i class="fas fa-circle-info"></i><span>About</span>
+        </a>
       </nav>
     </div>
   </div>
@@ -655,6 +696,17 @@
     }
   });
 </script>
+  <script>
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header-sticky');
+      if (!header) return;
+      if (window.scrollY > 20) {
+        header.classList.add('shrink');
+      } else {
+        header.classList.remove('shrink');
+      }
+    });
+  </script>
   <script src="assets/js/mobile-menu.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
