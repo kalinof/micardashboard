@@ -441,7 +441,7 @@
           <li>Non-compliant entities providing crypto-asset services</li>
         </ol>
         <p class="text-base leading-7 text-gray-700 mt-3">
-          Note: the Tracker currently does not include full white papers or ARTs where those datasets are not provided in the interim register. We only ingest and present the datasets ESMA publishes.
+          Note: the Tracker currently does not include white papers or ARTs.
         </p>
       </section>
 
@@ -490,13 +490,13 @@
         </p>
         <ul class="list-disc ml-6 mt-3 space-y-2 text-gray-700">
           <li>Filter out default or redundant CSV columns that are noisy for quick comparison.</li>
-          <li>Enrich records with DEA’s own, non-confidential annotations (for example, clarifying service names, normalising date formats, or grouping asset-types for readability).
+          <li>Records are enriched with DEA’s own, non-confidential annotations to improve clarity and usability, such as explicitly naming EMT assets where identifiers are ambiguous, simplifying and standardising service descriptions for CASPs, and grouping asset types for easier interpretation.
             <ul class="list-disc ml-6 mt-2 space-y-2">
               <li><span class="font-semibold">EMT handling:</span> for E-money tokens (EMTs), where the CSV data is difficult to digest, we combine roles from the CSV and connect them to the same company so readers see a consolidated company view rather than many fragmented rows.</li>
               <li><span class="font-semibold">Stablecoin linking:</span> we also attempt to connect stablecoins to issuers and identify which stablecoins an entity is issuing or for which stablecoins they have added a white paper in the registry.</li>
             </ul>
           </li>
-          <li>Annotate provenance — where possible we point to the ESMA CSV row or the NCA source behind a given entry.</li>
+          <li>Add KPI cards with statistics for quick overview.</li>
         </ul>
         <p class="text-base leading-7 text-gray-700 mt-3">
           We do not alter the underlying facts reported by ESMA or NCAs — our changes are limited to presentation, column selection, linking, and helpful contextual notes. Because much of the enrichment involves non-automated, manual work, errors may occasionally arise; we do our best to minimise and correct mistakes and to keep the enriched information up to date.
