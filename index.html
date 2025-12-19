@@ -4370,6 +4370,29 @@
         }
     }
 
+    function getTabFromHash() {
+        const rawHash = window.location.hash.replace('#', '').toLowerCase();
+        if (!rawHash) return null;
+
+        const hashMap = {
+            overview: 'overview',
+            details: 'details',
+            emts: 'details',
+            casps: 'casps',
+            'non-compliant': 'nonCompliant',
+            noncompliant: 'nonCompliant'
+        };
+
+        return hashMap[rawHash] || null;
+    }
+
+    function syncTabWithHash() {
+        const tab = getTabFromHash();
+        if (tab) {
+            switchTab(tab);
+        }
+    }
+
     function resetDashboard() {
         switchTab('overview');
 
@@ -4444,7 +4467,11 @@
     });
 
     // Initialize on page load
-    document.addEventListener('DOMContentLoaded', initDashboard);
+    document.addEventListener('DOMContentLoaded', () => {
+        initDashboard();
+        syncTabWithHash();
+        window.addEventListener('hashchange', syncTabWithHash);
+    });
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
