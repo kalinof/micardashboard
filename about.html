@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — MiCAR Tracker</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles/tailwind.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    body {
+      font-family: "Twemoji Country Flags", 'Inter', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+      background: linear-gradient(90deg, #58c1ba, #004aad);
+      min-height: 100vh;
+    }
+
+    .main-bg {
+      background: linear-gradient(90deg, #58c1ba, #004aad);
+    }
+
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(90deg, rgba(88, 193, 186, 0.95), rgba(0, 74, 173, 0.95));
+      transition: all 0.3s ease-in-out;
+    }
+
+    .logo-container {
+      max-height: 80px;
+      width: auto;
+      margin-right: 20px;
+      cursor: pointer;
+      border-radius: 0.75rem;
+    }
+
+    .tab-button {
+      transition: all 0.3s ease;
+    }
+
+    .tab-active {
+      background: white;
+      color: #1e40af;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab-inactive {
+      background: rgba(59, 130, 246, 0.3);
+      color: white;
+    }
+
+    .tab-inactive:hover {
+      background: rgba(59, 130, 246, 0.5);
+    }
+
+    .nav-buttons {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    .nav-buttons .tab-button {
+      flex: 1 1 auto;
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .nav-buttons {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-buttons .tab-button {
+        flex: 1 1 calc(50% - 0.75rem);
+      }
+
+      .header-sticky.shrink .nav-buttons .tab-button {
+        font-size: 0.875rem;
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .nav-buttons .tab-button {
+        flex-basis: 100%;
+      }
+    }
+
+    /* === Sticky header shrink on scroll === */
+    .header-sticky {
+      transition: all 0.3s ease-in-out;
+    }
+
+    .header-sticky.shrink {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .header-sticky.shrink .logo-container {
+      max-height: 40px;
+    }
+
+    .header-sticky.shrink h1 {
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+    }
+
+    .header-sticky.shrink .additional-info {
+      display: none;
+    }
+
+    .header-sticky.shrink .tab-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+
+    .floating-card {
+      max-width: 64rem;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border-radius: 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .floating-card h1,
+    .floating-card h2,
+    .floating-card p,
+    .floating-card li {
+      color: #0f172a;
+    }
+
+    .about-content ol,
+    .about-content ul {
+      list-style-position: outside;
+      padding-left: 1.5rem;
+      margin-left: 0.5rem;
+    }
+
+    .about-content li {
+      line-height: 1.75;
+    }
+
+    .about-content ul {
+      list-style-type: disc;
+    }
+
+    .about-content ol {
+      list-style-type: decimal;
+    }
+
+    /* ==== Cookie banner styles (match index.html) ==== */
+    .cookie-banner {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: min(22rem, calc(100% - 2rem));
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 64, 175, 0.95));
+      color: #f8fafc;
+      border-radius: 1.25rem;
+      box-shadow: 0 20px 45px -20px rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .cookie-banner.cookie-hidden {
+      transform: translateY(25px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .cookie-banner h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .cookie-banner p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .cookie-banner .cookie-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .cookie-banner .cookie-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: #facc15;
+      font-size: 1.25rem;
+    }
+
+    .cookie-banner .cookie-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .cookie-banner button {
+      font: inherit;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cookie-banner .cookie-accept {
+      padding: 0.65rem 1.5rem;
+      border-radius: 9999px;
+      background: #ffffff;
+      color: #1e40af;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cookie-banner .cookie-accept:hover,
+    .cookie-banner .cookie-accept:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px -12px rgba(15, 23, 42, 0.9);
+    }
+
+    .cookie-banner .cookie-dismiss {
+      padding: 0.65rem 1.15rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #f8fafc;
+      font-weight: 500;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .cookie-banner .cookie-dismiss:hover,
+    .cookie-banner .cookie-dismiss:focus-visible {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .cookie-banner .cookie-close {
+      position: absolute;
+      top: 0.65rem;
+      right: 0.65rem;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      background: transparent;
+      color: #cbd5f5;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .cookie-banner .cookie-close:hover,
+    .cookie-banner .cookie-close:focus-visible {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    @media (max-width: 640px) {
+      .cookie-banner {
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+        bottom: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cookie-banner {
+        transition: none;
+      }
+
+      .cookie-banner.cookie-hidden {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="main-bg text-gray-900">
+  <div class="header-sticky shadow-2xl">
+    <header class="bg-transparent">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex items-center justify-between h-16 header-content">
+          <div class="flex items-center space-x-6">
+            <a href="index.html" class="inline-flex items-center" aria-label="Return to the dashboard">
+              <img src="DEA%20logo%20white.png" alt="DEA Logo" class="logo-container">
+            </a>
+            <div class="flex items-center">
+              <h1 class="text-[1.8rem] md:text-[2.2rem] font-bold text-white mb-0 leading-tight">
+                <span class="text-sky-100">MiCAR</span>
+                <span class="text-sky-50">Tracker</span>
+              </h1>
+            </div>
+          </div>
+
+          <!-- Middle / Right: Desktop nav (visible from md and up) -->
+          <nav class="hidden md:flex md:items-center md:space-x-3 nav-buttons">
+            <a href="index.html" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+              <i class="fas fa-chart-pie mr-2"></i>Overview
+            </a>
+            <a href="index.html#details" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+              <i class="fas fa-table mr-2"></i>EMTs
+            </a>
+            <a href="index.html#casps" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+              <i class="fas fa-building-columns mr-2"></i>CASPs
+            </a>
+            <a href="index.html#non-compliant" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+              <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
+            </a>
+            <a href="about.html" class="tab-button tab-active px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
+              <i class="fas fa-circle-info mr-2"></i>About
+            </a>
+          </nav>
+
+          <!-- Mobile hamburger button (visible on small screens) -->
+          <div class="md:hidden flex items-center">
+            <button id="mobile-menu-button"
+                    type="button"
+                    class="p-2 rounded-md text-white hover:text-sky-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                    aria-controls="mobile-menu"
+                    aria-expanded="false"
+                    aria-label="Open main menu">
+              <!-- Hamburger icon -->
+              <svg id="hamburger-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <!-- Close icon (hidden by default) -->
+              <svg id="close-icon" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- Mobile Popup Menu (like cookie banner) -->
+  <!-- Overlay to capture outside clicks (no visible color) -->
+  <div id="mobile-menu-overlay" class="fixed inset-0 z-40 hidden" aria-hidden="true"></div>
+
+  <!-- Floating popup: small, centered horizontally, anchored bottom like cookie banner -->
+  <div id="mobile-menu"
+       class="fixed left-4 right-4 bottom-4 z-50 hidden">
+    <div class="mx-auto max-w-md bg-white/80 backdrop-blur-sm shadow-lg rounded-lg p-4 transition-transform duration-200 ease-out transform opacity-0 translate-y-6"
+         role="menu"
+         aria-labelledby="mobile-menu-button">
+      <!-- Menu items stacked vertically -->
+      <nav class="flex flex-col mobile-menu-list" role="none">
+        <a role="menuitem" href="index.html" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600">
+          <span class="mobile-menu-icon"><i class="fas fa-chart-pie"></i></span>
+          <span class="mobile-menu-text">Overview</span>
+        </a>
+        <a role="menuitem" href="index.html#details" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600">
+          <span class="mobile-menu-icon"><i class="fas fa-table"></i></span>
+          <span class="mobile-menu-text">EMTs</span>
+        </a>
+        <a role="menuitem" href="index.html#casps" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600">
+          <span class="mobile-menu-icon"><i class="fas fa-building-columns"></i></span>
+          <span class="mobile-menu-text">CASPs</span>
+        </a>
+        <a role="menuitem" href="index.html#non-compliant" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600">
+          <span class="mobile-menu-icon"><i class="fas fa-exclamation-triangle"></i></span>
+          <span class="mobile-menu-text">Non-Compliant</span>
+        </a>
+        <a role="menuitem" href="about.html" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600">
+          <span class="mobile-menu-icon"><i class="fas fa-circle-info"></i></span>
+          <span class="mobile-menu-text">About</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="max-w-7xl mx-auto my-10 px-6">
+    <div class="floating-card p-8 md:p-10 about-content">
+      <header class="mb-8">
+        <h1 class="text-3xl font-semibold mb-3 text-gray-900">About the MiCAR Tracker</h1>
+      </header>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">What the MiCAR Tracker is</h2>
+        <p class="text-base leading-7 text-gray-700">
+          The MiCAR Tracker is a lightweight, open project that gathers and digests public information about crypto-asset actors covered by the EU Markets in Crypto-Assets rules. Its purpose is simple: give the community and industry stakeholders clearer, comparable, and easy-to-scan information on market behaviour, costs, and compliance signals. Think of the tracker as a navigation compass — it helps identify places worth deeper investigation, but it is not a substitute for formal audits or regulatory reviews.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">What is MiCAR (MiCA)</h2>
+        <p class="text-base leading-7 text-gray-700">
+          MiCAR — Markets in Crypto-Assets Regulation (often abbreviated MiCA) is the European Union’s legal framework to regulate crypto-assets and the services around them. MiCAR is intended to support the safe adoption of blockchain and distributed ledger technology while protecting users and investors. The EU Parliament adopted MiCAR on 20 April 2023, and the regulation became fully applicable in December 2024.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">What is ESMA</h2>
+        <p class="text-base leading-7 text-gray-700">
+          ESMA (the European Securities and Markets Authority) is the EU’s markets regulator and supervisor. ESMA coordinates supervisory activity across member states, hosts registers required by MiCAR, and publishes the interim MiCA register that this Tracker uses as a primary source. ESMA’s interim register is intended to meet the MiCAR legal deadline and is being updated regularly until it is fully integrated into ESMA’s IT systems.
+        </p>
+        <p class="text-base leading-7 text-gray-700 mt-3">
+          Official ESMA MiCA page &amp; interim register:<br>
+          <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-700 underline">https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister</a>
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">What the ESMA (Interim) MiCA Register contains</h2>
+        <p class="text-base leading-7 text-gray-700">
+          To comply with Articles 109 and 110 of MiCAR, ESMA publishes a central register. To meet the legal deadline ESMA prepared an interim MiCA register (a set of CSV files) that will be re-published at regular intervals until the register is formally integrated into ESMA systems (planned for mid-2026). The interim register consists of five CSV files:
+        </p>
+        <ol class="list-decimal ml-6 mt-3 space-y-2 text-gray-700">
+          <li>White papers for crypto-assets other than asset-referenced tokens and e-money tokens (Title II)</li>
+          <li>Issuers of asset-referenced tokens (Title III)</li>
+          <li>Issuers of e-money tokens (Title IV)</li>
+          <li>Authorised crypto-asset service providers (Title V)</li>
+          <li>Non-compliant entities providing crypto-asset services</li>
+        </ol>
+        <p class="text-base leading-7 text-gray-700 mt-3">
+          Note: the Tracker currently does not include white papers or ARTs.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">What data we pull (and what we don’t)</h2>
+        <p class="text-base leading-7 text-gray-700">
+          From the ESMA interim register and related public sources, the DEA pulls and presents the following datasets:
+        </p>
+        <ul class="list-disc ml-6 mt-3 space-y-2 text-gray-700">
+          <li>E-money tokens (EMTs) — issuers and meta information where available</li>
+          <li>Crypto-asset service providers (CASPs) that are listed as authorised by NCAs / reported to ESMA</li>
+          <li>Non-compliant CASPs — entities flagged by NCAs or ESMA as non-compliant</li>
+        </ul>
+        <p class="text-base leading-7 text-gray-700 mt-4">Not included / intentionally not pulled at this time:</p>
+        <ul class="list-disc ml-6 mt-2 space-y-2 text-gray-700">
+          <li>White papers. The Tracker does not ingest or publish white paper data.</li>
+          <li>Issuers of asset-referenced tokens (ARTs). We have chosen not to pull these datasets for the public tracker at this stage.</li>
+        </ul>
+        <p class="text-base leading-7 text-gray-700 mt-3">
+          Why: DEA has intentionally chosen not to ingest these particular datasets right now (rather than them being absent from ESMA). We may add white papers and ARTs if there is significant community interest or demand.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">What are National Competent Authorities (NCAs)?</h2>
+        <p class="text-base leading-7 text-gray-700">
+          Each EU member state designates one or more National Competent Authorities (NCAs) to perform the supervisory duties assigned by MiCAR. NCAs provide data to ESMA and cooperate with other NCAs and European authorities (including the EBA and ESMA) for supervision, investigations, and enforcement. Where multiple authorities are appointed in a member state, they must agree a single point of contact to liaise with ESMA and other member states.
+        </p>
+        <p class="text-base leading-7 text-gray-700 mt-3">
+          NCAs are the primary reporters of authorisations, authorisation dates, services provided, and any compliance or enforcement actions that appear in the ESMA register.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">Interim register &amp; update frequency — how we sync data</h2>
+        <ul class="list-disc ml-6 space-y-2 text-gray-700">
+          <li><span class="font-semibold">ESMA publishes updated interim CSVs on a weekly cadence.</span> The interim register is a rolling dataset: NCAs submit information to ESMA and ESMA republishes the register weekly.</li>
+          <li><span class="font-semibold">How we pull it:</span> DEA pulls the interim CSVs once per week. Because of publication timing and processing, there can be up to a three-day delay between ESMA publishing an update and our Tracker reflecting that update. Treat the Tracker as showing the most recent weekly snapshot processed by DEA, not a real-time feed. The latest update date is refreshed at the bottom of this website.</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">Do we change the data? (Filtering &amp; enrichment)</h2>
+        <p class="text-base leading-7 text-gray-700">
+          We present ESMA’s public data in a more digestible form for readers. To do that we:
+        </p>
+        <ul class="list-disc ml-6 mt-3 space-y-2 text-gray-700">
+          <li>Filter out default or redundant CSV columns that are noisy for quick comparison.</li>
+          <li>Records are enriched with DEA’s own, non-confidential annotations to improve clarity and usability, such as explicitly naming EMT assets where identifiers are ambiguous, simplifying and standardising service descriptions for CASPs, and grouping asset types for easier interpretation.
+            <ul class="list-disc ml-6 mt-2 space-y-2">
+              <li><span class="font-semibold">EMT handling:</span> for E-money tokens (EMTs), where the CSV data is difficult to digest, we combine roles from the CSV and connect them to the same company so readers see a consolidated company view rather than many fragmented rows.</li>
+              <li><span class="font-semibold">Stablecoin linking:</span> we also attempt to connect stablecoins to issuers and identify which stablecoins an entity is issuing or for which stablecoins they have added a white paper in the registry.</li>
+            </ul>
+          </li>
+          <li>Add KPI cards with statistics for quick overview.</li>
+        </ul>
+        <p class="text-base leading-7 text-gray-700 mt-3">
+          We do not alter the underlying facts reported by ESMA or NCAs — our changes are limited to presentation, column selection, linking, and helpful contextual notes. Because much of the enrichment involves non-automated, manual work, errors may occasionally arise; we do our best to minimise and correct mistakes and to keep the enriched information up to date.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">Why we built it</h2>
+        <p class="text-base leading-7 text-gray-700">
+          Our aim is to turn raw public data into concise, comparable summaries so people — whether community members, journalists, industry practitioners, or policymakers — can better understand market dynamics, costs, and compliance posture. The Tracker is a first-look tool: it helps spot trends and anomalies quickly and points researchers toward the official sources for deeper work.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">Who leads this project</h2>
+        <p class="text-base leading-7 text-gray-700">
+          This project is led by the Digital Euro Association (DEA). The MiCAR Tracker is a DEA initiative to improve transparency in the digital-money ecosystem.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">DEA — mission &amp; core pillars</h2>
+        <p class="text-base leading-7 text-gray-700">
+          The Digital Euro Association is an independent voice committed to advancing values such as freedom, privacy, and transparent governance in digital money.
+        </p>
+        <div class="mt-4 space-y-4 text-gray-700">
+          <div>
+            <h3 class="font-semibold text-gray-900">What we do</h3>
+            <p>We focus on emerging topics such as CBDCs and stablecoins and on novel forms of digital money and payment infrastructures.</p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-gray-900">Who we are</h3>
+            <p>A think tank specialising in central bank digital currencies (CBDCs), stablecoins, and other forms of digital fiat currencies.</p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-gray-900">Mission</h3>
+            <p>DEA promotes independence in aggregating and amplifying societal views, furthers the public good through knowledge exchange, and encourages forward-thinking in digital money. Partnerships do not imply endorsement of member ideologies, products, or political regimes.</p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-gray-900">Core pillars:</h3>
+            <ul class="list-disc ml-5 mt-2 space-y-1">
+              <li><strong>Education:</strong> publications, conferences, courses, and working groups</li>
+              <li><strong>Community &amp; Collaboration:</strong> multidisciplinary networks and cross-institutional exchange</li>
+              <li><strong>Public Affairs:</strong> engagement with European bodies, advisory work on CBDC/stablecoin policy</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">Sources, methodology &amp; transparency</h2>
+        <p class="text-base leading-7 text-gray-700">
+          The official ESMA MiCA page and interim register is the primary source for the datasets used by this Tracker:
+        </p>
+        <p class="text-base leading-7 text-gray-700 mt-2">
+          ESMA Interim MiCA Register:<br>
+          <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-700 underline">https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister</a>
+        </p>
+      </section>
+
+      <section class="mb-2">
+        <h2 class="text-2xl font-semibold mb-3 text-gray-900">Contact &amp; corrections</h2>
+        <p class="text-base leading-7 text-gray-700">
+          If you spot an error, omission, or have a suggested improvement, please:
+        </p>
+        <ul class="list-disc ml-6 mt-2 space-y-2 text-gray-700">
+          <li>Contact the Digital Euro Association (link available in the page footer).</li>
+        </ul>
+        <p class="text-base leading-7 text-gray-700 mt-3">
+          We welcome corrections and will update the Tracker when authoritative sources (ESMA/NCAs) change or when we identify presentation mistakes. Our goal is to be fully transparent about sources, dates, and any enrichment we add.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ==== DEA FOOTER START ==== -->
+  <footer class="bg-gray-900 text-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-10 space-y-10">
+
+      <!-- ── Headline & snapshot date ── -->
+      <div class="text-center">
+        <p class="text-gray-300">
+          Digital Euro Association (DEA) MiCAR Tracker – Overview
+        </p>
+        <p class="text-gray-400 text-sm mt-2" id="currentDate">
+          Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA EMT Register</a> - Data as of 15 December 2025</p>
+        <p class="text-gray-400 text-sm" id="caspsDate">Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA CASPs Register</a> - Data as of 15 December 2025</p>
+      </div>
+
+      <!-- ── Nav links + social icons ── -->
+      <div class="flex flex-col md:flex-row md:justify-between gap-8">
+        <!-- Nav -->
+        <nav>
+          <ul class="space-y-2 md:space-y-0 md:flex md:gap-6 text-sm">
+            <li><a href="https://home.digital-euro-association.de/legal-notice?hsLang=en"  target="_blank" rel="noopener" class="hover:text-white font-semibold">Legal Notice</a></li>
+            <li><a href="https://home.digital-euro-association.de/privacy-policy-0?hsLang=en" target="_blank" rel="noopener" class="hover:text-white font-semibold">Privacy</a></li>
+            <li><a href="https://home.digital-euro-association.de/code-of-conduct?hsLang=en"  target="_blank" rel="noopener" class="hover:text-white font-semibold">Code of Conduct</a></li>
+            <li><a href="https://home.digital-euro-association.de/faq?hsLang=en"            target="_blank" rel="noopener" class="hover:text-white font-semibold">FAQ</a></li>
+            <li><a href="https://home.digital-euro-association.de/impressum?hsLang=en"      target="_blank" rel="noopener" class="hover:text-white font-semibold">Impressum</a></li>
+          </ul>
+        </nav>
+
+        <!-- Social -->
+        <div class="flex items-center gap-6 text-xl">
+          <a href="https://x.com/DigiEuro" target="_blank" aria-label="Twitter"  class="hover:text-white"><i class="fab fa-twitter"></i></a>
+          <a href="mailto:info@digital-euro-association.de" target="_blank" aria-label="Email" class="hover:text-white"><i class="fas fa-envelope"></i></a>
+          <a href="https://www.linkedin.com/company/digital-euro-association/" target="_blank" aria-label="LinkedIn" class="hover:text-white"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/DigiEuro/micardashboard" target="_blank" aria-label="GitHub" class="hover:text-white"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+
+      <!-- ── Bottom row: copyright + CTA ── -->
+      <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        <p class="text-xs">&copy; <span id="year"></span> Digital Euro Association e.V.</p>
+
+        <a href="https://digital-euro-association.de"
+           class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow transition">
+          Learn more about DEA
+        </a>
+      </div>
+    </div>
+  </footer>
+  <div id="cookieConsent" class="cookie-banner cookie-hidden" role="dialog" aria-live="polite" aria-modal="false" aria-labelledby="cookieTitle" aria-describedby="cookieDescription" aria-hidden="true">
+    <button type="button" id="cookieDismiss" class="cookie-close" aria-label="Dismiss cookie notice">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="cookie-header">
+      <div class="cookie-icon" aria-hidden="true">
+        <i class="fas fa-cookie-bite"></i>
+      </div>
+      <h2 id="cookieTitle">Cookie notice</h2>
+    </div>
+    <p id="cookieDescription">We use essential cookies to keep this dashboard running smoothly. Our privacy-friendly analytics (Umami) operates without cookies.</p>
+    <div class="cookie-actions">
+      <button type="button" id="cookieAccept" class="cookie-accept">Got it</button>
+      <button type="button" id="cookieRemind" class="cookie-dismiss">Remind me later</button>
+    </div>
+  </div>
+  <!-- ==== DEA FOOTER END ==== -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const consentBanner = document.getElementById('cookieConsent');
+      if (!consentBanner) {
+        return;
+      }
+
+      const storageKey = 'micardashboard-cookie-consent';
+
+      const getStoredValue = () => {
+        try {
+          return window.localStorage.getItem(storageKey);
+        } catch (error) {
+          return null;
+        }
+      };
+
+      const setStoredValue = (value) => {
+        try {
+          window.localStorage.setItem(storageKey, value);
+        } catch (error) {
+          // Ignore storage errors (e.g., private browsing)
+        }
+      };
+
+      const hideBanner = () => {
+        consentBanner.classList.add('cookie-hidden');
+        consentBanner.setAttribute('aria-hidden', 'true');
+      };
+
+      const showBanner = () => {
+        consentBanner.classList.remove('cookie-hidden');
+        consentBanner.removeAttribute('aria-hidden');
+      };
+
+      const acceptButton = document.getElementById('cookieAccept');
+      const dismissButton = document.getElementById('cookieDismiss');
+      const remindButton = document.getElementById('cookieRemind');
+
+      acceptButton?.addEventListener('click', () => {
+        setStoredValue('accepted');
+        hideBanner();
+      });
+
+      const handleRemind = () => {
+        hideBanner();
+      };
+
+      dismissButton?.addEventListener('click', handleRemind);
+    remindButton?.addEventListener('click', handleRemind);
+
+    if (!getStoredValue()) {
+      window.setTimeout(showBanner, 800);
+    }
+  });
+</script>
+  <script>
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header-sticky');
+      if (!header) return;
+      if (window.scrollY > 20) {
+        header.classList.add('shrink');
+      } else {
+        header.classList.remove('shrink');
+      }
+    });
+  </script>
+  <script src="assets/js/mobile-menu.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const yearEl = document.getElementById('year');
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+    });
+  </script>
+</body>
+</html>

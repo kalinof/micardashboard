@@ -2,7 +2,9 @@ module.exports = {
   content: [
     './index.html',
     './config.js',
-    './update-data.js'
+    './about.html',
+    './update-data.js',
+    './assets/js/**/*.js'
   ],
   theme: {
     extend: {},
