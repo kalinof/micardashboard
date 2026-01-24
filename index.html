@@ -128,8 +128,9 @@
 
     @media (max-width: 768px) {
         .header-content {
-            align-items: center;
-            gap: 0.75rem;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1.25rem;
         }
 
         .nav-buttons {
@@ -190,7 +191,6 @@
         padding: 0.5rem 1rem;  /* tighter buttons */
         font-size: 0.875rem;   /* Tailwind 'text-sm' */
     }
-
     </style>
     <style>
     /* hide the "xx.x% of total" under each card */
@@ -369,43 +369,23 @@
                 <span class="text-sky-50">Tracker</span>
             </h1>
         </div>
-      </header>
     </div>
-
-    <!-- Mobile Popup Menu (like cookie banner) -->
-    <!-- Overlay to capture outside clicks (no visible color) -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 z-40 hidden" aria-hidden="true"></div>
-
-    <!-- Floating popup: small, centered horizontally, anchored bottom like cookie banner -->
-    <div id="mobile-menu"
-         class="fixed left-4 right-4 bottom-4 z-50 hidden">
-      <div class="mx-auto max-w-md bg-white/80 backdrop-blur-sm shadow-lg rounded-lg p-4 transition-transform duration-200 ease-out transform opacity-0 translate-y-6"
-           role="menu"
-           aria-labelledby="mobile-menu-button">
-        <!-- Menu items stacked vertically -->
-        <nav class="flex flex-col mobile-menu-list" role="none">
-          <button role="menuitem" type="button" data-tab-target="overview" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600 text-left">
-            <span class="mobile-menu-icon"><i class="fas fa-chart-pie"></i></span>
-            <span class="mobile-menu-text">Overview</span>
-          </button>
-          <button role="menuitem" type="button" data-tab-target="details" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600 text-left">
-            <span class="mobile-menu-icon"><i class="fas fa-table"></i></span>
-            <span class="mobile-menu-text">EMTs</span>
-          </button>
-          <button role="menuitem" type="button" data-tab-target="casps" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600 text-left">
-            <span class="mobile-menu-icon"><i class="fas fa-building-columns"></i></span>
-            <span class="mobile-menu-text">CASPs</span>
-          </button>
-          <button role="menuitem" type="button" data-tab-target="nonCompliant" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600 text-left">
-            <span class="mobile-menu-icon"><i class="fas fa-exclamation-triangle"></i></span>
-            <span class="mobile-menu-text">Non-Compliant</span>
-          </button>
-          <a role="menuitem" href="about.html" class="mobile-menu-link mobile-menu-item text-base font-medium text-gray-800 hover:text-indigo-600">
-            <span class="mobile-menu-icon"><i class="fas fa-circle-info"></i></span>
-            <span class="mobile-menu-text">About</span>
-          </a>
-        </nav>
-      </div>
+    <div class="flex items-center nav-buttons">
+    <button id="overviewBtn" class="tab-button tab-active px-5 py-3 rounded-xl font-semibold">
+    <i class="fas fa-chart-pie mr-2"></i>Overview
+    </button>
+    <button id="detailsBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
+    <i class="fas fa-table mr-2"></i>EMTs
+    </button>
+    <button id="caspsBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
+    <i class="fas fa-building-columns mr-2"></i>CASPs
+    </button>
+    <button id="nonCompliantBtn" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold">
+    <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
+    </button>
+    </div>
+    </div>
+    </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-6 py-8">
@@ -1669,117 +1649,12 @@
         ]
     },
     {
-        "id": 42,
-        "name": "Hyphe Markets GmbH",
-        "authority": "BaFin",
-        "memberState": "Germany",
-        "services": [
-            "execution"
-        ],
-        "websites": [
-            "https://www.vr-teilhaberbank.de"
-        ]
-    },
-    {
-        "id": 43,
-        "name": "Deutsche WertpapierService Bank AG",
-        "authority": "BaFin",
-        "memberState": "Germany",
-        "services": [
-            "execution"
-        ],
-        "websites": [
-            "https://www.voba-msw.de"
-        ]
-    },
-    {
-        "id": 44,
-        "name": "DekaBank Deutsche Girozentrale",
-        "authority": "BaFin",
-        "memberState": "Germany",
-        "services": [
-            "custody",
-            "exchange funds",
-            "exchange crypto",
-            "execution"
-        ],
-        "websites": [
-            "https://www.ig.com/de"
-        ]
-    },
-    {
-        "id": 45,
-        "name": "EUWAX AG",
-        "authority": "BaFin",
-        "memberState": "Germany",
-        "services": [
-            "execution"
-        ],
-        "websites": [
-            "https://www.euwax-ag.de"
-        ]
-    },
-    {
-        "id": 46,
-        "name": "Hauck Aufhäuser Digital Custody GmbH",
-        "authority": "BaFin",
-        "memberState": "Germany",
-        "services": [
-            "execution"
-        ],
-        "websites": [
-            "https://www.vrbk.de"
-        ]
-    },
-    {
-        "id": 47,
-        "name": "Fels wealth GmbH",
-        "authority": "BaFin",
-        "memberState": "Germany",
-        "services": [
-            "execution",
-            "RTO",
-            "advice",
-            "portfolio mgmt"
-        ],
-        "websites": [
-            "https://www.vrbank-suedpfalz.de"
-        ]
-    },
-    {
-        "id": 48,
-        "name": "Westerwald Bank eG Volks- und Raiffeisenbank",
-        "authority": "BaFin",
-        "memberState": "Germany",
-        "services": [
-            "execution"
-        ],
-        "websites": [
-            "https://www.westerwaldbank.de"
-        ]
-    },
-    {
-        "id": 49,
-        "name": "Hannoversche Volksbank eG",
-        "authority": "BaFin",
-        "memberState": "Germany",
-        "services": [
-            "RTO"
-        ],
-        "websites": [
-            "https://www.wsw-pm.de"
-        ]
-    },
-    {
         "id": 50,
         "name": "VR TeilhaberBank Metropolregion Nürnberg eG",
         "authority": "BaFin",
         "memberState": "Germany",
         "services": [
-            "execution",
-            "RTO",
-            "advice",
-            "portfolio mgmt"
+            "execution"
         ],
         "websites": [
             "https://www.vr-teilhaberbank.de"
@@ -1794,7 +1669,7 @@
             "execution"
         ],
         "websites": [
-            "https://www.dzbank.de"
+            "https://www.voba-msw.de"
         ]
     },
     {
@@ -1809,7 +1684,7 @@
             "execution"
         ],
         "websites": [
-            "https://www.tradevest.ai"
+            "https://www.ig.com/de"
         ]
     },
     {
@@ -3199,9 +3074,9 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dobibo.com",
-            "dobibo1.com",
-            "dobibo2.com"
+            "https://dobibo.com",
+            "https://dobibo1.com",
+            "https://dobibo2.com"
         ],
         "isNew": false
     },
@@ -3211,8 +3086,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "fameexn.top",
-            "fameexn.com"
+            "https://fameexn.top",
+            "https://fameexn.com"
         ],
         "isNew": false
     },
@@ -3222,7 +3097,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "spaziofinanziario.com"
+            "www.spaziofinanziario.com"
         ],
         "isNew": false
     },
@@ -3232,7 +3107,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "m.htxcoin-az.com"
+            "https://m.htxcoin-az.com"
         ],
         "isNew": false
     },
@@ -3242,7 +3117,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "stockcreditwallet.com"
+            "https://stockcreditwallet.com"
         ],
         "isNew": false
     },
@@ -3252,8 +3127,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "paycraftv.top",
-            "paycraftn.top"
+            "https://paycraftv.top",
+            "https://paycraftn.top"
         ],
         "isNew": false
     },
@@ -3263,7 +3138,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "coinbankexchange.icu"
+            "https://coinbankexchange.icu"
         ],
         "isNew": false
     },
@@ -3273,8 +3148,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "akqa715.it",
-            "AKQ1181.it"
+            "https://akqa715.it",
+            "https://AKQ1181.it"
         ],
         "isNew": false
     },
@@ -3284,8 +3159,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "fameexe.top",
-            "fameexj.top"
+            "https://fameexe.top",
+            "https://fameexj.top"
         ],
         "isNew": false
     },
@@ -3295,8 +3170,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "argonintgroup.com",
-            "cfd.argonintgroup.com"
+            "https://argonintgroup.com",
+            "https://cfd.argonintgroup.com"
         ],
         "isNew": false
     },
@@ -3306,9 +3181,9 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dtcoin.tech",
-            "dtwallet.io",
-            "forcedmarketcap.tech"
+            "https://dtcoin.tech",
+            "https://dtwallet.io",
+            "https://forcedmarketcap.tech"
         ],
         "isNew": false
     },
@@ -3318,8 +3193,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dtsmoney.com",
-            "portal.dtsmoney.com"
+            "https://dtsmoney.com",
+            "https://portal.dtsmoney.com"
         ],
         "isNew": false
     },
@@ -3329,7 +3204,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "caa871.it"
+            "https://caa871.it"
         ],
         "isNew": false
     },
@@ -3339,7 +3214,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "sdf837.it"
+            "https://sdf837.it"
         ],
         "isNew": false
     },
@@ -3349,7 +3224,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "sybzgroup.co"
+            "https://sybzgroup.co"
         ],
         "isNew": false
     },
@@ -3359,7 +3234,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "egplus.vip"
+            "https://egplus.vip"
         ],
         "isNew": false
     },
@@ -3369,7 +3244,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "egalite.bond"
+            "https://egalite.bond"
         ],
         "isNew": false
     },
@@ -3379,8 +3254,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "arbismart.com",
-            "dashboard.arbismart.com"
+            "https://arbismart.com",
+            "https://dashboard.arbismart.com"
         ],
         "isNew": false
     },
@@ -3390,7 +3265,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "blockbyteq.top"
+            "https://blockbyteq.top"
         ],
         "isNew": false
     },
@@ -3400,7 +3275,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "bvoxed.com"
+            "https://bvoxed.com"
         ],
         "isNew": false
     },
@@ -3410,7 +3285,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "btc6688.com"
+            "https://btc6688.com"
         ],
         "isNew": false
     },
@@ -3420,8 +3295,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "interersosf.org",
-            "interersos.org"
+            "https://interersosf.org",
+            "https://interersos.org"
         ],
         "isNew": false
     },
@@ -3431,7 +3306,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "cfw896.it"
+            "https://cfw896.it"
         ],
         "isNew": false
     },
@@ -3441,8 +3316,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "stratoslumex.com",
-            "stratoslumex.net"
+            "https://stratoslumex.com",
+            "https://stratoslumex.net"
         ],
         "isNew": false
     },
@@ -3452,7 +3327,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "60yg.com"
+            "https://60yg.com"
         ],
         "isNew": false
     },
@@ -3462,8 +3337,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "uyr968.it",
-            "fwq367.it"
+            "https://uyr968.it",
+            "https://fwq367.it"
         ],
         "isNew": false
     },
@@ -3473,7 +3348,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "syk755.it"
+            "www.syk755.it"
         ],
         "isNew": false
     },
@@ -3483,7 +3358,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "pxm266.it"
+            "https://pxm266.it"
         ],
         "isNew": false
     },
@@ -3493,7 +3368,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "hct685.it"
+            "https://hct685.it"
         ],
         "isNew": false
     },
@@ -3503,7 +3378,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "sdh878.it"
+            "https://sdh878.it"
         ],
         "isNew": false
     },
@@ -3513,7 +3388,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "skillnexp.top"
+            "https://skillnexp.top"
         ],
         "isNew": false
     },
@@ -3523,7 +3398,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "ymg686.it"
+            "https://ymg686.it"
         ],
         "isNew": false
     },
@@ -3533,7 +3408,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "coingridr.top"
+            "https://coingridr.top"
         ],
         "isNew": false
     },
@@ -3543,7 +3418,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "gigtaskr.top"
+            "https://gigtaskr.top"
         ],
         "isNew": false
     },
@@ -3553,7 +3428,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "sxr922.it"
+            "https://sxr922.it"
         ],
         "isNew": false
     },
@@ -3563,7 +3438,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "09pqws.it"
+            "https://09pqws.it"
         ],
         "isNew": false
     },
@@ -3573,7 +3448,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dss776.it"
+            "https://dss776.it"
         ],
         "isNew": false
     },
@@ -3583,7 +3458,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "ery357.it"
+            "https://ery357.it"
         ],
         "isNew": false
     },
@@ -3593,7 +3468,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "tnt882.it"
+            "https://tnt882.it"
         ],
         "isNew": false
     },
@@ -3603,7 +3478,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "zerotrillionworld.it"
+            "https://zerotrillionworld.it"
         ],
         "isNew": false
     },
@@ -3613,7 +3488,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "zgv796.it"
+            "https://zgv796.it"
         ],
         "isNew": false
     },
@@ -3623,7 +3498,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "78def.it"
+            "https://78def.it"
         ],
         "isNew": false
     },
@@ -3633,7 +3508,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "atomicwallet.io"
+            "https://atomicwallet.io"
         ],
         "isNew": false
     },
@@ -3643,7 +3518,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "cexrqw.com"
+            "https://cexrqw.com"
         ],
         "isNew": false
     },
@@ -3653,7 +3528,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "interersos.it"
+            "https://interersos.it"
         ],
         "isNew": false
     },
@@ -3663,7 +3538,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "yui236.it"
+            "https://yui236.it"
         ],
         "isNew": false
     },
@@ -3673,7 +3548,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "drst78.it"
+            "https://drst78.it"
         ],
         "isNew": false
     },
@@ -3683,7 +3558,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "gdy733.it"
+            "https://gdy733.it"
         ],
         "isNew": false
     },
@@ -3693,7 +3568,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "xur652.it"
+            "https://xur652.it"
         ],
         "isNew": false
     },
@@ -3703,7 +3578,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "yza335.it"
+            "https://yza335.it"
         ],
         "isNew": false
     },
@@ -3713,7 +3588,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "bhp536.it"
+            "https://bhp536.it"
         ],
         "isNew": false
     },
@@ -3723,7 +3598,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "mju567.it"
+            "https://mju567.it"
         ],
         "isNew": false
     },
@@ -3733,7 +3608,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "tnt788.it"
+            "https://tnt788.it"
         ],
         "isNew": false
     },
@@ -3743,7 +3618,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "ytt975.it"
+            "https://ytt975.it"
         ],
         "isNew": false
     },
@@ -3753,7 +3628,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "yqz585.it"
+            "https://yqz585.it"
         ],
         "isNew": false
     },
@@ -3763,7 +3638,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "ewq778.it"
+            "https://ewq778.it"
         ],
         "isNew": false
     },
@@ -3773,7 +3648,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "awe818.it"
+            "https://awe818.it"
         ],
         "isNew": false
     },
@@ -3783,7 +3658,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "grt325.it"
+            "https://grt325.it"
         ],
         "isNew": false
     },
@@ -3793,7 +3668,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "tut551.it"
+            "https://tut551.it"
         ],
         "isNew": false
     },
@@ -3803,7 +3678,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "sfs854.it"
+            "https://sfs854.it"
         ],
         "isNew": false
     },
@@ -3813,7 +3688,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "12def.it"
+            "https://12def.it"
         ],
         "isNew": false
     },
@@ -3823,7 +3698,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "yth937.it"
+            "https://yth937.it"
         ],
         "isNew": false
     },
@@ -3833,7 +3708,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "c7viz.it"
+            "https://c7viz.it"
         ],
         "isNew": false
     },
@@ -3843,8 +3718,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "spaziofinanziario.pro",
-            "clients.spaziofinanziario.pro"
+            "www.spaziofinanziario.pro",
+            "https://clients.spaziofinanziario.pro"
         ],
         "isNew": false
     },
@@ -3854,7 +3729,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "ynln.com"
+            "www.ynln.com"
         ],
         "isNew": false
     },
@@ -3864,7 +3739,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "network-capital-partners.com"
+            "https://network-capital-partners.com",
+            "https://web.networkcapital-partnersltd.com"
         ],
         "isNew": false
     },
@@ -3874,7 +3750,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "lucrumiagroup.co"
+            "https://lucrumiagroup.co"
         ],
         "isNew": false
     },
@@ -3884,7 +3760,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dbbddrb.com"
+            "https://dbbddrb.com"
         ],
         "isNew": false
     },
@@ -3894,8 +3770,11 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "jzmor.com",
-            "jzmor-it57659.com"
+            "www.jzmor.com",
+            "www.jzmor-it57659.com",
+            "www.jzmor-it33583.com",
+            "www.jzmor-it99518.com",
+            "www.jzmor-it52337.com"
         ],
         "isNew": false
     },
@@ -3905,7 +3784,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "zzcoingy.com"
+            "https://zzcoingy.com"
         ],
         "isNew": false
     },
@@ -3915,12 +3794,12 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "ofuyc.com",
-            "ofuyc-32516it.com",
-            "ofuyc-55337it.com",
-            "ofuyc-23166it.com",
-            "ofuyc-33111it.com",
-            "ofuyc-83255it.com"
+            "www.ofuyc.com",
+            "www.ofuyc-32516it.com",
+            "www.ofuyc-55337it.com",
+            "www.ofuyc-23166it.com",
+            "www.ofuyc-33111it.com",
+            "www.ofuyc-83255it.com"
         ],
         "isNew": false
     },
@@ -3930,8 +3809,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "veltrixmax-invest.com",
-            "ayquozeber.com"
+            "https://veltrixmax-invest.com",
+            "https://ayquozeber.com"
         ],
         "isNew": false
     },
@@ -3941,8 +3820,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "orolonix-invest.com",
-            "cyberirfy.icu"
+            "https://orolonix-invest.com",
+            "https://cyberirfy.icu"
         ],
         "isNew": false
     },
@@ -3952,7 +3831,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "ryr888.it"
+            "https://ryr888.it"
         ],
         "isNew": false
     },
@@ -3962,7 +3841,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dfh258.it"
+            "https://dfh258.it"
         ],
         "isNew": false
     },
@@ -3972,7 +3851,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dxz175.it"
+            "https://dxz175.it"
         ],
         "isNew": false
     },
@@ -3982,7 +3861,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "jmy999.it"
+            "https://jmy999.it"
         ],
         "isNew": false
     },
@@ -3992,7 +3871,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dsg158.it"
+            "https://dsg158.it"
         ],
         "isNew": false
     },
@@ -4002,7 +3881,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "wes218.it"
+            "https://wes218.it"
         ],
         "isNew": false
     },
@@ -4012,7 +3891,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "gjg258.it"
+            "https://gjg258.it"
         ],
         "isNew": false
     },
@@ -4022,7 +3901,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "cfsd123.it"
+            "https://cfsd123.it"
         ],
         "isNew": false
     },
@@ -4032,7 +3911,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "r4mox.it"
+            "https://r4mox.it"
         ],
         "isNew": false
     },
@@ -4042,7 +3921,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dfg789.it"
+            "https://dfg789.it"
         ],
         "isNew": false
     },
@@ -4052,7 +3931,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "niufo.co"
+            "www.niufo.co"
         ],
         "isNew": false
     },
@@ -4062,8 +3941,8 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "alpha-capital.finance",
-            "cfd.alpha-capital.finance"
+            "https://alpha-capital.finance",
+            "https://cfd.alpha-capital.finance"
         ],
         "isNew": false
     },
@@ -4073,8 +3952,10 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "cryptoin24.io",
-            "cryptoin24.com"
+            "ttps://cryptoin24.io",
+            "https://cryptoin24.com",
+            "https://clients.cryptoin24.com",
+            "https://trading.cryptoin24.com"
         ],
         "isNew": false
     },
@@ -4084,7 +3965,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "rye026.it"
+            "https://rye026.it"
         ],
         "isNew": false
     },
@@ -4094,7 +3975,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "rye326.it"
+            "https://rye326.it"
         ],
         "isNew": false
     },
@@ -4104,7 +3985,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "03wakih.it"
+            "https://03wakih.it"
         ],
         "isNew": false
     },
@@ -4114,7 +3995,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "sjcj11.it"
+            "https://sjcj11.it"
         ],
         "isNew": false
     },
@@ -4124,7 +4005,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "01luhar.it"
+            "https://01luhar.it"
         ],
         "isNew": false
     },
@@ -4134,7 +4015,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "gkj159.it"
+            "https://gkj159.it"
         ],
         "isNew": false
     },
@@ -4144,7 +4025,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "dshs82.it"
+            "https://dshs82.it"
         ],
         "isNew": false
     },
@@ -4154,7 +4035,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "gfj123.it"
+            "https://gfj123.it"
         ],
         "isNew": false
     },
@@ -4164,7 +4045,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "l88159.it"
+            "https://l88159.it"
         ],
         "isNew": false
     },
@@ -4174,7 +4055,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "fgj329.it"
+            "https://fgj329.it"
         ],
         "isNew": false
     },
@@ -4184,7 +4065,7 @@
         "country": "Italy",
         "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "druvaxio-invest.com"
+            "https://druvaxio-invest.com"
         ],
         "isNew": false
     },
@@ -4192,20 +4073,22 @@
         "id": 98,
         "entity": "Lucrumiagroup",
         "country": "Italy",
-        "authority": "Commissione Nazionale per le Societa e la Borsa  (CONSOB)",
+        "authority": "Commissione Nazionale per le Societa e la Borsa (CONSOB)",
         "websites": [
-            "lucrumiaofficial.co",
-            "lucrumiamode.co"
+            "https://www.lucrumiaofficial.co",
+            "https://www.lucrumiamode.co",
+            "https://wap.lucrumiaofficial.co",
+            "https://wap.lucrumiamode.co"
         ],
         "isNew": false
     },
     {
         "id": 99,
-        "entity": "MEXC",
+        "entity": "MEXC Global",
         "country": "Netherlands",
         "authority": "Netherlands Authority for the Financial Markets (AFM)",
         "websites": [
-            "mexc.com"
+            "https://www.mexc.com/"
         ],
         "isNew": false
     },
@@ -4215,7 +4098,7 @@
         "country": "Slovakia",
         "authority": "National Bank of Slovakia (NBS)",
         "websites": [
-            "lwex.com"
+            "https://lwex.com/"
         ],
         "isNew": false
     }
@@ -4843,29 +4726,6 @@
         }
     }
 
-    function getTabFromHash() {
-        const rawHash = window.location.hash.replace('#', '').toLowerCase();
-        if (!rawHash) return null;
-
-        const hashMap = {
-            overview: 'overview',
-            details: 'details',
-            emts: 'details',
-            casps: 'casps',
-            'non-compliant': 'nonCompliant',
-            noncompliant: 'nonCompliant'
-        };
-
-        return hashMap[rawHash] || null;
-    }
-
-    function syncTabWithHash() {
-        const tab = getTabFromHash();
-        if (tab) {
-            switchTab(tab);
-        }
-    }
-
     function resetDashboard() {
         switchTab('overview');
 
@@ -4940,11 +4800,7 @@
     });
 
     // Initialize on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        initDashboard();
-        syncTabWithHash();
-        window.addEventListener('hashchange', syncTabWithHash);
-    });
+    document.addEventListener('DOMContentLoaded', initDashboard);
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
@@ -5007,7 +4863,6 @@
         document.getElementById('year').textContent = new Date().getFullYear();
       });
     </script>
-    <script src="assets/js/mobile-menu.js" defer></script>
     <!-- Polyfill to render flag emojis correctly on Windows-based browsers -->
     <script type="module" defer>
       import { polyfillCountryFlagEmojis } from 'https://cdn.skypack.dev/country-flag-emoji-polyfill';
