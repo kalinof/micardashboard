@@ -357,61 +357,17 @@
 <body class="main-bg">
     <!-- Sticky Header -->
     <div class="header-sticky shadow-2xl">
-      <header class="bg-transparent">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div class="flex items-center justify-between h-16 header-content">
-            <div class="flex items-center space-x-6">
-              <img src="DEA%20logo%20white.png"
-                   alt="DEA Logo" id="homeLogo" class="logo-container" role="button" tabindex="0"
-                   aria-label="Return to the default dashboard view">
-              <div class="flex items-center">
-                <h1 class="text-[1.8rem] md:text-[2.2rem] font-bold text-white mb-0 leading-tight">
-                  <span class="text-sky-100">MiCAR</span>
-                  <span class="text-sky-50">Tracker</span>
-                </h1>
-              </div>
-            </div>
-
-            <!-- Middle / Right: Desktop nav (visible from md and up) -->
-            <nav class="hidden md:flex md:items-center md:space-x-3 nav-buttons">
-              <button id="overviewBtn" type="button" class="tab-button tab-active px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
-                <i class="fas fa-chart-pie mr-2"></i>Overview
-              </button>
-              <button id="detailsBtn" type="button" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
-                <i class="fas fa-table mr-2"></i>EMTs
-              </button>
-              <button id="caspsBtn" type="button" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
-                <i class="fas fa-building-columns mr-2"></i>CASPs
-              </button>
-              <button id="nonCompliantBtn" type="button" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
-                <i class="fas fa-exclamation-triangle mr-2"></i>Non-Compliant
-              </button>
-              <a href="about.html" class="tab-button tab-inactive px-5 py-3 rounded-xl font-semibold inline-flex items-center justify-center">
-                <i class="fas fa-circle-info mr-2"></i>About
-              </a>
-            </nav>
-
-            <!-- Mobile hamburger button (visible on small screens) -->
-            <div class="md:hidden flex items-center">
-              <button id="mobile-menu-button"
-                      type="button"
-                      class="p-2 rounded-md text-white hover:text-sky-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
-                      aria-controls="mobile-menu"
-                      aria-expanded="false"
-                      aria-label="Open main menu">
-                <!-- Hamburger icon -->
-                <svg id="hamburger-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-                <!-- Close icon (hidden by default) -->
-                <svg id="close-icon" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
+    <div class="max-w-7xl mx-auto px-6 py-6">
+    <div class="flex items-center justify-between flex-wrap header-content">
+    <div class="flex items-center space-x-6 mb-4 md:mb-0">
+        <img src="DEA%20logo%20white.png"
+             alt="DEA Logo" id="homeLogo" class="logo-container" role="button" tabindex="0"
+             aria-label="Return to the default dashboard view">
+        <div class="flex items-center">
+            <h1 class="text-[1.8rem] md:text-[2.2rem] font-bold text-white mb-0 leading-tight">
+                <span class="text-sky-100">MiCAR</span>
+                <span class="text-sky-50">Tracker</span>
+            </h1>
         </div>
       </header>
     </div>
@@ -1713,12 +1669,117 @@
         ]
     },
     {
+        "id": 42,
+        "name": "Hyphe Markets GmbH",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "execution"
+        ],
+        "websites": [
+            "https://www.vr-teilhaberbank.de"
+        ]
+    },
+    {
+        "id": 43,
+        "name": "Deutsche WertpapierService Bank AG",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "execution"
+        ],
+        "websites": [
+            "https://www.voba-msw.de"
+        ]
+    },
+    {
+        "id": 44,
+        "name": "DekaBank Deutsche Girozentrale",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "custody",
+            "exchange funds",
+            "exchange crypto",
+            "execution"
+        ],
+        "websites": [
+            "https://www.ig.com/de"
+        ]
+    },
+    {
+        "id": 45,
+        "name": "EUWAX AG",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "execution"
+        ],
+        "websites": [
+            "https://www.euwax-ag.de"
+        ]
+    },
+    {
+        "id": 46,
+        "name": "Hauck Aufhäuser Digital Custody GmbH",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "execution"
+        ],
+        "websites": [
+            "https://www.vrbk.de"
+        ]
+    },
+    {
+        "id": 47,
+        "name": "Fels wealth GmbH",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "execution",
+            "RTO",
+            "advice",
+            "portfolio mgmt"
+        ],
+        "websites": [
+            "https://www.vrbank-suedpfalz.de"
+        ]
+    },
+    {
+        "id": 48,
+        "name": "Westerwald Bank eG Volks- und Raiffeisenbank",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "execution"
+        ],
+        "websites": [
+            "https://www.westerwaldbank.de"
+        ]
+    },
+    {
+        "id": 49,
+        "name": "Hannoversche Volksbank eG",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "RTO"
+        ],
+        "websites": [
+            "https://www.wsw-pm.de"
+        ]
+    },
+    {
         "id": 50,
         "name": "VR TeilhaberBank Metropolregion Nürnberg eG",
         "authority": "BaFin",
         "memberState": "Germany",
         "services": [
-            "execution"
+            "execution",
+            "RTO",
+            "advice",
+            "portfolio mgmt"
         ],
         "websites": [
             "https://www.vr-teilhaberbank.de"
@@ -1733,7 +1794,7 @@
             "execution"
         ],
         "websites": [
-            "https://www.voba-msw.de"
+            "https://www.dzbank.de"
         ]
     },
     {
@@ -1748,7 +1809,7 @@
             "execution"
         ],
         "websites": [
-            "https://www.ig.com/de"
+            "https://www.tradevest.ai"
         ]
     },
     {
