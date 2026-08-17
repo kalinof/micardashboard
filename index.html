@@ -520,8 +520,8 @@
             Digital Euro Association (DEA) MiCAR Tracker – Overview
           </p>
           <p class="text-gray-400 text-sm mt-2" id="currentDate">
-            Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA EMT Register</a> - Data as of 5 August 2026</p>
-          <p class="text-gray-400 text-sm" id="caspsDate">Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA CASPs Register</a> - Data as of 5 August 2026</p>
+            Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA EMT Register</a> - Data as of 12 August 2026</p>
+          <p class="text-gray-400 text-sm" id="caspsDate">Source: <a href="https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica#InterimMiCARegister" target="_blank" rel="noopener" class="text-blue-300 underline hover:text-blue-200">ESMA CASPs Register</a> - Data as of 12 August 2026</p>
         </div>
 
         <!-- ── Nav links + social icons ── -->
@@ -754,7 +754,7 @@
         "id": 8,
         "issuer": "Eurodollar ApS",
         "state": "Denmark",
-        "authority": "Finanstilsynet",
+        "authority": "DFSA",
         "tokens": "",
         "count": 0,
         "euro": 0,
@@ -1437,11 +1437,11 @@
         "authority": "CySEC",
         "memberState": "Cyprus",
         "services": [
-            "custody",
+            "RTO",
+            "execution",
             "exchange funds",
             "exchange crypto",
-            "execution",
-            "RTO",
+            "custody",
             "transfer"
         ],
         "websites": [
@@ -1627,23 +1627,22 @@
         "name": "TRIA BRIDGE LIMITED (ex Tokenomica Bridge Ltd)",
         "authority": "CySEC",
         "memberState": "Cyprus",
-        "services": [],
+        "services": [
+            "custody",
+            "exchange funds",
+            "exchange crypto",
+            "execution",
+            "RTO",
+            "advice",
+            "portfolio mgmt",
+            "transfer"
+        ],
         "websites": [
             "https://triabridge.com/"
         ]
     },
     {
         "id": 44,
-        "name": "Ronin EM Ltd",
-        "authority": "CySEC",
-        "memberState": "Cyprus",
-        "services": [],
-        "websites": [
-            "https://em.ron.in/"
-        ]
-    },
-    {
-        "id": 45,
         "name": "Invity Finance s.r.o.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1660,7 +1659,7 @@
         ]
     },
     {
-        "id": 46,
+        "id": 45,
         "name": "MP Developers s.r.o.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1676,7 +1675,7 @@
         ]
     },
     {
-        "id": 47,
+        "id": 46,
         "name": "ILAVO GROUP a.s.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1693,7 +1692,7 @@
         ]
     },
     {
-        "id": 48,
+        "id": 47,
         "name": "Pluso a.s.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1708,7 +1707,7 @@
         ]
     },
     {
-        "id": 49,
+        "id": 48,
         "name": "COINMATE a.s.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1724,7 +1723,7 @@
         ]
     },
     {
-        "id": 50,
+        "id": 49,
         "name": "MipSoftware s.r.o.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1738,7 +1737,7 @@
         ]
     },
     {
-        "id": 51,
+        "id": 50,
         "name": "GG Digital, a.s.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1754,7 +1753,7 @@
         ]
     },
     {
-        "id": 52,
+        "id": 51,
         "name": "IP wBTCb solutions, s.r.o.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1769,7 +1768,7 @@
         ]
     },
     {
-        "id": 53,
+        "id": 52,
         "name": "Simple Coin s.r.o.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1784,7 +1783,7 @@
         ]
     },
     {
-        "id": 54,
+        "id": 53,
         "name": "wBTCb.cz, s.r.o.",
         "authority": "CNB",
         "memberState": "Czechia",
@@ -1796,21 +1795,19 @@
         ]
     },
     {
-        "id": 55,
-        "name": "Altlift s.r.o.",
+        "id": 54,
+        "name": "Partners Banka, a.s.",
         "authority": "CNB",
         "memberState": "Czechia",
         "services": [
-            "execution",
-            "RTO",
-            "advice"
+            "RTO"
         ],
         "websites": [
-            "https://www.altlift.cz/"
+            "https://www.partnersbanka.cz/"
         ]
     },
     {
-        "id": 56,
+        "id": 55,
         "name": "Boerse Stuttgart Digital Custody GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1823,7 +1820,7 @@
         ]
     },
     {
-        "id": 57,
+        "id": 56,
         "name": "Bitpanda Asset Management GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1838,7 +1835,7 @@
         ]
     },
     {
-        "id": 58,
+        "id": 57,
         "name": "Tradias GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1854,7 +1851,7 @@
         ]
     },
     {
-        "id": 59,
+        "id": 58,
         "name": "EUWAX AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1867,7 +1864,7 @@
         ]
     },
     {
-        "id": 60,
+        "id": 59,
         "name": "flatexDEGIRO Bank AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1879,7 +1876,7 @@
         ]
     },
     {
-        "id": 61,
+        "id": 60,
         "name": "360 Treasury Systems AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1891,7 +1888,7 @@
         ]
     },
     {
-        "id": 62,
+        "id": 61,
         "name": "Trade Republic Bank GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1906,7 +1903,7 @@
         ]
     },
     {
-        "id": 63,
+        "id": 62,
         "name": "BitGo Europe GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1923,7 +1920,7 @@
         ]
     },
     {
-        "id": 64,
+        "id": 63,
         "name": "N26 Bank SE",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1931,11 +1928,12 @@
             "RTO"
         ],
         "websites": [
-            "https://n26.com"
+            "https://N26 – Die erste Onlinebank",
+            "die du lieben wirst"
         ]
     },
     {
-        "id": 65,
+        "id": 64,
         "name": "Baader Bank Aktiengesellschaft",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1947,7 +1945,7 @@
         ]
     },
     {
-        "id": 66,
+        "id": 65,
         "name": "Commerzbank Aktiengesellschaft",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1956,11 +1954,11 @@
             "transfer"
         ],
         "websites": [
-            "https://www.commerzbank.de"
+            "https://Commerzbank AG – Investor Relations"
         ]
     },
     {
-        "id": 67,
+        "id": 66,
         "name": "Baden-Württembergische Wertpapierbörse GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1972,7 +1970,7 @@
         ]
     },
     {
-        "id": 68,
+        "id": 67,
         "name": "Crypto Finance (Deutschland) GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -1988,7 +1986,7 @@
         ]
     },
     {
-        "id": 69,
+        "id": 68,
         "name": "Traders Place GmbH & Co. KGaA",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2000,7 +1998,7 @@
         ]
     },
     {
-        "id": 70,
+        "id": 69,
         "name": "Tangany GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2013,7 +2011,7 @@
         ]
     },
     {
-        "id": 71,
+        "id": 70,
         "name": "Smartbroker AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2025,7 +2023,7 @@
         ]
     },
     {
-        "id": 72,
+        "id": 71,
         "name": "Dietrich & Richter Private Asset Management AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2038,7 +2036,7 @@
         ]
     },
     {
-        "id": 73,
+        "id": 72,
         "name": "Bullish Europe GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2054,7 +2052,7 @@
         ]
     },
     {
-        "id": 74,
+        "id": 73,
         "name": "V-Bank AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2068,25 +2066,25 @@
         ]
     },
     {
-        "id": 75,
+        "id": 74,
         "name": "Bankhaus Scheich Wertpapierspezialist AG",
         "authority": "BaFin",
         "memberState": "Germany",
         "services": [
             "exchange funds",
-            "exchange funds",
-            "execution",
+            "exchange crypto",
             "execution",
             "placing",
             "RTO",
-            "advice"
+            "advice",
+            "portfolio mgmt"
         ],
         "websites": [
             "https://www.bankhaus-scheich.de"
         ]
     },
     {
-        "id": 76,
+        "id": 75,
         "name": "Lang & Schwarz TradeCenter AG & Co. KG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2099,7 +2097,7 @@
         ]
     },
     {
-        "id": 77,
+        "id": 76,
         "name": "DonauCapital Wertpapier GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2111,19 +2109,20 @@
         ]
     },
     {
-        "id": 78,
+        "id": 77,
         "name": "Volksbank Raiffeisenbank Bayern Mitte eG",
         "authority": "BaFin",
         "memberState": "Germany",
         "services": [
-            "execution"
+            "execution",
+            "RTO"
         ],
         "websites": [
             "https://www.vr-bayernmitte.de"
         ]
     },
     {
-        "id": 79,
+        "id": 78,
         "name": "Huddlestock GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2135,7 +2134,7 @@
         ]
     },
     {
-        "id": 80,
+        "id": 79,
         "name": "sino Aktiengesellschaft",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2147,7 +2146,7 @@
         ]
     },
     {
-        "id": 81,
+        "id": 80,
         "name": "Hyphe Markets GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2159,7 +2158,7 @@
         ]
     },
     {
-        "id": 82,
+        "id": 81,
         "name": "Deutsche WertpapierService Bank AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2171,7 +2170,7 @@
         ]
     },
     {
-        "id": 83,
+        "id": 82,
         "name": "DekaBank Deutsche Girozentrale",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2185,7 +2184,7 @@
         ]
     },
     {
-        "id": 84,
+        "id": 83,
         "name": "EUWAX AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2197,7 +2196,7 @@
         ]
     },
     {
-        "id": 85,
+        "id": 84,
         "name": "Hauck Aufhäuser Digital Custody GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2210,7 +2209,7 @@
         ]
     },
     {
-        "id": 86,
+        "id": 85,
         "name": "Fels wealth GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2225,7 +2224,7 @@
         ]
     },
     {
-        "id": 87,
+        "id": 86,
         "name": "Westerwald Bank eG Volks- und Raiffeisenbank",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2237,7 +2236,7 @@
         ]
     },
     {
-        "id": 88,
+        "id": 87,
         "name": "Hannoversche Volksbank eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2249,7 +2248,7 @@
         ]
     },
     {
-        "id": 89,
+        "id": 88,
         "name": "VR TeilhaberBank Metropolregion Nürnberg eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2261,7 +2260,7 @@
         ]
     },
     {
-        "id": 90,
+        "id": 89,
         "name": "Volksbank Mittlerer Schwarzwald eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2273,7 +2272,7 @@
         ]
     },
     {
-        "id": 91,
+        "id": 90,
         "name": "IG Europe GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2288,7 +2287,7 @@
         ]
     },
     {
-        "id": 92,
+        "id": 91,
         "name": "Volksbank Raiffeisenbank Würzburg eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2300,7 +2299,7 @@
         ]
     },
     {
-        "id": 93,
+        "id": 92,
         "name": "VR-Bank Rottal-Inn eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2312,7 +2311,7 @@
         ]
     },
     {
-        "id": 94,
+        "id": 93,
         "name": "VR Bank Südpfalz eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2324,7 +2323,7 @@
         ]
     },
     {
-        "id": 95,
+        "id": 94,
         "name": "Sutor Bank GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2336,7 +2335,7 @@
         ]
     },
     {
-        "id": 96,
+        "id": 95,
         "name": "wSw PortfolioManagement AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2348,7 +2347,7 @@
         ]
     },
     {
-        "id": 97,
+        "id": 96,
         "name": "FIDUS Finanz AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2363,7 +2362,7 @@
         ]
     },
     {
-        "id": 98,
+        "id": 97,
         "name": "DZ BANK AG Deutsche Zentral-Genossenschaftsbank",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2377,7 +2376,7 @@
         ]
     },
     {
-        "id": 99,
+        "id": 98,
         "name": "Tradevest Digital Assets GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2390,7 +2389,7 @@
         ]
     },
     {
-        "id": 100,
+        "id": 99,
         "name": "ISF Institut Deutsch-Schweizer Finanzdienstleistungen GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2402,7 +2401,7 @@
         ]
     },
     {
-        "id": 101,
+        "id": 100,
         "name": "Plutos Vermögensverwaltung AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2414,7 +2413,7 @@
         ]
     },
     {
-        "id": 102,
+        "id": 101,
         "name": "Scalable Capital Bank GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2426,7 +2425,7 @@
         ]
     },
     {
-        "id": 103,
+        "id": 102,
         "name": "AnCeKa Vermögensbetreuungs Aktiengesellschaft",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2440,7 +2439,7 @@
         ]
     },
     {
-        "id": 104,
+        "id": 103,
         "name": "Joh. Berenberg, Gossler & Co. KG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2457,7 +2456,7 @@
         ]
     },
     {
-        "id": 105,
+        "id": 104,
         "name": "MLP Banking AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2469,7 +2468,7 @@
         ]
     },
     {
-        "id": 106,
+        "id": 105,
         "name": "BV & P Vermögen AG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2482,7 +2481,7 @@
         ]
     },
     {
-        "id": 107,
+        "id": 106,
         "name": "CONCEDUS GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2495,7 +2494,7 @@
         ]
     },
     {
-        "id": 108,
+        "id": 107,
         "name": "DLT Securities GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2503,28 +2502,34 @@
             "exchange funds",
             "exchange crypto",
             "execution",
-            "placing"
+            "placing",
+            "RTO",
+            "advice",
+            "portfolio mgmt"
         ],
         "websites": [
             "https://www.dlt-finance.com"
         ]
     },
     {
-        "id": 109,
+        "id": 108,
         "name": "Tradevest Markets AG",
         "authority": "BaFin",
         "memberState": "Germany",
         "services": [
             "exchange funds",
             "exchange crypto",
-            "execution"
+            "execution",
+            "RTO",
+            "advice",
+            "portfolio mgmt"
         ],
         "websites": [
             "https://www.tradevest.ai/de"
         ]
     },
     {
-        "id": 110,
+        "id": 109,
         "name": "Vermögensbutler GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2537,7 +2542,7 @@
         ]
     },
     {
-        "id": 111,
+        "id": 110,
         "name": "Volksbank Heiden eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2549,7 +2554,7 @@
         ]
     },
     {
-        "id": 112,
+        "id": 111,
         "name": "Raiffeisenbank Kreis Kelheim eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2561,7 +2566,7 @@
         ]
     },
     {
-        "id": 113,
+        "id": 112,
         "name": "DekaBank Deutsche Girozentrale",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2573,7 +2578,7 @@
         ]
     },
     {
-        "id": 114,
+        "id": 113,
         "name": "Donau-Iller-Bank eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2585,7 +2590,7 @@
         ]
     },
     {
-        "id": 115,
+        "id": 114,
         "name": "Volksbank Schwarzwald-Donau-Neckar eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2597,7 +2602,7 @@
         ]
     },
     {
-        "id": 116,
+        "id": 115,
         "name": "Raiffeisebank Auerbach-Freihung eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2609,7 +2614,7 @@
         ]
     },
     {
-        "id": 117,
+        "id": 116,
         "name": "JT Technologies GmbH",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2622,7 +2627,7 @@
         ]
     },
     {
-        "id": 118,
+        "id": 117,
         "name": "Spar- und Kreditbank Rheinstetten eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2634,7 +2639,7 @@
         ]
     },
     {
-        "id": 119,
+        "id": 118,
         "name": "VR-Bank Augsburg-Ostallgäu eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2646,7 +2651,7 @@
         ]
     },
     {
-        "id": 120,
+        "id": 119,
         "name": "Raiffeisenbank Falkenstein-Wörth",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2658,7 +2663,7 @@
         ]
     },
     {
-        "id": 121,
+        "id": 120,
         "name": "Volksbank Raiffeisenbank Oberbayern Südost eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2670,7 +2675,7 @@
         ]
     },
     {
-        "id": 122,
+        "id": 121,
         "name": "VR Bank Schleswig-Holstein Mitte eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2682,7 +2687,7 @@
         ]
     },
     {
-        "id": 123,
+        "id": 122,
         "name": "VR-Bank Landau-Mengkofen eG",
         "authority": "BaFin",
         "memberState": "Germany",
@@ -2694,49 +2699,72 @@
         ]
     },
     {
-        "id": 124,
+        "id": 123,
         "name": "Volksbank eG - Die Gestalterbank",
         "authority": "BaFin",
         "memberState": "Germany",
-        "services": [],
+        "services": [
+            "execution"
+        ],
         "websites": [
             "https://www.gestalterbank.de"
         ]
     },
     {
-        "id": 125,
+        "id": 124,
         "name": "Deutsche WertpapierService Bank AG",
         "authority": "BaFin",
         "memberState": "Germany",
-        "services": [],
+        "services": [
+            "custody",
+            "exchange funds",
+            "exchange crypto",
+            "transfer"
+        ],
         "websites": [
             "https://dwpbank.de"
         ]
     },
     {
-        "id": 126,
+        "id": 125,
         "name": "VBU Volksbank im Unterland eG",
         "authority": "BaFin",
         "memberState": "Germany",
-        "services": [],
+        "services": [
+            "execution"
+        ],
         "websites": [
             "https://www.vbu-volksbank.de"
         ]
     },
     {
-        "id": 127,
+        "id": 126,
         "name": "VR-Bank Erding eG",
         "authority": "BaFin",
         "memberState": "Germany",
-        "services": [],
+        "services": [
+            "execution"
+        ],
         "websites": [
             "https://www.vr-bank-erding.de"
         ]
     },
     {
+        "id": 127,
+        "name": "Volksbank Beilstein-Ilsfeld-Abstatt eG",
+        "authority": "BaFin",
+        "memberState": "Germany",
+        "services": [
+            "execution"
+        ],
+        "websites": [
+            "https://www.vb-bia.de"
+        ]
+    },
+    {
         "id": 128,
         "name": "Penning Financial Services ApS",
-        "authority": "Finanstilsynet",
+        "authority": "DFSA",
         "memberState": "Denmark",
         "services": [
             "custody",
@@ -2754,7 +2782,7 @@
     {
         "id": 129,
         "name": "Lunar Block A/S",
-        "authority": "Finanstilsynet",
+        "authority": "DFSA",
         "memberState": "Denmark",
         "services": [
             "custody",
@@ -2767,7 +2795,7 @@
     {
         "id": 130,
         "name": "GC Exchange A/S",
-        "authority": "Finanstilsynet",
+        "authority": "DFSA",
         "memberState": "Denmark",
         "services": [
             "exchange funds",
@@ -2782,7 +2810,7 @@
     {
         "id": 131,
         "name": "Northstake ApS",
-        "authority": "Finanstilsynet",
+        "authority": "DFSA",
         "memberState": "Denmark",
         "services": [
             "custody",
@@ -2796,7 +2824,7 @@
     {
         "id": 132,
         "name": "Coinify ApS",
-        "authority": "Finanstilsynet",
+        "authority": "DFSA",
         "memberState": "Denmark",
         "services": [
             "exchange funds",
@@ -2811,7 +2839,7 @@
     {
         "id": 133,
         "name": "Januar ApS",
-        "authority": "Finanstilsynet",
+        "authority": "DFSA",
         "memberState": "Denmark",
         "services": [
             "custody",
@@ -2825,7 +2853,7 @@
     {
         "id": 134,
         "name": "SafeLynx Technologies ApS",
-        "authority": "Finanstilsynet",
+        "authority": "DFSA",
         "memberState": "Denmark",
         "services": [
             "exchange funds"
@@ -2960,7 +2988,7 @@
             "transfer"
         ],
         "websites": [
-            "https://portal.kutxabank.es/cs/Satellite/kb/es/particulares"
+            "https://portal.kutxabank.es/cs/ Satellite/kb/es/particulares"
         ]
     },
     {
@@ -2998,6 +3026,7 @@
         "memberState": "Spain",
         "services": [
             "custody",
+            "exchange funds",
             "transfer"
         ],
         "websites": [
@@ -3030,10 +3059,11 @@
             "exchange crypto",
             "execution",
             "placing",
-            "RTO"
+            "RTO",
+            "transfer"
         ],
         "websites": [
-            "https://minos.global"
+            "https://ttps://minos.global"
         ]
     },
     {
@@ -3043,7 +3073,8 @@
         "memberState": "Spain",
         "services": [
             "custody",
-            "RTO"
+            "RTO",
+            "transfer"
         ],
         "websites": [
             "https://www.prosegurcrypto.com"
@@ -3091,9 +3122,14 @@
         "authority": "FIN-FSA",
         "memberState": "Finland",
         "services": [
-            "custody"
+            "custody",
+            "exchange funds",
+            "execution",
+            "transfer"
         ],
-        "websites": []
+        "websites": [
+            "https://coinmotion.com"
+        ]
     },
     {
         "id": 154,
@@ -3101,9 +3137,15 @@
         "authority": "FIN-FSA",
         "memberState": "Finland",
         "services": [
-            "custody"
+            "custody",
+            "RTO",
+            "advice",
+            "portfolio mgmt",
+            "transfer"
         ],
-        "websites": []
+        "websites": [
+            "https://tesseract.fi"
+        ]
     },
     {
         "id": 155,
@@ -3123,9 +3165,14 @@
         "authority": "FIN-FSA",
         "memberState": "Finland",
         "services": [
-            "custody"
+            "custody",
+            "execution",
+            "RTO",
+            "transfer"
         ],
-        "websites": []
+        "websites": [
+            "https://www.northcrypto.com/"
+        ]
     },
     {
         "id": 157,
@@ -3133,9 +3180,14 @@
         "authority": "FIN-FSA",
         "memberState": "Finland",
         "services": [
-            "custody"
+            "custody",
+            "execution",
+            "RTO",
+            "transfer"
         ],
-        "websites": []
+        "websites": [
+            "https://www.kvarnx.com/"
+        ]
     },
     {
         "id": 158,
@@ -3252,7 +3304,9 @@
         "services": [
             "exchange funds"
         ],
-        "websites": []
+        "websites": [
+            "https://75012 Paris"
+        ]
     },
     {
         "id": 166,
@@ -3263,7 +3317,9 @@
             "custody",
             "transfer"
         ],
-        "websites": []
+        "websites": [
+            "https://92800 PUTEAUX"
+        ]
     },
     {
         "id": 167,
@@ -3279,7 +3335,9 @@
             "portfolio mgmt",
             "transfer"
         ],
-        "websites": []
+        "websites": [
+            "https://07160 LE CHEYLARD"
+        ]
     },
     {
         "id": 168,
@@ -3690,7 +3748,7 @@
     },
     {
         "id": 195,
-        "name": "DIGITAL ASSETS Limited liability company for intermediation and services",
+        "name": "DIGITAL ASSETS Limited liability company for intermediation and services",
         "authority": "HANFA",
         "memberState": "Croatia",
         "services": [
@@ -3822,8 +3880,7 @@
             "transfer"
         ],
         "websites": [
-            "https://www.skrill.com",
-            "https://www.neteller.com"
+            "https://www.skrill.com www.neteller.com"
         ]
     },
     {
@@ -4369,7 +4426,7 @@
             "transfer"
         ],
         "websites": [
-            "https://coinbase.com"
+            "https://https.//coinbase.com"
         ]
     },
     {
@@ -4508,7 +4565,6 @@
         "memberState": "Luxembourg",
         "services": [
             "exchange funds",
-            "exchange crypto",
             "exchange crypto",
             "transfer"
         ],
@@ -4895,7 +4951,7 @@
             "transfer"
         ],
         "websites": [
-            "https://olmipay.com"
+            "https://Olmipay.com (upcoming)"
         ]
     },
     {
@@ -5423,14 +5479,17 @@
         "authority": "AFM",
         "memberState": "Netherlands",
         "services": [
-            "exchange funds"
+            "exchange funds",
+            "transfer"
         ],
-        "websites": []
+        "websites": [
+            "https://www.bitpay.com/"
+        ]
     },
     {
         "id": 313,
         "name": "AK JENSEN NORWAY AS",
-        "authority": "Finanstilsynet",
+        "authority": "NFSA",
         "memberState": "Norway",
         "services": [
             "RTO",
@@ -5443,7 +5502,7 @@
     {
         "id": 314,
         "name": "TÝR MARKETS AS",
-        "authority": "Finanstilsynet",
+        "authority": "NFSA",
         "memberState": "Norway",
         "services": [
             "custody",
@@ -5458,7 +5517,7 @@
     {
         "id": 315,
         "name": "FIRI AS",
-        "authority": "Finanstilsynet",
+        "authority": "NFSA",
         "memberState": "Norway",
         "services": [
             "custody",
@@ -5475,7 +5534,7 @@
     {
         "id": 316,
         "name": "K33 MARKETS as",
-        "authority": "Finanstilsynet",
+        "authority": "NFSA",
         "memberState": "Norway",
         "services": [
             "custody",
@@ -5489,7 +5548,7 @@
     {
         "id": 317,
         "name": "BARE BITCOIN AS",
-        "authority": "Finanstilsynet",
+        "authority": "NFSA",
         "memberState": "Norway",
         "services": [
             "custody",
@@ -5503,7 +5562,7 @@
     {
         "id": 318,
         "name": "NORWEGIAN BLOCK EXCHANGE AS",
-        "authority": "Finanstilsynet",
+        "authority": "NFSA",
         "memberState": "Norway",
         "services": [
             "custody",
